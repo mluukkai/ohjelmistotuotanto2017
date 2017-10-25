@@ -80,7 +80,7 @@ public class KonsoliIO implements IO {
 }
 ```
 
-Muokatussa <code>Laskin</code>-luokan versiossa määritellään <code>IO</code>-rajapinnan toteuttava oliomuuttuja joka annetaan laskin-oliolle konstruktorin parametrina:
+Muokatussa <code>Laskin</code>-luokan versiossa määritellään <code>IO</code>-rajapinnan toteuttava oliomuuttuja, joka annetaan laskin-oliolle konstruktorin parametrina:
 
 ``` java
 public class Laskin {
