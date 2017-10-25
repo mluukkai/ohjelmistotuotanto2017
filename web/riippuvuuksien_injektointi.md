@@ -2,7 +2,7 @@
 
 Lue ensin [http://jamesshore.com/Blog/Dependency-Injection-Demystified.html](http://jamesshore.com/Blog/Dependency-Injection-Demystified.html)
 
-Allaolevat koodiesimerkit löytyvät maven-muotoisina projekteina [kurssirepositoriosta](https://github.com/mluukkai/ohjelmistotuotanto2017) (hakemistossa viikko1)
+Allaolevat koodiesimerkit löytyvät gradle-muotoisina projekteina [kurssirepositoriosta](https://github.com/mluukkai/ohjelmistotuotanto2017) (hakemistossa koodi/viikko1/RiippuvuuksienInjektointi1)
 
 Seuraavassa yksinkertainen laskin:
 
