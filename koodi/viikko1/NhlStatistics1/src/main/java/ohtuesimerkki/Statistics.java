@@ -8,13 +8,20 @@ import java.util.List;
 public class Statistics {
 
     private List<Player> players;
-
+/**
     public Statistics() {
-        PlayerReader reader = new PlayerReader("http://nhlstatistics.herokuapp.com/players.txt");
+        Reader reader = new PlayerReader("http://nhlstatistics.herokuapp.com/players.txt");
+        players = reader.getPlayers();       
+    }
+**/ 
+    public Statistics(Reader reader) {
         players = reader.getPlayers();       
     }
 
     public Player search(String name) {
+        if (name == null) {
+            return null;
+        }
         for (Player player : players) {
             if (player.getName().contains(name)) {
                 return player;
@@ -37,11 +44,12 @@ public class Statistics {
     }
 
     public List<Player> topScorers(int howMany) {
+        howMany = Math.min(howMany, players.size());
         Collections.sort(players);
         ArrayList<Player> topScorers = new ArrayList<Player>();
         Iterator<Player> playerIterator = players.iterator();
         
-        while (howMany>=0) {
+        while (howMany>0) {
             topScorers.add( playerIterator.next() );            
             howMany--;
         }

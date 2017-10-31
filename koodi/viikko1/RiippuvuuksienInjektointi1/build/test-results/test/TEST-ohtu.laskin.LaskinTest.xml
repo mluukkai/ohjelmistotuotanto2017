@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ohtu.laskin.LaskinTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-10-31T16:55:22" hostname="da3-cs-dk110-02" time="0.001">
+  <properties/>
+  <testcase name="yksiSummaOikein" classname="ohtu.laskin.LaskinTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
