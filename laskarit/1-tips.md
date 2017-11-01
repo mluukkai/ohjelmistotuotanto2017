@@ -64,6 +64,16 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 13:31 <@mluukkai> eli ei sinne src:n alla olevaan main:iin
 13:31 <@mluukkai> hieman hämäävää, että sen pakkauksen nimi on main
 13:32 <@mluukkai> koska siellä on myös se toinen "main"
+13:33 < opiskelija> hetkinen, ohtu-kansiossakin siis main-kansio?
+13:34 < opiskelija> vai javassa?
+13:34 <@mluukkai> ei
+13:34 <@mluukkai> java tarkottaa tuossa ns default-pakkausta. eli siellä olevat eivät ole missään pakkauksessa
+13:35 <@mluukkai> pakkaukset tulevat java:n alle
+13:35 <@mluukkai> esim ohtu ja ohtu/ohtuvarasto
+13:35 <@mluukkai> jos halutaan pakkaus nimeltään main, se tulee myös java:n alle
+13:35 <@mluukkai> ohtuvarasto on siis tässä ohtu:n "alipakkaus"
+13:36 < opiskelija> eli java/main/Main.java?
+13:36 <@mluukkai> juuri niin
 ```
 
 ### 14. riippuvuuksien injektointi osa 1
