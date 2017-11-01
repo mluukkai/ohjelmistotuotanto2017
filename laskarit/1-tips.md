@@ -34,6 +34,38 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 
 ### 13. Parempi testauskattavuus
 
+```
+13:23 < opiskelija> 1. viikon tehtävässä 13 sanotaan "Siirrä pääohjelma pakkaukseen..", niin mikä on se pääohjelma tuossa?
+13:25 <@mluukkai> se missä on main-metodi
+13:25 < opiskelija> aaa, eli noita luokka-tiedostoja siirtelee vaan kansiosta toiseen?
+13:26 <@mluukkai> joo
+13:26 <@mluukkai> pitää myös varmistaa, että importit menee oikein. NB yleensä korjaa ne automaattisesti
+13:27 < opiskelija> eli kun tuolta src:stä edetään parit kansiot alas päin, niin sieltä lopulta kun löytyy se main.java ->
+                      siirretään ylempään kansioon main?
+13:29 <@mluukkai> ├── main
+13:29 <@mluukkai> │   └── java
+13:29 <@mluukkai> │       └── ohtu
+13:29 <@mluukkai> │           └── ohtuvarasto
+13:29 <@mluukkai> │               ├── Main.java
+13:29 <@mluukkai> │               └── Varasto.java
+13:29 <@mluukkai> se on tollanen alunperin
+13:29 <@mluukkai> src:n sisältö
+13:29 < opiskelija> joo
+13:29 < opiskelija> eli tuo Main.java ylemmäs main-kansioon?
+13:31 <@mluukkai> ├── main
+13:31 <@mluukkai> │   └── java
+13:31 <@mluukkai> │       ├── ohtu
+13:31 <@mluukkai> │       │   └── ohtuvarasto
+13:31 <@mluukkai> │       │      └── Varasto.java
+13:31 <@mluukkai> │       │
+13:31 <@mluukkai>         └── main
+13:31 <@mluukkai>              └──Main.java
+13:31 <@mluukkai> tollanen olisi toivottava tulos
+13:31 <@mluukkai> eli ei sinne src:n alla olevaan main:iin
+13:31 <@mluukkai> hieman hämäävää, että sen pakkauksen nimi on main
+13:32 <@mluukkai> koska siellä on myös se toinen "main"
+```
+
 ### 14. riippuvuuksien injektointi osa 1
 
 ### 15. riippuvuuksien injektointi osa 2: NHL-tilastot
