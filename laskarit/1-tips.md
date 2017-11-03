@@ -82,4 +82,4 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 
 ### 16. NHLStatistics-ohjelman yksikkötestaus
 
-### 17. Forkaa repositorio https://github.com/mluukkai/ohjelmistotuotanto2017
+### 17. Forkkaa repositorio https://github.com/mluukkai/ohjelmistotuotanto2017
