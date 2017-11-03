@@ -75,6 +75,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 13:36 < opiskelija> eli java/main/Main.java?
 13:36 <@mluukkai> juuri niin
 ```
+* Täytyy myös muistaa muokata build.gradlessa ohtu.ohtuvarasto.Main --> main.Main
 
 ### 14. riippuvuuksien injektointi osa 1
 
