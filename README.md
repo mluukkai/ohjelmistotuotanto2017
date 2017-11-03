@@ -1,4 +1,5 @@
 ### Ohjelmistotuotanto syksy 2017, Tietojenkäsittelytieteen laitos, Helsingin Yliopisto
+Pieni muutos.
 
 <https://github.com/mluukkai/ohjelmistotuotanto2017/wiki/Ohjelmistotuotanto-syksy-2017>
 
