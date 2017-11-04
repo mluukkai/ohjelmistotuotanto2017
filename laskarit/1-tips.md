@@ -83,4 +83,6 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 
 ### 16. NHLStatistics-ohjelman yksikkötestaus
 
+* jos haluaa testeissä verrata pelaajien pelkkien nimien sijaan pelaajaolioita, täytyy Player-luokalle tehdä equals-metodi
+
 ### 17. Forkaa repositorio https://github.com/mluukkai/ohjelmistotuotanto2017
