@@ -4,30 +4,40 @@ import java.util.Scanner;
 
 public class Laskin {
 
-    private Scanner lukija;
+    private IO io;
 
-    public Laskin() {
-        lukija = new Scanner(System.in);
+    public Laskin(IO io) {
+        this.io = io;
     }
-    
-    public void suorita(){
-        while( true ) {
-            System.out.println("luku 1: ");
-            int luku1 = lukija.nextInt();
-            if ( luku1==-9999  ) return;
-            
-            System.out.println("luku 2: ");
-            int luku2 = lukija.nextInt();
-            if ( luku2==-9999  ) return;
-            
+
+    public void suorita() {
+        while (true) {
+            io.print("luku 1: ");
+            int luku1 = io.nextInt();
+            if (luku1 == -9999) {
+                return;
+            }
+
+            io.print("luku 2: ");
+            int luku2 = io.nextInt();
+            if (luku2 == -9999) {
+                return;
+            }
+
             int vastaus = laskeSumma(luku1, luku2);
-            System.out.println("summa: "+ vastaus);
+            io.print("summa: " + vastaus + "\n");
         }
     }
 
     private int laskeSumma(int luku1, int luku2) {
-        return luku1+luku2;
-    }    
-   
-}
+        return luku1 + luku2;
+    }
 
+    public interface IO {
+
+        int nextInt();
+
+        void print(String m);
+    }
+
+}
