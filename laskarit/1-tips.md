@@ -31,7 +31,9 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 11. TravisCI, osa 3
 
 ### 12. Codecov
-*opin että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
+* opin että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
+* Codecov jäi yhden commitin kanssa valittamaan, että "Reports are queued for processing". Tämä koski kuitenkin vain kyseistä commitia, seuraavien kanssa testitulosten laskeminen onnistui hyvin.
+  
 ### 13. Parempi testauskattavuus
 
 ```
