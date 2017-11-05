@@ -31,7 +31,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 11. TravisCI, osa 3
 
 ### 12. Codecov
-
+*opin että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
 ### 13. Parempi testauskattavuus
 
 ```
@@ -77,6 +77,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ```
 * Täytyy myös muistaa muokata build.gradlessa ohtu.ohtuvarasto.Main --> main.Main
 
+
 ### 14. riippuvuuksien injektointi osa 1
 
 ### 15. riippuvuuksien injektointi osa 2: NHL-tilastot
@@ -84,5 +85,6 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 16. NHLStatistics-ohjelman yksikkötestaus
 
 * jos haluaa testeissä verrata pelaajien pelkkien nimien sijaan pelaajaolioita, täytyy Player-luokalle tehdä equals-metodi
+* topScorers palauttaa yhden pelaajan enemmän kuin annettu parametri
 
 ### 17. Forkaa repositorio https://github.com/mluukkai/ohjelmistotuotanto2017
