@@ -1,4 +1,5 @@
 ### Ohjelmistotuotanto syksy 2017, Tietojenkäsittelytieteen laitos, Helsingin Yliopisto
+Tulevalla viikolla enemmän, kuin tähän mennessä!
 
 <https://github.com/mluukkai/ohjelmistotuotanto2017/wiki/Ohjelmistotuotanto-syksy-2017>
 
