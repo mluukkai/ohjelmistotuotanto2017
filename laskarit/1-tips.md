@@ -9,6 +9,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 3. Gitin alkeet
 
 * Laskarien tehtäväs 3, siis gitignore tehtävä, kannattaa huomata et tarkotus on ignoraa vaan hakemisto build, eikä kaikkea mikä alkaa build
+* Huomaa, että `.gitignore` on piilotiedosto (piste nimen eka merkki). Komennolla `ls -l` sitä ei näe, mutta `ls -la` näyttää myös piilotiedostot
 
 ### 4. Tiedostojen lisääminen githubin
 
@@ -31,7 +32,8 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 11. TravisCI, osa 3
 
 ### 12. Codecov
-*opin että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
+* opin, että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
+
 ### 13. Parempi testauskattavuus
 
 ```
