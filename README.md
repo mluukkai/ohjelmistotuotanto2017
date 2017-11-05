@@ -11,7 +11,7 @@
 [5](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento5.pdf?raw=true)
 [6](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento6.pdf?raw=true)
 
-## Laskarit
+## Viikkotehtävät
 
 [1](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/1.md)
 [2](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/2.md)
