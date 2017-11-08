@@ -4,6 +4,13 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 
 ## 1. gradlen perusteita
 
+Gradlen uusimmat versiot (ainakaan 4.3) eivät näköjään enää lähtökohtaisesti tulosta tutoriaalissa mainittuja rivejä
+:compileJava NO-SOURCE
+:processResources NO-SOURCE
+:classes UP-TO-DATE
+jne. 
+Ne saa näkyviin optiolla --console=plain, eli esim. gradle build -> gradle --console=plain build.
+
 ## 2. lisää gradlea: koodin staattinen analyysi
 
 ## 3. codacy
