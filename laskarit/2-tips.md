@@ -13,6 +13,45 @@ Ne saa näkyviin optiolla --console=plain, eli esim. gradle build -> gradle --co
 
 ## 2. lisää gradlea: koodin staattinen analyysi
 
+Telegramista:
+
+> Nyt jouduin hukkaan 2 vkon 2 tehtävän kohdan poista tree walker sisällä olevat tarkistukset kohdan kanssa.. voiskohan joku avulias selventää mitä tällä tarkoitetaan?
+
+vastaus:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<module name="Checker">
+
+    <module name="TreeWalker">
+        <module name="JavadocMethod"/>
+        <module name="JavadocType"/>
+           monta riviä
+        <module name="TodoComment"/>
+        <module name="UpperEll"/>
+    </module>
+
+</module>
+```
+
+siis tuosta pois nuo TreeWalker kohdan alla/sisällä olevat
+
+niin että lopputulos on
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<module name="Checker">
+
+    <module name="TreeWalker">
+    </module>
+
+</module>
+```
+
+sitten lisäillään tehtävän mukasia sääntöjä TreeWalkerin alle, samoin kun ne poistetut olivat
+
 ## 3. codacy
 
 ## 4. git: branchit
