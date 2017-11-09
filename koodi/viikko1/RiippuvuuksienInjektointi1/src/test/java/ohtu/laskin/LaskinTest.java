@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class LaskinTest {
-
+    //lisäys
     @Test
     public void yksiSummaOikein() {
         IOStub io = new IOStub(1, 3, -9999);
