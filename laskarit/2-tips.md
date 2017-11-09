@@ -5,11 +5,13 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ## 1. gradlen perusteita
 
 Gradlen uusimmat versiot (ainakaan 4.3) eivät näköjään enää lähtökohtaisesti tulosta tutoriaalissa mainittuja rivejä
+```
 :compileJava NO-SOURCE
 :processResources NO-SOURCE
 :classes UP-TO-DATE
+```xml
 jne. 
-Ne saa näkyviin optiolla --console=plain, eli esim. gradle build -> gradle --console=plain build.
+Ne saa näkyviin optiolla <code>--console=plain</code>, eli esim. komennon <code>gradle build</code> sijaan <code> gradle --console=plain build</code>.
 
 ## 2. lisää gradlea: koodin staattinen analyysi
 
