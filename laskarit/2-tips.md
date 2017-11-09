@@ -9,7 +9,8 @@ Gradlen uusimmat versiot (ainakaan 4.3) eivät näköjään enää lähtökohtai
 :compileJava NO-SOURCE
 :processResources NO-SOURCE
 :classes UP-TO-DATE
-```xml
+```
+
 jne. 
 Ne saa näkyviin optiolla <code>--console=plain</code>, eli esim. komennon <code>gradle build</code> sijaan <code> gradle --console=plain build</code>.
 
