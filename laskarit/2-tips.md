@@ -55,6 +55,9 @@ niin että lopputulos on
 
 sitten lisäillään tehtävän mukasia sääntöjä TreeWalkerin alle, samoin kun ne poistetut olivat
 
+----------
+* checkstyle.xml: koodin pitää alkaa heti ensimmäiseltä riviltä. Jos alussa on tyhjä rivi, tulee ongelmia.
+
 ## 3. codacy
 
 ## 4. git: branchit
