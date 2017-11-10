@@ -1,4 +1,4 @@
-### Ohjelmistotuotanto kevät 2017, Tietojenkäsittelytieteen laitos, Helsingin Yliopisto
+### Ohjelmistotuotanto kevät 2017, Tietojenkäsittelytieteen laitos, Helsingin Yliopisto --
 
 <https://github.com/mluukkai/ohjelmistotuotanto2017/wiki/Ohjelmistotuotanto-syksy-2017>
 
