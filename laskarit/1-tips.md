@@ -9,6 +9,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 3. Gitin alkeet
 
 * Laskarien tehtäväs 3, siis gitignore tehtävä, kannattaa huomata et tarkotus on ignoraa vaan hakemisto build, eikä kaikkea mikä alkaa build
+* Huomaa, että `.gitignore` on piilotiedosto (piste nimen eka merkki). Komennolla `ls -l` sitä ei näe, mutta `ls -la` näyttää myös piilotiedostot
 
 ### 4. Tiedostojen lisääminen githubin
 
@@ -31,9 +32,8 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 11. TravisCI, osa 3
 
 ### 12. Codecov
-* opin että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
-* Codecov jäi yhden commitin kanssa valittamaan, että "Reports are queued for processing". Tämä koski kuitenkin vain kyseistä commitia, seuraavien kanssa testitulosten laskeminen onnistui hyvin.
-  
+* opin, että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
+
 ### 13. Parempi testauskattavuus
 
 ```
@@ -45,21 +45,21 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 13:27 < opiskelija> eli kun tuolta src:stä edetään parit kansiot alas päin, niin sieltä lopulta kun löytyy se main.java ->
                       siirretään ylempään kansioon main?
 13:29 <@mluukkai> ├── main
-13:29 <@mluukkai> │   └── java
-13:29 <@mluukkai> │       └── ohtu
-13:29 <@mluukkai> │           └── ohtuvarasto
-13:29 <@mluukkai> │               ├── Main.java
-13:29 <@mluukkai> │               └── Varasto.java
+13:29 <@mluukkai> │   └── java
+13:29 <@mluukkai> │       └── ohtu
+13:29 <@mluukkai> │           └── ohtuvarasto
+13:29 <@mluukkai> │               ├── Main.java
+13:29 <@mluukkai> │               └── Varasto.java
 13:29 <@mluukkai> se on tollanen alunperin
 13:29 <@mluukkai> src:n sisältö
 13:29 < opiskelija> joo
 13:29 < opiskelija> eli tuo Main.java ylemmäs main-kansioon?
 13:31 <@mluukkai> ├── main
-13:31 <@mluukkai> │   └── java
-13:31 <@mluukkai> │       ├── ohtu
-13:31 <@mluukkai> │       │   └── ohtuvarasto
-13:31 <@mluukkai> │       │      └── Varasto.java
-13:31 <@mluukkai> │       │
+13:31 <@mluukkai> │   └── java
+13:31 <@mluukkai> │       ├── ohtu
+13:31 <@mluukkai> │       │   └── ohtuvarasto
+13:31 <@mluukkai> │       │      └── Varasto.java
+13:31 <@mluukkai> │       │
 13:31 <@mluukkai>         └── main
 13:31 <@mluukkai>              └──Main.java
 13:31 <@mluukkai> tollanen olisi toivottava tulos
