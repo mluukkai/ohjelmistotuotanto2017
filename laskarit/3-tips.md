@@ -17,7 +17,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ## 7. Uuden käyttäjän rekisteröitymisen testit
 
 ## 8. Spring jälleen kerran
-
+Springin kautta käynnistäminen ei toiminut,  kun oli Lambda-lause koodissa.  Springin 3.x versiot ei tue näköjään Java 8.
 ## 9. WebLogin
 
 ## 10. Selenium, eli web-selaimen simulointi ohjelmakoodista
