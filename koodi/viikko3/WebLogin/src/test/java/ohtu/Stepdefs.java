@@ -46,6 +46,12 @@ public class Stepdefs {
         logInWith(username, password);
     }
     
+    @When("^nonexisting username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
+    public void nonexisting_username_and_password_are_given(String username, String password) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        logInWith(username, password);
+    }
+    
     @Then("^user is logged in$")
     public void user_is_logged_in() throws Throwable {
         pageHasContent("Ohtu Application main page");
@@ -76,5 +82,6 @@ public class Stepdefs {
         element.sendKeys(password);
         element = driver.findElement(By.name("login"));
         element.submit();  
-    } 
+    }
+    
 }
