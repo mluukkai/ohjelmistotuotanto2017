@@ -45,21 +45,21 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 13:27 < opiskelija> eli kun tuolta src:stä edetään parit kansiot alas päin, niin sieltä lopulta kun löytyy se main.java ->
                       siirretään ylempään kansioon main?
 13:29 <@mluukkai> ├── main
-13:29 <@mluukkai> │   └── java
-13:29 <@mluukkai> │       └── ohtu
-13:29 <@mluukkai> │           └── ohtuvarasto
-13:29 <@mluukkai> │               ├── Main.java
-13:29 <@mluukkai> │               └── Varasto.java
+13:29 <@mluukkai> │   └── java
+13:29 <@mluukkai> │       └── ohtu
+13:29 <@mluukkai> │           └── ohtuvarasto
+13:29 <@mluukkai> │               ├── Main.java
+13:29 <@mluukkai> │               └── Varasto.java
 13:29 <@mluukkai> se on tollanen alunperin
 13:29 <@mluukkai> src:n sisältö
 13:29 < opiskelija> joo
 13:29 < opiskelija> eli tuo Main.java ylemmäs main-kansioon?
 13:31 <@mluukkai> ├── main
-13:31 <@mluukkai> │   └── java
-13:31 <@mluukkai> │       ├── ohtu
-13:31 <@mluukkai> │       │   └── ohtuvarasto
-13:31 <@mluukkai> │       │      └── Varasto.java
-13:31 <@mluukkai> │       │
+13:31 <@mluukkai> │   └── java
+13:31 <@mluukkai> │       ├── ohtu
+13:31 <@mluukkai> │       │   └── ohtuvarasto
+13:31 <@mluukkai> │       │      └── Varasto.java
+13:31 <@mluukkai> │       │
 13:31 <@mluukkai>         └── main
 13:31 <@mluukkai>              └──Main.java
 13:31 <@mluukkai> tollanen olisi toivottava tulos
