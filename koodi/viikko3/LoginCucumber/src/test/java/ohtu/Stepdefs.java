@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 import ohtu.io.*;
 import ohtu.data_access.*;
 import ohtu.services.*;
+import org.springframework.stereotype.Component;
 
 public class Stepdefs {
     App app;

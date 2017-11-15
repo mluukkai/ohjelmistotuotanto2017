@@ -2,13 +2,15 @@ package ohtu.io;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class StubIO implements IO {
 
     private List<String> lines;
     private int i;
     private ArrayList<String> prints;
-
+    
     public StubIO(List<String> values) {
         this.lines = values;
         prints = new ArrayList<>();
