@@ -10,6 +10,10 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 
 ## 4. Yksikkötestaus ja riippuvuudet: Mockito, osa 3
 
-## 5. Retrospektiivitekniikat
+## 5. Yksikkötestaus ja riippuvuudet: Mockito, osa 4
 
-## 6. git: monta etärepositorioa
+## 6. Retrospektiivitekniikat
+
+## 7. git: monta etärepositorioa
+
+## 8. git: stash
