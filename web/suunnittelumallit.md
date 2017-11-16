@@ -1,5 +1,12 @@
 # KESKEN. ÄLÄ VIELÄ LUE
 
+Tämä materiaali on tarkoitettu itseopiskeltavaksi ennen viikon 5 ja 6 laskarien tekemistä. Materiaali täydentää [luennon 8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
+asiaa.
+
+## koheesio
+
+Koheesiolla tarkoitetaan sitä, kuinka pitkälle metodissa, luokassa tai komponentissa oleva ohjelmakoodi on keskittynyt tietyn toiminnallisuuden toteuttamiseen. Hyvänä asiana pidetään mahdollisimman korkeaa koheesion astetta. Koheesioon tulee siis pyrkiä kaikilla ohjelman tasoilla, metodeissa, luokissa, komponenteissa ja jopa muuttujissa (samaa muuttujaa ei saa uusiokäyttää eri asioiden tallentamiseen). 
+
 ## koheesio metoditasolla
 
 Esimerkki artikkelista [http://www.ibm.com/developerworks/java/library/j-eaed4/index.html](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html)
@@ -106,7 +113,7 @@ public class Laskin {
 }
 ```
 
-Luokka rikkoo Single responsibility -periaatteen? Miksi? Periaate sanoo, että luokalla saa olla vain yksi vastuu eli syy muuttuua. Nyt luokalla on kuitenkin useita syitä muuttua:
+Luokka rikkoo Single responsibility -periaatteen. Miksi? Periaate sanoo, että luokalla saa olla vain yksi vastuu eli syy muuttuua. Nyt luokalla on kuitenkin useita syitä muuttua:
 
 * luokalle halutaan toteuttaa uusia laskutoimituksia
 * kommunikointi käyttäjän kanssa halutaan hoitaa jotenkin muuten kuin konsolin välityksellä
@@ -147,15 +154,15 @@ public class Laskin {
 }
 ```
 
-Nyt kommunikointitavan muutos ei edellytä luokkaan mitään muutoksia edellyttäen että uusikin kommunikoinitapa toteuttaa rajapinnan jonka kautta Laskin hoitaa kommunikoinnin.
+Nyt kommunikointitavan muutos ei edellytä luokkaan mitään muutoksia edellyttäen että uusikin kommunikoinitapa toteuttaa rajapinnan, jonka kautta Laskin hoitaa kommunikoinnin.
 
-Vaikka luokka Laskin siis toteuttaakin edelleen käyttäjänsä näkökulmasta samat asiat kuin aiemmin, ei se hoida kaikkea itse vaan delegoi osan vastuistaan muualle.
+Vaikka luokka Laskin siis toteuttaakin edelleen käyttäjänsä näkökulmasta samat asiat kuin aiemmin, ei se hoida kaikkea itse vaan _delegoi_ osan vastuistaan muualle.
 
 Luokka ei ole vielä kaikin osin laajennettavuuden kannalta optimaalinen. Palaamme asiaan hetken kuluttua.
 
 ## Favour composition over inheritance eli milloin ei kannata periä
 
-Meillä on käytössämme luokka joka mallintaa pankkitiliä:
+Meillä on käytössämme luokka, joka mallintaa pankkitiliä:
 
 ``` java
 public class Tili {
@@ -223,7 +230,7 @@ public class EuriborTili extends Tili {
 }
 ```
 
-Huomaamme, että EuriborTili rikkoo Single Responsibility -periaatetta, sillä luokka sisältää normaalin tiliin liittyvän toiminnan lisäksi koodia joka hakee tavaraa internetistä. Vastuut kannattaa selkeyttää ja korkoprosentin haku eriyttää omaan rajapinnan takana olevaan luokkaan:
+Huomaamme, että EuriborTili rikkoo Single Responsibility -periaatetta, sillä luokka sisältää normaalin tiliin liittyvän toiminnan lisäksi koodia, joka hakee tavaraa internetistä. Vastuut kannattaa selkeyttää ja korkoprosentin haku eriyttää omaan rajapinnan takana olevaan luokkaan:
 
 ``` java
 public interface EuriborLukija {
@@ -277,7 +284,7 @@ public class EuriborlukijaImpl implements EuriborLukija {
 
 EuriborTili-luokka alkaa olla nyt melko siisti, EuriborLukijassa olisi paljon parantemisen varaa, mm. sen ainoan metodin koheesio on huono, metodi tekee aivan liian montaa asiaa. Palaamme siihen kuitenkin myöhemmin.
 
-Seuraavaksi huomaamme että on tarvetta Määräaikaistilille joka on muuten samanlainen kuin Tili mutta määräaikaistililtä ei voi siirtää rahaa muualle ennen kuin se tehdään mahdolliseksi tietyn ajan kuluttua. Eli ei ongelmaa, perimme jälleen luokan Tili:
+Seuraavaksi huomaamme että on tarvetta _Määräaikaistilille_, joka on muuten samanlainen kuin Tili mutta määräaikaistililtä ei voi siirtää rahaa muualle ennen kuin se tehdään mahdolliseksi tietyn ajan kuluttua. Eli ei ongelmaa, perimme jälleen luokan Tili:
 
 ``` java
 public class MääräaikaisTili extends Tili {
@@ -305,7 +312,8 @@ public class MääräaikaisTili extends Tili {
 
 Luokka syntyi tuskattomasti.
 
-Seuraavaksi tulee idea Euribor-korkoa käyttävistä määräaikaistileistä. Miten nyt kannattaisi tehdä? Osa toiminnallisuudesta on luokassa Määräaikaistili ja osa luokassa Euribor-tili...
+Seuraavaksi tulee idea _Euribor-korkoa käyttävistä määräaikaistileistä_. 
+Miten nyt kannattaisi tehdä? Osa toiminnallisuudesta on luokassa Määräaikaistili ja osa luokassa Euribor-tili...
 
 Ehkä koronmaksun hoitaminen perinnän avulla ei ollutkaan paras ratkaisu, ja kannattaisi noudattaa "favor composition over inheritance"-periaatetta. Eli erotetaan koronmaksu omaksi luokakseen, tai rajapinnan toteuttaviksi luokiksi:
 
@@ -420,21 +428,41 @@ Tili euribor12 = Tili.luoEuriborTili("4422-3355", "Tero Huomo", 12 );
 Tili fyrkka = Tili.luoEuriborTili("7895-4571", "Esko Ukkonen", 10.75 );
 ```
 
-Käyttämämme periaate olioiden luomiseen staattisten metodien avulla on hyvin tunnettu suunnittelumalli *staattinen tehdas, engl. static factory*.
+### factory
 
-Huomaamme, että tehdasmetodien avulla voimme kapseloida luokan todellisen tyypin. Kasperin tilihän on määräaikaistili, se kuitenkin pyydetään Tili-luokassa sijaitsevalta factoryltä, olion oikea tyyppi on piilotettu tarkoituksella käyttäjältä. Määräaikaistilin käyttäjällä ei siis ole enää konkreettista riippuvuutta luokkaan Määräaikaistili.
+Käyttämämme periaate olioiden luomiseen staattisten metodien avulla on hyvin tunnettu suunnittelumalli *staattinen tehdasmetodi, engl. static factory method*.
+
+Tili-esimerkissä käytetty static factory method on yksinkertaisin erilaisista tehdas-suunnittelumallin varianteista. Periaatteena suunnittelumallissa on, se, että luokalle tehdään staattinen tehdasmetodi tai metodeja, jotka käyttävät konstruktoria ja luovat luokan ilmentymät. Konstruktorin suora käyttö usein estetään määrittelemällä konstruktori privateksi.
+
+Tehdasmetodin avulla voidaan piilottaa olion luomiseen liittyviä yksityiskohtia, esimerkissä Korko-rajapinnan toteuttavien olioiden luominen ja jopa olemassaolo oli tehdasmetodin avulla piilotettu tilin käyttäjältä. 
+
+Tehdasmetodin avulla voidaan myös piilottaa käyttäjältä luodun olion todellinen luokka, esimerkissä näin tehtiin määräaikaistilin suhteen.
+
+Tehdasmetodi siis auttaa _kapseloinnissa_, olion luomiseen liittyvät detaljit ja jopa olion todellinen luonne piilottuu olion käyttäjältä. Tämä taas mahdollistaa erittäin joustavan laajennettavuuden. 
+
+Staattinen tehdasmetodi ei ole testauksen kannalta erityisen hyvä ratkaisu, esimerkissämme olisi vaikea luoda tili, jolle annetaan Korko-rajapinnan toteuttama mock-olio. Nyt se tosin onnistuu koska konstruktoria ei ole täysin piilotettu.
+
+Lisätietoa factory-suunnittelumallista esim. seuraavissa https://sourcemaking.com/design_patterns/factory_methodh ttp://www.oodesign.com/factory-method-pattern.html
+
+Tehdasmetodien avulla voimme siis kapseloida luokan todellisen tyypin. Kasperin tilihän on määräaikaistili, se kuitenkin pyydetään Tili-luokassa sijaitsevalta factoryltä, olion oikea tyyppi on piilotettu tarkoituksella käyttäjältä. Määräaikaistilin käyttäjällä ei siis ole enää konkreettista riippuvuutta luokkaan Määräaikaistili.
 
 Teimme myös metodin jonka avulla tilin korkoa voi muuttaa. Kasperin tasakorkoinen määräaikaistili on helppo muuttaa lennossa kolmen kuukauden Euribor-tiliksi:
 
-``` java
+```java
 määräaikais.vaihdaKorkoa(new EuriborKorko(3));
 ```
 
 Eli luopumalla perinnästä selkeytyy oliorakenne huomattavasti ja saavutetaan ajonaikaista joustavuuttaa (koronlaskutapa) joka perintää käyttämällä ei onnistu.
 
-Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia eli englanniksi strategy*.
+### strategy
 
-## Tilin luominen
+Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia eli englanniksi strategy*. 
+
+Strategyn avulla voidaan hoitaa tilanne, jossa eri olioiden käyttäytyminen on muuten sama mutta tietyissä kohdissa on käytössä eri "algoritmi". Esimerkissämme tämä algoritmi oli korkoprosentin määritys. Sama tilanne voidaan hoitaa usein myös perinnän avulla käyttämättä erillisiä olioita, strategy kuitenkin mahdollistaa huomattavasti dynaamisemman ratkaisun, sillä strategia-olioa voi vaihtaa ajoaikana. Strategyn käyttö ilmentää hienosti "favour composition over inheritance"-periaatetta
+
+Lisätietoa strategia-suunnittelumallista seuraavissa http://www.oodesign.com/strategy-pattern.html ja https://sourcemaking.com/design_patterns/strategy
+
+### Tilin luominen
 
 Loimme äsken luokalle _Tili_ staattiset apumetodit tilien luomista varten. Voisi kuitenkin olla järkevämpää siirtää vastuu tilien luomisesta erillisen luokan, _pankin_ vastuulle. Pankki voi helposti hallinnoida myös tilinumeroiden generointia:
 
@@ -474,7 +502,9 @@ Tili euriborTili = spankki.euribortili("Kasper Hirvikoski", 6);
 Tili maaraaikaistili = spankki.maaraikaistili("Arto Hellas", 0.15);
 ``` 
 
-eli tlilin luojan ei enää tarvitse huolehtia tilinumeroiden generoinnista.
+eli tililin luojan ei enää tarvitse huolehtia tilinumeroiden generoinnista.
+
+Nyt tehdasmetodista on siis tehty luokan oman staattisen metdoin sijaan toiseen luokkaan sijoitettu oliometodi.
 
 ## Laskin ilman iffejä
 
@@ -533,7 +563,7 @@ public class Laskin {
 
 Ratkaisu ei ole kaikin puolin tyydyttävä. Entä jos haluamme muitakin operaatioita kuin summan, tulon ja erotuksen? if-hässäkkä tulee kasvamaan.
 
-Päätämme siirtyä strategian käyttöön, eli hoidetaan laskuoperaatio omassa luokassaan. Rajapinnan sijasta käytämme tällä kertaa abstraktia luokkaa:
+Päätämme siirtyä _strategia-suunnittelumallin_ käyttöön, eli hoidetaan laskuoperaatio omassa luokassaan. Rajapinnan sijasta käytämme tällä kertaa abstraktia luokkaa:
 
 ``` java
 public abstract class Operaatio {
