@@ -10,7 +10,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa, joiden kanss
 
 * Laskarien tehtäväs 3, siis gitignore tehtävä, kannattaa huomata et tarkotus on ignoraa vaan hakemisto build, eikä kaikkea mikä alkaa build
 
-### 4. Tiedostojen lisääminen githubin
+### 4. Tiedostojen lisääminen githubiin
 
 ### 5. Monta kloonia samasta repositoriosta
 
