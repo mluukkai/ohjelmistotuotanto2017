@@ -4,7 +4,9 @@ Osalla on ollut ongelmia Seleniumin toiminnan kanssa. Alla muutamia tapoja, mite
 
 ## tapa 1: chromedriverin downloadaus
 
-Lataa [täältä](https://sites.google.com/a/chromium.org/chromedriver/downloads) ChromeDriver.
+Lataa [täältä](https://sites.google.com/a/chromium.org/chromedriver/downloads) ja asenna ChromeDriver.
+
+Lataaminen ja asentaminen macillä tapahtuu komennolla `brew install chromedriver`. Tämän jälkeen pitäisi toimia ilman muuta määrittelyä. (brew pitää olla asennettuna etukäteen)
 
 Tee seuraava määrittely seleniumia käyttävässä tiedostossa:
 
