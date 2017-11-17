@@ -1,2 +1,4 @@
 pekka;akkep
 jukka;akkuj
+admin;123
+uusitili;salasana
