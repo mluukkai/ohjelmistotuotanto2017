@@ -54,7 +54,16 @@ public class Main {
         JsonParser parser = new JsonParser();
         JsonObject parsittuData = parser.parse(statsResponse).getAsJsonObject();
         
-        System.out.println(parsittuData);
+        //System.out.println(parsittuData);
+        
+        
+        
+        int palautettujaTehtavia = Integer.parseInt(parsittuData.entrySet().toArray()[0].toString().split(",")[2].split(":")[1].toString()) + Integer.parseInt(parsittuData.entrySet().toArray()[1].toString().split(",")[2].split(":")[1].toString()) + Integer.parseInt(parsittuData.entrySet().toArray()[2].toString().split(",")[2].split(":")[1].toString());
+        
+        int palautustenMaara = Integer.parseInt(parsittuData.entrySet().toArray()[0].toString().split(",")[0].split(":")[1].toString() + Integer.parseInt(parsittuData.entrySet().toArray()[1].toString().split(",")[0].split(":")[1].toString()) + Integer.parseInt(parsittuData.entrySet().toArray()[2].toString().split(",")[0].split(":")[1].toString()));
+        
+        System.out.println("");
+        System.out.println("Kurssilla on yhteensä: " + palautustenMaara + " palautusta, palautettuja tehtäviä " + palautettujaTehtavia);
         
 
     }
