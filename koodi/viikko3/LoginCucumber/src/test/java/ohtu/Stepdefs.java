@@ -11,12 +11,20 @@ import ohtu.data_access.*;
 import ohtu.services.*;
 
 public class Stepdefs {
+    
 
     App app;
     StubIO io;
     UserDao userDao = new InMemoryUserDao();
     AuthenticationService auth = new AuthenticationService(userDao);
     List<String> inputLines = new ArrayList<>();
+
+    public Stepdefs() {
+        System.setProperty("webdriver.chrome.driver", "C:/Users/Desktop/chromedriver.exe"); 
+    }
+    
+    
+    
 
     @Given("^command login is selected$")
     public void command_login_selected() throws Throwable {
