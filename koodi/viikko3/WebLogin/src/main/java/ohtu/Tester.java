@@ -3,7 +3,7 @@ package ohtu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class Tester {
 
@@ -11,27 +11,30 @@ public class Tester {
         
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Beast\\Desktop\\chromedriver.exe");
         
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new HtmlUnitDriver();
 
         driver.get("http://localhost:4567");
         
-        sleep(2);
+//        sleep(2);
         
-        WebElement element = driver.findElement(By.linkText("login"));
+        WebElement element = driver.findElement(By.linkText("register new user"));
         element.click();
 
-        sleep(2);
+        String password = "salasana";
+        
+        element.findElement(By.name("username"));
+        
 
-        element = driver.findElement(By.name("username"));
         element.sendKeys("pekka");
         element = driver.findElement(By.name("password"));
-        element.sendKeys("akkep");
-        element = driver.findElement(By.name("login"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("signup"));
+        element.click();
         
-        sleep(2);
-        element.submit();
 
-        sleep(3);
+//        sleep(3);
         
         driver.quit();
     }

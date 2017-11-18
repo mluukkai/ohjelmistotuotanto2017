@@ -1,5 +1,6 @@
 package ohtu;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -49,7 +50,7 @@ public class Stepdefs {
 
     @When("^incorrect username \"([^\"]*)\" and incorrect password \"([^\"]*)\" are given$")
     public void incorrect_username_and_incorrect_password_are_given(String arg1, String arg2) throws Throwable {
-        logInWith(arg1,arg2);
+        logInWith(arg1, arg2);
     }
 
     @Then("^user is logged in$")
@@ -82,4 +83,76 @@ public class Stepdefs {
         element = driver.findElement(By.name("login"));
         element.submit();
     }
+
+    private void createAccountWith(String username, String password) throws InterruptedException {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("signup"));
+        element.click();
+    }
+
+    @Given("^command new user is selected$")
+    public void command_new_user_is_selected() throws Throwable {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));
+        element.click();
+    }
+
+    @When("^a valid username \"([^\"]*)\" and password \"([^\"]*)\" and matching password confirmation are entered$")
+    public void a_valid_username_and_password_and_matching_password_confirmation_are_entered(String username, String password) throws Throwable {
+        createAccountWith(username, password);
+        system_will_respond("Welcome to Ohtu Application!");
+    }
+
+    @Then("^a new user is created$")
+    public void a_new_user_is_created() throws Throwable {
+        system_will_respond("Welcome to Ohtu Application!");
+    }
+
+    @Then("^user is not created and error \"([^\"]*)\" is reported$")
+    public void user_is_not_created_and_error_is_reported(String error) throws Throwable {
+        system_will_respond(error);
+    }
+
+    @When("^a invalid username \"([^\"]*)\" and password \"([^\"]*)\" and matching password confirmation are entered$")
+    public void a_invalid_username_and_password_and_matching_password_confirmation_are_entered(String arg1, String arg2) throws Throwable {
+        createAccountWith(arg1, arg2);
+        system_will_respond("username should have at least 3 characters");
+    }
+
+    @When("^a valid username \"([^\"]*)\" and invalid password \"([^\"]*)\" are entered$")
+    public void a_valid_username_and_invalid_password_are_entered(String arg1, String arg2) throws Throwable {
+        createAccountWith(arg1, arg2);
+        system_will_respond("password should be at least 8 characters");
+    }
+
+    @When("^a taken username \"([^\"]*)\" and password \"([^\"]*)\" and matching password confirmation are entered$")
+    public void a_taken_username_and_password_and_matching_password_confirmation_are_entered(String arg1, String arg2) throws Throwable {
+        createAccountWith(arg1, arg2);
+        system_will_respond("username is already taken");
+    }
+
+    @When("^a valid username \"([^\"]*)\" and password \"([^\"]*)\" and unmatching password confirmation are entered$")
+    public void a_valid_username_and_password_and_unmatching_password_confirmation_are_entered(String arg1, String arg2) throws Throwable {
+        createAccountWithWrongPassword(arg1, arg2);
+        system_will_respond("passwords dont match");
+    }
+
+    private void createAccountWithWrongPassword(String username, String password) {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys("adsasdwasdwads");
+        element = driver.findElement(By.name("signup"));
+        element.click();
+    }
+
 }
