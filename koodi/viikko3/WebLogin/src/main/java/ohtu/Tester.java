@@ -16,25 +16,25 @@ public class Tester {
         driver.get("http://localhost:4567");
         
 //        sleep(2);
-        
-        WebElement element = driver.findElement(By.linkText("register new user"));
-        element.click();
-
-        String password = "salasana";
-        
-        element.findElement(By.name("username"));
-        
-
-        element.sendKeys("pekka");
-        element = driver.findElement(By.name("password"));
-        element.sendKeys(password);
-        element = driver.findElement(By.name("passwordConfirmation"));
-        element.sendKeys(password);
-        element = driver.findElement(By.name("signup"));
-        element.click();
-        
-
-//        sleep(3);
+//        
+//        WebElement element = driver.findElement(By.linkText("register new user"));
+//        element.click();
+//
+//        String password = "salasana";
+//        
+//        element.findElement(By.name("username"));
+//        
+//
+//        element.sendKeys("pekka");
+//        element = driver.findElement(By.name("password"));
+//        element.sendKeys(password);
+//        element = driver.findElement(By.name("passwordConfirmation"));
+//        element.sendKeys(password);
+//        element = driver.findElement(By.name("signup"));
+//        element.click();
+//        
+//
+////        sleep(3);
         
         driver.quit();
     }
