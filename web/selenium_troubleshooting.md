@@ -162,7 +162,9 @@ HtmlUnitDriver:in hyvä puoli on nopeus. Voit käyttää sitä myös testeissä.
 
 ## Tapa 5: Lataa Google Chrome koneellesi
 
-Jos saat seuraavanlaisen virheilmoituksen kun suoritat komennon gradle browse: 
+Suorita ensin Tapa 1. Sen jälkeen vasta tämän ohjeen mukaan.
+
+Jos saat seuraavanlaisen virheilmoituksen kun suoritat komennon gradle browse (toimii myös, jos virhe valittaa Chromen versiota): 
 
 Starting ChromeDriver 2.33.506092 (733a02544d189eeb751fe0d7ddca79a0ee28cce4) on port 17195
 Only local connections are allowed.
