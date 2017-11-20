@@ -20,3 +20,6 @@
 [2](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/2.md)
 [3](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/3.md)
 [4](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/4.md)
+
+
+MOIKKA
