@@ -46,7 +46,7 @@ public class KauppaTest {
 
         verify(pankki).tilisiirto("Jori", 7, "666", "33333-44455", 6);
     }
-    
+
     @Test
     public void kaupanTilimaksuaKutsuttuKahdellaSamallaTuotteella() {
         when(viitegeneraattori.uusi()).thenReturn(5);
@@ -60,5 +60,59 @@ public class KauppaTest {
         kauppa.tilimaksu("Pera", "0700123123");
 
         verify(pankki).tilisiirto("Pera", 5, "0700123123", "33333-44455", 2);
+    }
+
+    @Test
+    public void aloitaAsiointiNollaa() {
+        when(viitegeneraattori.uusi()).thenReturn(5);
+        when(varasto.saldo(2)).thenReturn(25);
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "Kalia", 2));
+        kauppa.aloitaAsiointi();
+        kauppa.lisaaKoriin(2);
+        kauppa.tilimaksu("Pera", "0700123123");
+
+        verify(pankki).tilisiirto("Pera", 5, "0700123123", "33333-44455", 2);
+        when(viitegeneraattori.uusi()).thenReturn(6);
+        kauppa.aloitaAsiointi();
+        kauppa.lisaaKoriin(2);
+        kauppa.tilimaksu("Jori", "666");
+        verify(pankki).tilisiirto("Jori", 6, "666", "33333-44455", 2);
+    }
+    
+    @Test
+    public void uusiViite() {
+        when(viitegeneraattori.uusi()).thenReturn(5);
+        when(varasto.saldo(2)).thenReturn(25);
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "Kalia", 2));
+        kauppa.aloitaAsiointi();
+        kauppa.lisaaKoriin(2);
+        kauppa.tilimaksu("Pera", "0700123123");
+
+        verify(pankki).tilisiirto("Pera", 5, "0700123123", "33333-44455", 2);
+        when(viitegeneraattori.uusi()).thenReturn(89);
+        kauppa.aloitaAsiointi();
+        kauppa.lisaaKoriin(2);
+        kauppa.tilimaksu("Jori", "666");
+        verify(pankki).tilisiirto("Jori", 89, "666", "33333-44455", 2);
+        
+        when(viitegeneraattori.uusi()).thenReturn(90);
+        kauppa.aloitaAsiointi();
+        kauppa.lisaaKoriin(2);
+        kauppa.lisaaKoriin(2);
+        kauppa.tilimaksu("Jori", "666");
+        verify(pankki).tilisiirto("Jori", 90, "666", "33333-44455", 4);
+    }
+    
+    @Test
+    public void koristaPoisto() {
+        when(viitegeneraattori.uusi()).thenReturn(5);
+        when(varasto.saldo(2)).thenReturn(25);
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "Kalia", 2));
+        kauppa.aloitaAsiointi();
+        kauppa.lisaaKoriin(2);
+        kauppa.poistaKorista(2);
+        kauppa.tilimaksu("Pera", "0700123123");
+
+        verify(pankki).tilisiirto("Pera", 5, "0700123123", "33333-44455", 0);
     }
 }
