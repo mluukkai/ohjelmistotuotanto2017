@@ -41,7 +41,7 @@ public class KauppaTest {
         kauppa.maksa("1111");
 
         // tällä kertaa vaaditaan että ensimmäisen parametrin arvo on oikea
-        verify(mockPankki).maksa(eq("1111"), anyInt(), anyInt());
+        verify(mockPankki).maksa(eq("1112"), anyInt(), anyInt());
         // kokeile jälleen rikkoa koodi
     }
 
