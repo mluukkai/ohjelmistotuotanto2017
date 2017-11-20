@@ -777,7 +777,22 @@ public class Lopeta implements Komento {
 }
 ```
 
-Koska kaksi parametria käyttäjältä kysyvillä komennoilla on paljon yhteistä, luodaan niitä varten yliluokka:
+### command
+
+Eristämme siis jokaiseen erilliseen laskuoperaatioon liittyvä toiminnallisuuden omaksi oliokseen command-suunnittelumallin ideaa nodattaen, eli siten, että kaikki operaatiot toteuttavat yksinkertaisen rajapinnan, jolla on ainoastaan metodi public <code>void suorita()</code>
+
+Ohjelman edellisessä versiossa sovelsimme strategia-suunnittelumallia, missä erilliset laskuoperaatiot oli toteutettu omina olioinaan. Command-suunnittelumalli eroaa siinä, että olemme nyt kapseloineet koko komennon suorituksen, myös käyttäjän kanssa käytävän kommunikoinnin omiin olioihin. Komento-olioiden rajapinta on yksinkertainen, niillä on ainoastaan yksi metodi _suorita_. Strategia-suunnittelumallissa taas strategia-olioiden rajapinta vaihtelee tilanteen mukaan. 
+
+Esimerkissä komennot luotiin tehdasmetodin tarjoavan olion avulla, if:it piilotettiin tehtaan sisälle. Komento-olioiden suorita-metodi suoritettiin esimerkissä välittömästi, näin ei välttämättä ole, komentoja voitaisiin laittaa esim. jonoon ja suorittaa myöhemmin. Joskus komento-olioilla metodin _suorita_ lisäksi myös metodi _peru_, mikä kumoaa komennon suorituksen aiheuttaman toimenpiteen. Esim. editorien undo- ja redo-toiminnallisuus toteutetaan säilyttämällä komento-olioita jonossa. Toteutamme viikon 6 laskareissa _peru_-toiminnallisuuden laskimen komennoille.
+
+Lisää command-suunnittelimallista esim. seuraavissa ttp://www.oodesign.com/command-pattern.html
+http://sourcemaking.com/design_patterns/command
+
+### lisää komentoja
+
+Jatketaan laskimen komentojen toteuttamista.
+
+Koska kaksi parametria käyttäjältä kysyvillä komennoilla, kuten summa, tulo ja erotus on paljon yhteistä, luodaan niitä varten yliluokka:
 
 ``` java
 public abstract class KaksiparametrinenLaskuoperaatio implements Komento {
@@ -854,9 +869,66 @@ public class Laskin {
 
 Ohjelmasta on näinollen saatu laajennettavuudeltaan varsin joustava. Uusia operaatioita on helppo lisätä ja lisäys ei aiheuta muutoksia moneen kohtaan koodia. Laskin-luokallahan ei ole riippuvuuksia muualle kuin rajapintoihin IO ja Komento ja luokkaan Komentotehdas.
 
-Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). Luokka- ja sekvenssikaavion piirtäminen lienee paikallaan.
+### template method
 
-Yksinkertaisessa ohjelmassa ei tietenkään ole järkeä tehdä ohjelman rakenteesta näin joustavaa.
+Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). 
+
+Tmplate method -mallia sovelletaan tilanteissa, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
+
+Summa- ja Tulo-komentojen suoritus on oleellisesti samanlainen:
+
+<pre>
+Lue luku1 käyttäjältä
+Lue luku2 käyttäjältä
+Laske operaation tulos
+Tulosta operaation tulos
+</pre>
+
+Ainoastaan kolmas vaihe eli operaation tuloksen laskeminen eroaa summaa ja tuloa selvitettäessä.
+
+Template methodin hengessä asia hoidetaan tekemällä abstrakti yliluokka, joka sisältää metodin _suorita()_ joka toteuttaa koko komennon suorituslogiikan:
+
+```java
+public abstract class KaksiparametrinenLaskuoperaatio implements Komento {
+
+    @Override
+    public void suorita() {
+        io.print("luku 1: ");
+        int luku1 = io.nextInt();
+
+        io.print("luku 2: ");
+        int luku2 = io.nextInt();
+
+        io.print("vastaus: "+laske());
+    }
+
+    protected abstract int laske();
+}
+```
+
+
+Suorituslogiikan vaihtuva osa eli operaation laskun tulos on määritelty abstraktina metodina _laske()_ jota metodi _suorita()_ kutsuu.
+
+Konkreettiset toteutukset Summa ja Tulo ylikirjoittavat abstraktin metodin _laske()_, määrittelemällä miten laskenta tietyssä konkreettisessa, esim. laskettaessa summaa tapahtuu:
+
+```java
+public class Summa extends KaksiparametrinenLaskuoperaatio {
+
+    @Override
+    protected int laske() {
+        return luku1+luku2;
+    }
+}
+```
+
+Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että osan suorituksen konkreettinen toteutus on abstraktissa metodissa, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
+
+Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella
+Strategioita voidaan vaihtaa ajonaikana, template-metodissa olio toimii samalla tavalla koko elinaikansa  
+
+Lisää template method -suunnittelumallista seuraavissa
+http://www.oodesign.com/template-method-pattern.html
+http://www.netobjectives.com/PatternRepository/index.php?title=TheTemplateMethodPattern
 
 ## Koodissa olevan epätriviaalin copypasten poistaminen Strategy-patternin avulla, Java 8:a hyödyntävä versio
 
@@ -931,8 +1003,9 @@ Luokkaa käytetään seuraavasti:
     }
 ```
 
-Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Voimme korvata listalla olevien merkkijonojen tulostamisen kutsumalla listoilla (tarkemmin sanottuna rajapinnan [Interable](http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)-toteuttavilla) olevaa metodia <code>forEach</code> joka mahdollistaa listan alkioiden läpikäynnin "funktionaaliseen" tyyliin. Metodi saa parametrikseen "functional interfacen" (eli rajapinnan, joka määrittelee ainoastaan yhden toteutettavan metodin) toteuttavan olion. Tälläisiä ovat Java 8:ssa myös ns. lambda-lausekkeet (lambda expression), joka tarkoittaa käytännössä anonyymia mihinkään luokkaan liittymätöntä metodia.  Seuraavassa metodin palauttavien kirjan rivien tulostus forEachia ja lambdaa käyttäen:
+Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Osalle Java 8 on jo tuttu Ohjelmoinnin perusteiden ja jatkokurssin uudemmista versiosta.
 
+Voimme korvata listalla olevien merkkijonojen tulostamisen kutsumalla listoilla (tarkemmin sanottuna rajapinnan [Interable](http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)-toteuttavilla) olevaa metodia <code>forEach</code> joka mahdollistaa listan alkioiden läpikäynnin "funktionaaliseen" tyyliin. Metodi saa parametrikseen "functional interfacen" (eli rajapinnan, joka määrittelee ainoastaan yhden toteutettavan metodin) toteuttavan olion. Tälläisiä ovat Java 8:ssa myös ns. lambda-lausekkeet (lambda expression), joka tarkoittaa käytännössä anonyymia mihinkään luokkaan liittymätöntä metodia.  Seuraavassa metodin palauttavien kirjan rivien tulostus forEachia ja lambdaa käyttäen:
 
 ``` java
     public static void main(String[] args) {
@@ -1363,7 +1436,7 @@ public class ViikonLottonumerot {
     public static void main(String[] args) {
         ViikonLottonumerot lotto = new ViikonLottonumerot();
 
-        int[] omat = {1,4,7,8,33,24,12};
+        int[] omat = { 1, 4, 7, 8, 33, 24, 12 };
         System.out.println( "omat numerot: "+Arrays.toString(omat));
         System.out.println( "oikein: "+lotto.oikeita(omat));
         System.out.println( "arvottulottorivi oli: "+lotto );
@@ -2639,4 +2712,3 @@ rakentajan sisällä suoritettava toiminnallisuus vastaa seuraavaa:
 ```
 
 Eli jälleen rakentajan suorittavat komennot annetaan lambda-lausekkeen muodossa parametrina. Rakentajametodien suoritusjärjestys on sama kuin komentojen järjestys lambda-lausekeessa.
-
