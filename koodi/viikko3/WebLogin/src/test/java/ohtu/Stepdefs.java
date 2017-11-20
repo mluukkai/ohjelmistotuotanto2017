@@ -11,17 +11,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class Stepdefs {
+<<<<<<< HEAD
     
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     WebDriver driver = new ChromeDriver();
     String baseUrl = "http://localhost:4567";
     
     @Given("^login is selected$")
     public void login_selected() throws Throwable {
         driver.get(baseUrl);
+<<<<<<< HEAD
         WebElement element = driver.findElement(By.linkText("login"));
         element.click();
     }
     
+=======
+        WebElement element = driver.findElement(By.linkText("login"));       
+        element.click();          
+    } 
+
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
     public void username_and_password_are_given(String username, String password) throws Throwable {
         WebElement element = driver.findElement(By.name("username"));
@@ -29,9 +39,15 @@ public class Stepdefs {
         element = driver.findElement(By.name("password"));
         element.sendKeys(password);
         element = driver.findElement(By.name("login"));
+<<<<<<< HEAD
         element.submit();
     }
     
+=======
+        element.submit();  
+    }
+
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     @Then("^system will respond \"([^\"]*)\"$")
     public void system_will_respond(String pageContent) throws Throwable {
         assertTrue(driver.getPageSource().contains(pageContent));
@@ -41,17 +57,24 @@ public class Stepdefs {
     public void username_correct_and_password_are_given(String username, String password) throws Throwable {
         logInWith(username, password);
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     @When("^correct username \"([^\"]*)\" and incorrect password \"([^\"]*)\" are given$")
     public void username_and_incorrect_password_are_given(String username, String password) throws Throwable {
         logInWith(username, password);
     }
     
+<<<<<<< HEAD
     @When("^nonexisting username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
     public void nonexisting_username_and_password_are_given(String arg1, String arg2) throws Throwable {
         logInWith(arg1, arg2);
     }
     
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     @Then("^user is logged in$")
     public void user_is_logged_in() throws Throwable {
         pageHasContent("Ohtu Application main page");
@@ -61,6 +84,7 @@ public class Stepdefs {
     public void user_is_not_logged_in_and_error_message_is_given() throws Throwable {
         pageHasContent("invalid username or password");
         pageHasContent("Give your credentials to login");
+<<<<<<< HEAD
     }
     
     @After
@@ -73,6 +97,21 @@ public class Stepdefs {
         assertTrue(driver.getPageSource().contains(content));
     }
     
+=======
+    }     
+    
+    @After
+    public void tearDown(){
+        driver.quit();
+    }
+        
+    /* helper methods */
+ 
+    private void pageHasContent(String content) {
+        assertTrue(driver.getPageSource().contains(content));
+    }
+        
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     private void logInWith(String username, String password) {
         assertTrue(driver.getPageSource().contains("Give your credentials to login"));
         WebElement element = driver.findElement(By.name("username"));
@@ -80,6 +119,7 @@ public class Stepdefs {
         element = driver.findElement(By.name("password"));
         element.sendKeys(password);
         element = driver.findElement(By.name("login"));
+<<<<<<< HEAD
         element.submit();
     }
     
@@ -157,4 +197,8 @@ public class Stepdefs {
     public void user_is_not_logged_and_error_is_reported(String arg1) throws Throwable {
         pageHasContent(arg1);
     }
+=======
+        element.submit();  
+    } 
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
 }

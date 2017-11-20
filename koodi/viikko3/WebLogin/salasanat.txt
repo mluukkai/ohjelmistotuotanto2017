@@ -1,5 +1,6 @@
 pekka;akkep
 jukka;akkuj
+<<<<<<< HEAD
 asd;asd
 ddd;fff
 gunther;gunther3
@@ -7,3 +8,5 @@ liisa;salainen1
 rtyu;ertt
 pertti;salasana1
 keijo;salasana1
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f

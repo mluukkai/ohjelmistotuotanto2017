@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class Tester {
 
     public static void main(String[] args) {
+<<<<<<< HEAD
 
         System.setProperty("webdriver.chrome.driver", "chromedriver");
         WebDriver driver = new ChromeDriver();
@@ -32,12 +33,25 @@ public class Tester {
         element.click();
 
         sleep(1);
+=======
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("http://localhost:4567");
+        
+        sleep(2);
+        
+        WebElement element = driver.findElement(By.linkText("login"));
+        element.click();
+
+        sleep(2);
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
 
         element = driver.findElement(By.name("username"));
         element.sendKeys("pekka");
         element = driver.findElement(By.name("password"));
         element.sendKeys("akkep");
         element = driver.findElement(By.name("login"));
+<<<<<<< HEAD
 
         sleep(1);
         element.submit();
@@ -137,5 +151,20 @@ public class Tester {
             Thread.sleep(n * 1000);
         } catch (Exception e) {
         }
+=======
+        
+        sleep(2);
+        element.submit();
+
+        sleep(3);
+        
+        driver.quit();
+    }
+    
+    private static void sleep(int n){
+        try{
+            Thread.sleep(n*1000);
+        } catch(Exception e){}
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     }
 }

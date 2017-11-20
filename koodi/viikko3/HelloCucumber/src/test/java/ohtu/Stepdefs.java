@@ -28,10 +28,13 @@ public class Stepdefs {
         assertEquals(val, counter.value());
     }
   
+<<<<<<< HEAD
     @When("^it is reseted$")
     public void it_is_reseted() throws Throwable {
         counter.reset();
         assertEquals(0, counter.value());
     }
 
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
 }

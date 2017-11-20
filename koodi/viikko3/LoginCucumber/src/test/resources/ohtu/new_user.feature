@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Feature: A new user account can be created if a proper unused username and password are given
 
     Scenario: creation is successful with valid username and password
@@ -31,3 +32,6 @@ Feature: A new user account can be created if a proper unused username and passw
         And   command login is selected
         When  username "eero" and password "salainen1" is entered
         Then  system will respond with "logged in"
+=======
+Feature: A new user account can be created if a proper unused username and password are given
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f

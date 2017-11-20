@@ -4,6 +4,7 @@ Feature: User can log in with valid username/password-combination
        Given command login is selected
        When  username "pekka" and password "akkep" are entered
        Then  system will respond with "logged in"
+<<<<<<< HEAD
 
     Scenario: user can not login with incorrect password
         Given command login is selected
@@ -14,3 +15,5 @@ Feature: User can log in with valid username/password-combination
         Given command login is selected
         When  username "kalle" and password "akkep" are entered
         Then  system will respond with "wrong username or password"
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f

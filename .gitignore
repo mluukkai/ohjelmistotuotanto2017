@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 /koodi/viikko3/Kurssistatistiikka/build/
 /koodi/viikko3/HelloCucumber/.nb-gradle/
 /koodi/viikko3/HelloCucumber/build/
 /koodi/viikko3/LoginCucumber/.nb-gradle/
 /koodi/viikko3/LoginCucumber/build/
 /koodi/viikko3/WebLogin/.nb-gradle/
+=======
+**/.gradle
+**/.settings
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f

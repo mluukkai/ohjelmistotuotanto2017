@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Feature: As a user I want to be able to set the counter to value zero
 
   Scenario: Reseting after one increment
@@ -11,3 +12,6 @@ Feature: As a user I want to be able to set the counter to value zero
     When it is incremented by 5
     And it is reseted 
     Then the value should be 0
+=======
+Feature: As a user I want to be able to set the counter to value zero
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f

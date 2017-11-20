@@ -1,5 +1,6 @@
 package ohtu;
 
+<<<<<<< HEAD
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import java.io.IOException;
@@ -78,5 +79,10 @@ public class Main {
 
         System.out.println("kurssilla yhteensä palautuksia " + palautuksia + ", palautettuja tehtäviä " + tehtavia + " kpl");
 
+=======
+public class Main {
+
+    public static void main(String[] args) {
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
     }
 }

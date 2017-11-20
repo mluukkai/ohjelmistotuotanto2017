@@ -1,5 +1,6 @@
 package ohtu;
 
+<<<<<<< HEAD
 import java.util.List;
 
 public class Submission {
@@ -23,6 +24,10 @@ public class Submission {
         this.hours = hours;
     }
     
+=======
+public class Submission {
+    private int week;
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
 
     public void setWeek(int week) {
         this.week = week;
