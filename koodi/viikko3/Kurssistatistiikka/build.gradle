@@ -1,10 +1,36 @@
+<<<<<<< HEAD
+
+plugins {
+  id 'com.github.johnrengelman.shadow' version '2.0.1'
+}
+
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
 apply plugin: 'java'
 apply plugin: 'application'
 
 mainClassName = 'ohtu.Main'
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
 jar {
     manifest {
         attributes 'Main-Class': 'ohtu.Main'
     }
+<<<<<<< HEAD
 }
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
+    compile 'com.google.code.gson:gson:2.7'
+}
+=======
+}
+>>>>>>> 47567022126cd47d95da67fe0990f21063754a4f
