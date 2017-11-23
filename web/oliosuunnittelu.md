@@ -1,4 +1,4 @@
-Tämä materiaali on tarkoitettu itseopiskeltavaksi ennen viikon 5 ja 6 laskarien tekemistä. Materiaali täydentää [luennon 8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
+Tämä materiaali on tarkoitettu itseopiskeltavaksi ennen viikon 5, 6 ja 7 laskarien tekemistä. Materiaali täydentää [luennon 8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
 asiaa.
 
 ## koheesio
