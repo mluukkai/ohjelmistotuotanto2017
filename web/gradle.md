@@ -1,4 +1,4 @@
-Tehdään nyt gradle-projekti alusta asti itse. Tee tehtävienpalautusrepositoriosi sisälle hakemisto ja mene hakemistoon. Kokeile toimiiko koneessasi komento `gradle`. Jos ei, kopioi hakemistoon jostain aiemmasta gradle-projektistasi tiedosto _gradlew_ jos käytät Linux tai OSX) tai _gradlew.bat_ jos käytät Windowsia ja käytä jatkossa komentoa _./gradlew_ tai _gradlew_. Mikäli edelleen ei toimi, kopioi gradlew tiedoston lisäksi hakemisto gradle ja kokeile komentoja uudelleen.
+Tehdään nyt gradle-projekti alusta asti itse. Tee tehtävienpalautusrepositoriosi (älä käytä tähän tehtävään viikon 1 repositorioa) sisälle hakemisto ja mene hakemistoon. Kokeile toimiiko koneessasi komento `gradle`. Jos ei, kopioi hakemistoon jostain aiemmasta gradle-projektistasi tiedosto _gradlew_ jos käytät Linux tai OSX tai _gradlew.bat_ jos käytät Windowsia ja käytä jatkossa komentoa _./gradlew_ tai _gradlew_. Mikäli edelleen ei toimi, kopioi gradlew tiedoston lisäksi hakemisto gradle ja kokeile komentoja uudelleen.
 
 Aloita antamalla komento _gradle_:
 
@@ -165,6 +165,8 @@ alias atom='~/atom-1.15.0-amd64/atom'
 ```
 ja uudelleenkäynnistät terminaalin, voit käynnistää atomin missä vaan komennolla _atom_
 
+## Koodin lisääminen projektiin
+
 Gradle olettaa, että ohjelman koodi sijaitsee projektin juuren alla hakemistossa _src/main/java_. Luo hakemisto(t) ja tiedosto _src/main/java/Main.java_ ja sille esim. seuraava sisältö:
 
 <pre>
@@ -217,6 +219,8 @@ Description
      Assembles a jar archive containing the main classes.
 </pre>
 
+**HUOM** komento _gradle_ tulee suorittaa aina projektihakemiston juuressa, eli hakemistossa missä tiedosto _build.gradle_ sijaitsee.
+
 Määritellään taskia varten pääohjelman sijainti lisäämällä seuraava tiedostoon _build.gradle_:
 
 <pre>
@@ -229,12 +233,14 @@ jar {
 
 Palaa nyt projektihakemistoon ja suorita jar-tiedoston generoiva taski _jar_ (eli komento _gradle _jar). 
 
-Voit suorittaa syntyneen jar-tiedoston seuraavasti:
+Voit suorittaa syntyneen jar-tiedoston seuraavasti (huomaa että tiedoston nimi riippuu hakemistosi nimestä ja todennäköisesti ei ole _HelloGradle.jar_):
 
 <pre>
 $ java -jar build/libs/HelloGradle.jar
 Hello gradle!
 </pre>
+
+## application-plugin
 
 Aiemmissa tehtävissä olemme pystyneet suorittamaan koodin myös komennolla _gradle run_. Komento aiheuttaa kuitenkin nyt virheilmoituksen _Task 'run' not found in root project_.
 
@@ -243,6 +249,8 @@ Syynä tälle on se, että taski _run_ ei ole java-pluginin vaan [application-pl
 <pre>
 apply plugin: 'application'
 </pre>
+
+**HUOM** pluginien määrittelyn tulee tapahtua tiedoston alussa ennen muita määrittelyjä!
 
 Komento aiheuttaa virheen _No main class specified_.
 
@@ -326,6 +334,8 @@ run {
 
 Nyt komento _gradle run_ toimii. 
 
+## toinen luokka
+
 Lisätään vielä ohjelmalle luokka, jonka avulla on mahdollista laskea kertolaskuja. Sijoitetaan luokka pakkaukseen _ohtu_ eli tiedostoon _src/main/java/ohtu/Multiplier.java_
 
 ```java
@@ -361,6 +371,8 @@ public class Main {
     }
 }
 ```
+
+## testit
 
 Tehdään nyt luokalle JUnit-testi. Gradle olettaa, että JUnit-testit sijoitetaan hakemiston _src/test/java_ alle. Sijoitamme testin samaan pakkaukseen kuin testattavan luokan, eli tiedostoon _src/test/java/ohtu/MultiplierTest.java_
 
@@ -416,7 +428,7 @@ JUnit-kirjasto on siis ohjelmamme testien käännösaikainen _riippuvuus_.
 
 ## riippuvuudet
 
-Käytännössä riippuvuudet ovat jar-tiedostoja, jotka sisältävät riippuvuuksien, eli tässä tapauksessa JUnitin koodin. Gradlen samoin kuin Mavenin hyvä puoli on se, että ohjelmoijan ei tarvitse itse latailla riippuvuuksia vaan riittää kun projektin riippuvuudet määritellään tiedostossa _build.gradle_ ja gradle hoitaa sitten automaattisesti riippuvuuksien lataamisen jos niitä ei jo löydy koneelta.
+Käytännössä riippuvuudet ovat jar-tiedostoja, jotka sisältävät käytettävien apukirjastojen, eli tässä tapauksessa JUnitin koodin. Gradlen samoin kuin Mavenin hyvä puoli on se, että ohjelmoijan ei tarvitse itse latailla riippuvuuksia vaan riittää kun projektin riippuvuudet määritellään tiedostossa _build.gradle_ ja gradle hoitaa sitten automaattisesti riippuvuuksien lataamisen jos niitä ei jo löydy koneelta.
 
 Tarvittava määrittely on seuraava:
 
@@ -438,3 +450,4 @@ Kun suoritamme uudelleen komennon _gradle test_ kaikki toimii.
 
 Rikotaan vielä testi ja varmistetaan että junit huomaa virheen.
 
+JUnitisita on pitkän odotuksen jälkeen ilmestynyt JUnitin uusi versio [JUnit5](http://junit.org/junit5/) on ilmestynyt vuosien odotuksen jälkeen tämän vuoden syyskuussa. JUnit5:ssä on monia mielenkiintoisia uudistuksia, mutta valitettavasti työkalutuki on tässä vaiheessa vielä niin kesken, että joudumme kurssilla käyttämään vielä vanhaa JUnitia.
