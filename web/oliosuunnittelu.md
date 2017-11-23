@@ -1,5 +1,3 @@
-# KESKEN. ÄLÄ VIELÄ LUE
-
 Tämä materiaali on tarkoitettu itseopiskeltavaksi ennen viikon 5 ja 6 laskarien tekemistä. Materiaali täydentää [luennon 8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
 asiaa.
 
@@ -77,6 +75,8 @@ private void addPartToListFromResultSet(ResultSet rs) throws SQLException {
 Yksittäiset metodit ovat nyt kaikki samalla abstraktiotasolla toimivia ja hyvin nimettyjä.
 
 Nyt aikaansaatu lopputulos ei ole vielä välttämättä ideaali koko ohjelman kontekstissa. [Artikkelissa](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html) esimerkkiä jatketaankin eristäen tietokantaoperaatiot (joita myös muut ohjelman osat tarvitsevat) omaan luokkaansa.
+
+# ÄLÄ LUE VIELÄ TÄSTÄ ETEENPÄIN!
 
 ## Single responsibility -periaate eli koheesio luokkatasolla
 
