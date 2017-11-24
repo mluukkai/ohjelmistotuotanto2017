@@ -1,11 +1,15 @@
 
 ## Dependency injection Spring-sovelluskehyksessä
 
-Jatketaan [laskimen](rhttps://github.com/mluukkai/ohtu2017/blob/master/web/riippuvuuksien_injektointi.md) tarkastelua.
+Jatketaan viime viikolla aloittamaamme [laskimen](https://github.com/mluukkai/ohtu2017/blob/master/web/riippuvuuksien_injektointi.md) tarkastelua.
 
-Koodiesimerkit löytyvät maven-muotoisina projekteina kurssirepositoriosta (hakemistossa viikko2)
+Kertaa tarvittaessa nopeasti dokumentti https://github.com/mluukkai/ohtu2017/blob/master/web/riippuvuuksien_injektointi.md 
 
-Ennen käynnistämistä laskin pitää konfiguroida injektoimalla sille sopivat riippuvuudet:
+ALlaolevat koodiesimerkit löytyvät gradle-muotoisina projekteina kurssirepositoriosta (hakemistossa koodi/viikko2)
+
+Päädyimme siis tilanteeseen, missä Laskin-luokasta on erotettu konkreettinen riippuvuus syötteen lukemiseen ja tulostamiseen. Laskin tuntee ainoastaan _rajapinnan_ <code>IO</code> jonka kautta se hoitaa syötteen käsittelyn ja tulostamisen. 
+
+Ennen käynnistämistä refakotoroitu laskin pitää _konfiguroida_ injektoimalla sille sopivat riippuvuudet:
 
 ``` java
 // konfigurointivaihe
@@ -19,7 +23,9 @@ Esimerkkimme tapauksessa konfigurointi on helppoa. Isommissa ohjelmissa konfigur
 
 [Spring-sovelluskehys](http://www.springsource.org/) tarjoaa mahdollisuuden olioiden konfigurointiin erillisten konfiguraatiotiedostojen avulla.
 
-Spring saadaan käyttöön lisäämällä sopivat riippuvuudet gradle-projektin määrittelemään pom.xml-tiedostoon, katso tarkemmin projektista https://github.com/mluukkai/ohtu2017/tree/master/koodi/viikko2/RiippuvuuksienInjektointi2
+> Spring on laaja ja monikäyttöinen sovelluskehys, jota käytetään yleisesti mm. Javalla tapahtuvassa websovelluskehityksessä. Tutustumme kurssilla muutamiin springin ominaisuuksiin, lähinnä riippuvuuksien injektointiin. Springiin pääset halutessasi tutustumaan tarkemmin kurssilla [Web-palvelinohjelmointi Java](https://courses.helsinki.fi/fi/tkt21007)
+
+Spring saadaan käyttöön lisäämällä sopivat riippuvuudet gradle-projektin määrittelemään build.gradle-tiedostoon, katso tarkemmin projektista https://github.com/mluukkai/ohjelmistotuotanto2017/tree/master/koodi/viikko2/RiippuvuuksienInjektointi2
 
 Springissä konfigurointi tehdään xml-tiedostoon:
 
@@ -93,9 +99,11 @@ Jos haluttaisiin, että jokaisella <code>getBean</code>-pyynnöllä syntyy uusi 
 </bean>
 ```
 
+Tehtävä 12 kannattanee tehdä nyt. Voit palata seuraavaan osaan tehtävän jälkeen.
+
 ### Springin konfigurointi annotaatioilla
 
-Esimerkkiprojekti [https://github.com/mluukkai/ohtu2017/tree/master/viikko2/RiippuvuuksienInjektointi3](https://github.com/mluukkai/ohtu2017/tree/master/viikko2/RiippuvuuksienInjektointi3) esittelee vaihtoehtoisen tavan konfiguroida Springin hallinnoimia oliota. Konfiguraatiotiedosto on nyt muotoa
+Esimerkkiprojekti https://github.com/mluukkai/ohjelmistotuotanto2017/tree/master/koodi/viikko2/RiippuvuuksienInjektointi3 esittelee vaihtoehtoisen tavan konfiguroida Springin hallinnoimia oliota. Konfiguraatiotiedosto on nyt muotoa
 
 ``` java
 <?xml version="1.0" encoding="UTF-8"?>
