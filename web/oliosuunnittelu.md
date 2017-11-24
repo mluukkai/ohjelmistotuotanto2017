@@ -1,4 +1,9 @@
-# KESKEN. ÄLÄ VIELÄ LUE
+Tämä materiaali on tarkoitettu itseopiskeltavaksi ennen viikon 5, 6 ja 7 laskarien tekemistä. Materiaali täydentää [luennon 8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
+asiaa.
+
+## koheesio
+
+Koheesiolla tarkoitetaan sitä, kuinka pitkälle metodissa, luokassa tai komponentissa oleva ohjelmakoodi on keskittynyt tietyn toiminnallisuuden toteuttamiseen. Hyvänä asiana pidetään mahdollisimman korkeaa koheesion astetta. Koheesioon tulee siis pyrkiä kaikilla ohjelman tasoilla, metodeissa, luokissa, komponenteissa ja jopa muuttujissa (samaa muuttujaa ei saa uusiokäyttää eri asioiden tallentamiseen). 
 
 ## koheesio metoditasolla
 
@@ -71,6 +76,8 @@ Yksittäiset metodit ovat nyt kaikki samalla abstraktiotasolla toimivia ja hyvin
 
 Nyt aikaansaatu lopputulos ei ole vielä välttämättä ideaali koko ohjelman kontekstissa. [Artikkelissa](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html) esimerkkiä jatketaankin eristäen tietokantaoperaatiot (joita myös muut ohjelman osat tarvitsevat) omaan luokkaansa.
 
+# ÄLÄ LUE VIELÄ TÄSTÄ ETEENPÄIN!
+
 ## Single responsibility -periaate eli koheesio luokkatasolla
 
 Kurssin alussa tarkastelimme yksinkertaista laskinta:
@@ -106,7 +113,7 @@ public class Laskin {
 }
 ```
 
-Luokka rikkoo Single responsibility -periaatteen? Miksi? Periaate sanoo, että luokalla saa olla vain yksi vastuu eli syy muuttuua. Nyt luokalla on kuitenkin useita syitä muuttua:
+Luokka rikkoo Single responsibility -periaatteen. Miksi? Periaate sanoo, että luokalla saa olla vain yksi vastuu eli syy muuttuua. Nyt luokalla on kuitenkin useita syitä muuttua:
 
 * luokalle halutaan toteuttaa uusia laskutoimituksia
 * kommunikointi käyttäjän kanssa halutaan hoitaa jotenkin muuten kuin konsolin välityksellä
@@ -147,15 +154,15 @@ public class Laskin {
 }
 ```
 
-Nyt kommunikointitavan muutos ei edellytä luokkaan mitään muutoksia edellyttäen että uusikin kommunikoinitapa toteuttaa rajapinnan jonka kautta Laskin hoitaa kommunikoinnin.
+Nyt kommunikointitavan muutos ei edellytä luokkaan mitään muutoksia edellyttäen että uusikin kommunikoinitapa toteuttaa rajapinnan, jonka kautta Laskin hoitaa kommunikoinnin.
 
-Vaikka luokka Laskin siis toteuttaakin edelleen käyttäjänsä näkökulmasta samat asiat kuin aiemmin, ei se hoida kaikkea itse vaan delegoi osan vastuistaan muualle.
+Vaikka luokka Laskin siis toteuttaakin edelleen käyttäjänsä näkökulmasta samat asiat kuin aiemmin, ei se hoida kaikkea itse vaan _delegoi_ osan vastuistaan muualle.
 
 Luokka ei ole vielä kaikin osin laajennettavuuden kannalta optimaalinen. Palaamme asiaan hetken kuluttua.
 
 ## Favour composition over inheritance eli milloin ei kannata periä
 
-Meillä on käytössämme luokka joka mallintaa pankkitiliä:
+Meillä on käytössämme luokka, joka mallintaa pankkitiliä:
 
 ``` java
 public class Tili {
@@ -223,7 +230,7 @@ public class EuriborTili extends Tili {
 }
 ```
 
-Huomaamme, että EuriborTili rikkoo Single Responsibility -periaatetta, sillä luokka sisältää normaalin tiliin liittyvän toiminnan lisäksi koodia joka hakee tavaraa internetistä. Vastuut kannattaa selkeyttää ja korkoprosentin haku eriyttää omaan rajapinnan takana olevaan luokkaan:
+Huomaamme, että EuriborTili rikkoo Single Responsibility -periaatetta, sillä luokka sisältää normaalin tiliin liittyvän toiminnan lisäksi koodia, joka hakee tavaraa internetistä. Vastuut kannattaa selkeyttää ja korkoprosentin haku eriyttää omaan rajapinnan takana olevaan luokkaan:
 
 ``` java
 public interface EuriborLukija {
@@ -277,7 +284,7 @@ public class EuriborlukijaImpl implements EuriborLukija {
 
 EuriborTili-luokka alkaa olla nyt melko siisti, EuriborLukijassa olisi paljon parantemisen varaa, mm. sen ainoan metodin koheesio on huono, metodi tekee aivan liian montaa asiaa. Palaamme siihen kuitenkin myöhemmin.
 
-Seuraavaksi huomaamme että on tarvetta Määräaikaistilille joka on muuten samanlainen kuin Tili mutta määräaikaistililtä ei voi siirtää rahaa muualle ennen kuin se tehdään mahdolliseksi tietyn ajan kuluttua. Eli ei ongelmaa, perimme jälleen luokan Tili:
+Seuraavaksi huomaamme että on tarvetta _Määräaikaistilille_, joka on muuten samanlainen kuin Tili mutta määräaikaistililtä ei voi siirtää rahaa muualle ennen kuin se tehdään mahdolliseksi tietyn ajan kuluttua. Eli ei ongelmaa, perimme jälleen luokan Tili:
 
 ``` java
 public class MääräaikaisTili extends Tili {
@@ -305,7 +312,8 @@ public class MääräaikaisTili extends Tili {
 
 Luokka syntyi tuskattomasti.
 
-Seuraavaksi tulee idea Euribor-korkoa käyttävistä määräaikaistileistä. Miten nyt kannattaisi tehdä? Osa toiminnallisuudesta on luokassa Määräaikaistili ja osa luokassa Euribor-tili...
+Seuraavaksi tulee idea _Euribor-korkoa käyttävistä määräaikaistileistä_. 
+Miten nyt kannattaisi tehdä? Osa toiminnallisuudesta on luokassa Määräaikaistili ja osa luokassa Euribor-tili...
 
 Ehkä koronmaksun hoitaminen perinnän avulla ei ollutkaan paras ratkaisu, ja kannattaisi noudattaa "favor composition over inheritance"-periaatetta. Eli erotetaan koronmaksu omaksi luokakseen, tai rajapinnan toteuttaviksi luokiksi:
 
@@ -420,21 +428,41 @@ Tili euribor12 = Tili.luoEuriborTili("4422-3355", "Tero Huomo", 12 );
 Tili fyrkka = Tili.luoEuriborTili("7895-4571", "Esko Ukkonen", 10.75 );
 ```
 
-Käyttämämme periaate olioiden luomiseen staattisten metodien avulla on hyvin tunnettu suunnittelumalli *staattinen tehdas, engl. static factory*.
+### factory
 
-Huomaamme, että tehdasmetodien avulla voimme kapseloida luokan todellisen tyypin. Kasperin tilihän on määräaikaistili, se kuitenkin pyydetään Tili-luokassa sijaitsevalta factoryltä, olion oikea tyyppi on piilotettu tarkoituksella käyttäjältä. Määräaikaistilin käyttäjällä ei siis ole enää konkreettista riippuvuutta luokkaan Määräaikaistili.
+Käyttämämme periaate olioiden luomiseen staattisten metodien avulla on hyvin tunnettu suunnittelumalli *staattinen tehdasmetodi, engl. static factory method*.
+
+Tili-esimerkissä käytetty static factory method on yksinkertaisin erilaisista tehdas-suunnittelumallin varianteista. Periaatteena suunnittelumallissa on, se, että luokalle tehdään staattinen tehdasmetodi tai metodeja, jotka käyttävät konstruktoria ja luovat luokan ilmentymät. Konstruktorin suora käyttö usein estetään määrittelemällä konstruktori privateksi.
+
+Tehdasmetodin avulla voidaan piilottaa olion luomiseen liittyviä yksityiskohtia, esimerkissä Korko-rajapinnan toteuttavien olioiden luominen ja jopa olemassaolo oli tehdasmetodin avulla piilotettu tilin käyttäjältä. 
+
+Tehdasmetodin avulla voidaan myös piilottaa käyttäjältä luodun olion todellinen luokka, esimerkissä näin tehtiin määräaikaistilin suhteen.
+
+Tehdasmetodi siis auttaa _kapseloinnissa_, olion luomiseen liittyvät detaljit ja jopa olion todellinen luonne piilottuu olion käyttäjältä. Tämä taas mahdollistaa erittäin joustavan laajennettavuuden. 
+
+Staattinen tehdasmetodi ei ole testauksen kannalta erityisen hyvä ratkaisu, esimerkissämme olisi vaikea luoda tili, jolle annetaan Korko-rajapinnan toteuttama mock-olio. Nyt se tosin onnistuu koska konstruktoria ei ole täysin piilotettu.
+
+Lisätietoa factory-suunnittelumallista esim. seuraavissa https://sourcemaking.com/design_patterns/factory_methodh ttp://www.oodesign.com/factory-method-pattern.html
+
+Tehdasmetodien avulla voimme siis kapseloida luokan todellisen tyypin. Kasperin tilihän on määräaikaistili, se kuitenkin pyydetään Tili-luokassa sijaitsevalta factoryltä, olion oikea tyyppi on piilotettu tarkoituksella käyttäjältä. Määräaikaistilin käyttäjällä ei siis ole enää konkreettista riippuvuutta luokkaan Määräaikaistili.
 
 Teimme myös metodin jonka avulla tilin korkoa voi muuttaa. Kasperin tasakorkoinen määräaikaistili on helppo muuttaa lennossa kolmen kuukauden Euribor-tiliksi:
 
-``` java
+```java
 määräaikais.vaihdaKorkoa(new EuriborKorko(3));
 ```
 
 Eli luopumalla perinnästä selkeytyy oliorakenne huomattavasti ja saavutetaan ajonaikaista joustavuuttaa (koronlaskutapa) joka perintää käyttämällä ei onnistu.
 
-Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia eli englanniksi strategy*.
+### strategy
 
-## Tilin luominen
+Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia eli englanniksi strategy*. 
+
+Strategyn avulla voidaan hoitaa tilanne, jossa eri olioiden käyttäytyminen on muuten sama mutta tietyissä kohdissa on käytössä eri "algoritmi". Esimerkissämme tämä algoritmi oli korkoprosentin määritys. Sama tilanne voidaan hoitaa usein myös perinnän avulla käyttämättä erillisiä olioita, strategy kuitenkin mahdollistaa huomattavasti dynaamisemman ratkaisun, sillä strategia-olioa voi vaihtaa ajoaikana. Strategyn käyttö ilmentää hienosti "favour composition over inheritance"-periaatetta
+
+Lisätietoa strategia-suunnittelumallista seuraavissa http://www.oodesign.com/strategy-pattern.html ja https://sourcemaking.com/design_patterns/strategy
+
+### Tilin luominen
 
 Loimme äsken luokalle _Tili_ staattiset apumetodit tilien luomista varten. Voisi kuitenkin olla järkevämpää siirtää vastuu tilien luomisesta erillisen luokan, _pankin_ vastuulle. Pankki voi helposti hallinnoida myös tilinumeroiden generointia:
 
@@ -474,7 +502,9 @@ Tili euriborTili = spankki.euribortili("Kasper Hirvikoski", 6);
 Tili maaraaikaistili = spankki.maaraikaistili("Arto Hellas", 0.15);
 ``` 
 
-eli tlilin luojan ei enää tarvitse huolehtia tilinumeroiden generoinnista.
+eli tililin luojan ei enää tarvitse huolehtia tilinumeroiden generoinnista.
+
+Nyt tehdasmetodista on siis tehty luokan oman staattisen metdoin sijaan toiseen luokkaan sijoitettu oliometodi.
 
 ## Laskin ilman iffejä
 
@@ -533,7 +563,7 @@ public class Laskin {
 
 Ratkaisu ei ole kaikin puolin tyydyttävä. Entä jos haluamme muitakin operaatioita kuin summan, tulon ja erotuksen? if-hässäkkä tulee kasvamaan.
 
-Päätämme siirtyä strategian käyttöön, eli hoidetaan laskuoperaatio omassa luokassaan. Rajapinnan sijasta käytämme tällä kertaa abstraktia luokkaa:
+Päätämme siirtyä _strategia-suunnittelumallin_ käyttöön, eli hoidetaan laskuoperaatio omassa luokassaan. Rajapinnan sijasta käytämme tällä kertaa abstraktia luokkaa:
 
 ``` java
 public abstract class Operaatio {
@@ -747,7 +777,22 @@ public class Lopeta implements Komento {
 }
 ```
 
-Koska kaksi parametria käyttäjältä kysyvillä komennoilla on paljon yhteistä, luodaan niitä varten yliluokka:
+### command
+
+Eristämme siis jokaiseen erilliseen laskuoperaatioon liittyvä toiminnallisuuden omaksi oliokseen command-suunnittelumallin ideaa nodattaen, eli siten, että kaikki operaatiot toteuttavat yksinkertaisen rajapinnan, jolla on ainoastaan metodi public <code>void suorita()</code>
+
+Ohjelman edellisessä versiossa sovelsimme strategia-suunnittelumallia, missä erilliset laskuoperaatiot oli toteutettu omina olioinaan. Command-suunnittelumalli eroaa siinä, että olemme nyt kapseloineet koko komennon suorituksen, myös käyttäjän kanssa käytävän kommunikoinnin omiin olioihin. Komento-olioiden rajapinta on yksinkertainen, niillä on ainoastaan yksi metodi _suorita_. Strategia-suunnittelumallissa taas strategia-olioiden rajapinta vaihtelee tilanteen mukaan. 
+
+Esimerkissä komennot luotiin tehdasmetodin tarjoavan olion avulla, if:it piilotettiin tehtaan sisälle. Komento-olioiden suorita-metodi suoritettiin esimerkissä välittömästi, näin ei välttämättä ole, komentoja voitaisiin laittaa esim. jonoon ja suorittaa myöhemmin. Joskus komento-olioilla metodin _suorita_ lisäksi myös metodi _peru_, mikä kumoaa komennon suorituksen aiheuttaman toimenpiteen. Esim. editorien undo- ja redo-toiminnallisuus toteutetaan säilyttämällä komento-olioita jonossa. Toteutamme viikon 6 laskareissa _peru_-toiminnallisuuden laskimen komennoille.
+
+Lisää command-suunnittelimallista esim. seuraavissa ttp://www.oodesign.com/command-pattern.html
+http://sourcemaking.com/design_patterns/command
+
+### lisää komentoja
+
+Jatketaan laskimen komentojen toteuttamista.
+
+Koska kaksi parametria käyttäjältä kysyvillä komennoilla, kuten summa, tulo ja erotus on paljon yhteistä, luodaan niitä varten yliluokka:
 
 ``` java
 public abstract class KaksiparametrinenLaskuoperaatio implements Komento {
@@ -824,9 +869,66 @@ public class Laskin {
 
 Ohjelmasta on näinollen saatu laajennettavuudeltaan varsin joustava. Uusia operaatioita on helppo lisätä ja lisäys ei aiheuta muutoksia moneen kohtaan koodia. Laskin-luokallahan ei ole riippuvuuksia muualle kuin rajapintoihin IO ja Komento ja luokkaan Komentotehdas.
 
-Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). Luokka- ja sekvenssikaavion piirtäminen lienee paikallaan.
+### template method
 
-Yksinkertaisessa ohjelmassa ei tietenkään ole järkeä tehdä ohjelman rakenteesta näin joustavaa.
+Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). 
+
+Tmplate method -mallia sovelletaan tilanteissa, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
+
+Summa- ja Tulo-komentojen suoritus on oleellisesti samanlainen:
+
+<pre>
+Lue luku1 käyttäjältä
+Lue luku2 käyttäjältä
+Laske operaation tulos
+Tulosta operaation tulos
+</pre>
+
+Ainoastaan kolmas vaihe eli operaation tuloksen laskeminen eroaa summaa ja tuloa selvitettäessä.
+
+Template methodin hengessä asia hoidetaan tekemällä abstrakti yliluokka, joka sisältää metodin _suorita()_ joka toteuttaa koko komennon suorituslogiikan:
+
+```java
+public abstract class KaksiparametrinenLaskuoperaatio implements Komento {
+
+    @Override
+    public void suorita() {
+        io.print("luku 1: ");
+        int luku1 = io.nextInt();
+
+        io.print("luku 2: ");
+        int luku2 = io.nextInt();
+
+        io.print("vastaus: "+laske());
+    }
+
+    protected abstract int laske();
+}
+```
+
+
+Suorituslogiikan vaihtuva osa eli operaation laskun tulos on määritelty abstraktina metodina _laske()_ jota metodi _suorita()_ kutsuu.
+
+Konkreettiset toteutukset Summa ja Tulo ylikirjoittavat abstraktin metodin _laske()_, määrittelemällä miten laskenta tietyssä konkreettisessa, esim. laskettaessa summaa tapahtuu:
+
+```java
+public class Summa extends KaksiparametrinenLaskuoperaatio {
+
+    @Override
+    protected int laske() {
+        return luku1+luku2;
+    }
+}
+```
+
+Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että osan suorituksen konkreettinen toteutus on abstraktissa metodissa, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
+
+Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella
+Strategioita voidaan vaihtaa ajonaikana, template-metodissa olio toimii samalla tavalla koko elinaikansa  
+
+Lisää template method -suunnittelumallista seuraavissa
+http://www.oodesign.com/template-method-pattern.html
+http://www.netobjectives.com/PatternRepository/index.php?title=TheTemplateMethodPattern
 
 ## Koodissa olevan epätriviaalin copypasten poistaminen Strategy-patternin avulla, Java 8:a hyödyntävä versio
 
@@ -901,8 +1003,9 @@ Luokkaa käytetään seuraavasti:
     }
 ```
 
-Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Voimme korvata listalla olevien merkkijonojen tulostamisen kutsumalla listoilla (tarkemmin sanottuna rajapinnan [Interable](http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)-toteuttavilla) olevaa metodia <code>forEach</code> joka mahdollistaa listan alkioiden läpikäynnin "funktionaaliseen" tyyliin. Metodi saa parametrikseen "functional interfacen" (eli rajapinnan, joka määrittelee ainoastaan yhden toteutettavan metodin) toteuttavan olion. Tälläisiä ovat Java 8:ssa myös ns. lambda-lausekkeet (lambda expression), joka tarkoittaa käytännössä anonyymia mihinkään luokkaan liittymätöntä metodia.  Seuraavassa metodin palauttavien kirjan rivien tulostus forEachia ja lambdaa käyttäen:
+Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Osalle Java 8 on jo tuttu Ohjelmoinnin perusteiden ja jatkokurssin uudemmista versiosta.
 
+Voimme korvata listalla olevien merkkijonojen tulostamisen kutsumalla listoilla (tarkemmin sanottuna rajapinnan [Interable](http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)-toteuttavilla) olevaa metodia <code>forEach</code> joka mahdollistaa listan alkioiden läpikäynnin "funktionaaliseen" tyyliin. Metodi saa parametrikseen "functional interfacen" (eli rajapinnan, joka määrittelee ainoastaan yhden toteutettavan metodin) toteuttavan olion. Tälläisiä ovat Java 8:ssa myös ns. lambda-lausekkeet (lambda expression), joka tarkoittaa käytännössä anonyymia mihinkään luokkaan liittymätöntä metodia.  Seuraavassa metodin palauttavien kirjan rivien tulostus forEachia ja lambdaa käyttäen:
 
 ``` java
     public static void main(String[] args) {
@@ -1333,7 +1436,7 @@ public class ViikonLottonumerot {
     public static void main(String[] args) {
         ViikonLottonumerot lotto = new ViikonLottonumerot();
 
-        int[] omat = {1,4,7,8,33,24,12};
+        int[] omat = { 1, 4, 7, 8, 33, 24, 12 };
         System.out.println( "omat numerot: "+Arrays.toString(omat));
         System.out.println( "oikein: "+lotto.oikeita(omat));
         System.out.println( "arvottulottorivi oli: "+lotto );
@@ -2609,4 +2712,3 @@ rakentajan sisällä suoritettava toiminnallisuus vastaa seuraavaa:
 ```
 
 Eli jälleen rakentajan suorittavat komennot annetaan lambda-lausekkeen muodossa parametrina. Rakentajametodien suoritusjärjestys on sama kuin komentojen järjestys lambda-lausekeessa.
-

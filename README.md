@@ -11,6 +11,8 @@
 [5](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento5.pdf?raw=true)
 [6](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento6.pdf?raw=true)
 [7](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento7.pdf?raw=true)
+[8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
+
 
 ## Laskarit
 
@@ -18,3 +20,4 @@
 [2](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/2.md)
 [3](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/3.md)
 [4](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/4.md)
+[5](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/5.md)
