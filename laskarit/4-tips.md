@@ -4,6 +4,16 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 
 ## 1. git: tägit
 
+
+macOS mukana tuleva git versio (1.7.12.4 Apple Git-37) ei tue suoraan gitk komentoa. 
+Ainakin macOS High Sierrassa oli tämä ongelma. Jos brew on asennettu niin saat ongelman korjattua ajamalla
+```
+brew update
+brew install git
+```
+Jos tällä ei korjaannu, niin lue asiasta lisää [täältä](https://stackoverflow.com/questions/17582685/install-gitk-on-mac)
+
+
 ## 2. Yksikkötestaus ja riippuvuudet: Mockito, osa 1
 
 ## 3. Yksikkötestaus ja riippuvuudet: Mockito, osa 2
