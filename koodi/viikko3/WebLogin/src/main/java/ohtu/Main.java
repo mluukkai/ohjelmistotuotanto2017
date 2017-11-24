@@ -18,72 +18,7 @@ public class Main {
     static AuthenticationService authService;
     
     public static void main(String[] args) {
-        port(findOutPort());
-        
-        
-              
-        get("/", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/index.html");
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());             
-         
-        get("/ohtu", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/ohtu.html");
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());            
-        
-        get("/welcome", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/welcome.html");
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());            
-        
-        get("/login", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/login.html");
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());     
-        
-        get("/user", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/user.html");
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());            
-        
-        post("/login", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            String username = request.queryParams("username");
-            String password = request.queryParams("password");
-            
-            if ( !authenticationService().logIn(username, password) ) {
-                model.put("error", "invalid username or password");
-                model.put("template", "templates/login.html");
-                return new ModelAndView(model, LAYOUT);
-            }
-                
-           response.redirect("/ohtu");
-           return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());
-        
-        post("/user", (request, response) -> {
-            HashMap<String, String> model = new HashMap<>();
-            String username = request.queryParams("username");
-            String password = request.queryParams("password");
-            String passwordConf = request.queryParams("passwordConfirmation");
-            
-            CreationStatus status = authenticationService().createUser(username, password, passwordConf);
-            
-            if ( !status.isOk()) {
-                model.put("error", String.join(",  ", status.errors()));
-                model.put("template", "templates/user.html");
-                return new ModelAndView(model, LAYOUT);
-            }
-                
-           response.redirect("/welcome");
-           return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());           
+        System.out.println(System.getProperty("os.name"));
     }
 
     public static void setDao(UserDao dao) {
