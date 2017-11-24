@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 
-=======
 # Ohjelmistotuotanto syksy 2017, Tietojenkäsittelytieteen laitos, Helsingin yliopisto
->>>>>>> d26f89e8c7060bf3beed5628a610424369241c46
 
 <https://github.com/mluukkai/ohjelmistotuotanto2017/wiki/Ohjelmistotuotanto-syksy-2017>
 
