@@ -120,4 +120,78 @@ public class KauppaTest {
         verify(pankki).tilisiirto(eq("pete"), eq(50), eq("1773"), eq("33333-44455"), eq(8));
     }
 
+    @Test
+    public void testi5() { //forgive mig
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+
+        when(viite.uusi()).thenReturn(50);
+
+        Varasto varasto = mock(Varasto.class);
+
+        when(varasto.saldo(3)).thenReturn(5);
+        when(varasto.haeTuote(3)).thenReturn(new Tuote(3, "banaani", 8));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(3);
+        k.tilimaksu("pete", "1773");
+
+        verify(pankki, times(1)).tilisiirto(eq("pete"), eq(50), eq("1773"), eq("33333-44455"), eq(8));
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(3);
+        k.tilimaksu("ketku", "17");
+
+        verify(pankki, times(1)).tilisiirto(eq("ketku"), eq(50), eq("17"), eq("33333-44455"), eq(8));
+    }
+
+    @Test
+    public void uusiViitenumero() { //forgive mig
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+
+        when(viite.uusi()).thenReturn(50);
+
+        Varasto varasto = mock(Varasto.class);
+
+        when(varasto.saldo(3)).thenReturn(5);
+        when(varasto.haeTuote(3)).thenReturn(new Tuote(3, "banaani", 8));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(3);
+        k.tilimaksu("pete", "1773");
+
+        verify(viite, times(1)).uusi();       
+        k.tilimaksu("pete", "1773");       
+        verify(viite, times(2)).uusi();
+
+    }
+
+    @Test
+    public void poistaKorista() { //forgive mig
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+
+        when(viite.uusi()).thenReturn(50);
+
+        Varasto varasto = mock(Varasto.class);
+
+        when(varasto.saldo(3)).thenReturn(5);
+        when(varasto.haeTuote(3)).thenReturn(new Tuote(3, "banaani", 8));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(3);
+        k.poistaKorista(3);
+        k.tilimaksu("pete", "1773");
+
+        verify(pankki).tilisiirto(eq("pete"), eq(50), eq("1773"), eq("33333-44455"), eq(0));
+
+    }
+
 }
