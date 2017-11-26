@@ -103,7 +103,7 @@ Tehtävä 12 kannattanee tehdä nyt. Voit palata seuraavaan osaan tehtävän jä
 
 ### Springin konfigurointi annotaatioilla
 
-Esimerkkiprojekti https://github.com/mluukkai/ohjelmistotuotanto2017/tree/master/viikko2/RiippuvuuksienInjektointi3 esittelee vaihtoehtoisen tavan konfiguroida Springin hallinnoimia oliota. Konfiguraatiotiedosto on nyt muotoa
+Esimerkkiprojekti https://github.com/mluukkai/ohjelmistotuotanto2017/tree/master/koodi/viikko2/RiippuvuuksienInjektointi3 esittelee vaihtoehtoisen tavan konfiguroida Springin hallinnoimia oliota. Konfiguraatiotiedosto on nyt muotoa
 
 ``` java
 <?xml version="1.0" encoding="UTF-8"?>
