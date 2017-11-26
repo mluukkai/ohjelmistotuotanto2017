@@ -22,6 +22,8 @@ Jos tällä ei korjaannu, niin lue asiasta lisää [täältä](https://stackover
 
 ## 5. Yksikkötestaus ja riippuvuudet: Mockito, osa 4
 
+Jos et saa testitiedostoja tehtyä NetBeansissa tee ne komentorivillä. Luo testitiedostoja varten sopiva hakemistorakenne ja tee tyhjä tiedosto testien kansioon. Muista komennot: `mkdir, tree, touch`. Lataa projekti uudelleen NetBeanssissa, jotta se näkee uudet kansiot ja tiedostot.
+
 ## 6. Retrospektiivitekniikat
 
 ## 7. git: monta etärepositorioa
