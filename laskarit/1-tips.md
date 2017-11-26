@@ -9,6 +9,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 3. Gitin alkeet
 
 * Laskarien tehtäväs 3, siis gitignore tehtävä, kannattaa huomata et tarkotus on ignoraa vaan hakemisto build, eikä kaikkea mikä alkaa build
+* Huomaa, että `.gitignore` on piilotiedosto (piste nimen eka merkki). Komennolla `ls -l` sitä ei näe, mutta `ls -la` näyttää myös piilotiedostot
 
 ### 4. Tiedostojen lisääminen githubin
 
@@ -31,6 +32,7 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 ### 11. TravisCI, osa 3
 
 ### 12. Codecov
+* opin, että käytännössä näköjään tosi hidas odotella testituloksia näkyviksi
 
 ### 13. Parempi testauskattavuus
 
@@ -75,11 +77,16 @@ Joskus ohtun laskareissa tulee vastaan kaikkea sekalaista ongelmaa joiden kanssa
 13:36 < opiskelija> eli java/main/Main.java?
 13:36 <@mluukkai> juuri niin
 ```
+* Täytyy myös muistaa muokata build.gradlessa ohtu.ohtuvarasto.Main --> main.Main
+
 
 ### 14. riippuvuuksien injektointi osa 1
 
 ### 15. riippuvuuksien injektointi osa 2: NHL-tilastot
 
 ### 16. NHLStatistics-ohjelman yksikkötestaus
+
+* jos haluaa testeissä verrata pelaajien pelkkien nimien sijaan pelaajaolioita, täytyy Player-luokalle tehdä equals-metodi
+* topScorers palauttaa yhden pelaajan enemmän kuin annettu parametri
 
 ### 17. Forkaa repositorio https://github.com/mluukkai/ohjelmistotuotanto2017
