@@ -159,3 +159,59 @@ public class Tester {
 ```
 
 HtmlUnitDriver:in hyvä puoli on nopeus. Voit käyttää sitä myös testeissä. Testien debuggaaminen muuttuu hankalammaksi, mutta testit toimivat nopeasti. Testejä debugatessa best practice lienee sivun html-koodin tulostaminen konsoliin.
+
+## Tapa 5: Lataa Google Chrome koneellesi
+
+Suorita ensin Tapa 1. Sen jälkeen vasta tämän ohjeen mukaan.
+
+Jos saat seuraavanlaisen virheilmoituksen kun suoritat komennon gradle browse (toimii myös, jos virhe valittaa Chromen versiota): 
+
+Starting ChromeDriver 2.33.506092 (733a02544d189eeb751fe0d7ddca79a0ee28cce4) on port 17195
+Only local connections are allowed.
+Exception in thread "main" org.openqa.selenium.WebDriverException: unknown error: cannot find Chrome binary
+  (Driver info: chromedriver=2.33.506092 (733a02544d189eeb751fe0d7ddca79a0ee28cce4),platform=Linux 4.4.0-98-generic x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 605 milliseconds
+Build info: version: '2.41.0', revision: '3192d8a6c4449dc285928ba024779344f5423c58', time: '2014-03-27 11:29:39'
+
+Lataa koneellesi Google Chrome vaikkapa tämän ohjeen avulla: 
+
+
+
+Or if you want the actual Google Chrome, open a terminal and follow:
+
+1. cd /tmp
+2. wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+3. sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+The 32-bit version is no longer available.
+
+If you encounter any errors simply use
+
+4. sudo apt-get -f install
+
+To run it from terminal use google-chrome or hit the super key and search Google or Chrome
+
+Jos saat siis vaikkapa tämäntyylisen virheilmoituksen, kun suoritat komennon 3. (sudo dpkg -i google-chrome-stable_current_amd64.deb);
+
+Selecting previously unselected package google-chrome-stable.
+(Luetaan tietokantaa... 227676 files and directories currently installed.)
+Preparing to unpack google-chrome-stable_current_amd64.deb ...
+Unpacking google-chrome-stable (62.0.3202.94-1) ...
+dpkg: dependency problems prevent configuration of google-chrome-stable:
+ google-chrome-stable riippuu paketista libappindicator1; kuitenkin:
+  Pakettia libappindicator1 ei ole asennettu.
+
+dpkg: error processing package google-chrome-stable (--install):
+ riippuvuusongelmia - jätetään asetukset säätämättä
+Processing triggers for gnome-menus (3.13.3-6ubuntu3.1) ...
+Processing triggers for desktop-file-utils (0.22-1ubuntu5) ...
+Processing triggers for bamfdaemon (0.5.3~bzr0+16.04.20160701-0ubuntu1) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for mime-support (3.59ubuntu1) ...
+Processing triggers for man-db (2.7.5-1) ...
+Käsittelyssä tapahtui liian monta virhettä:
+ google-chrome-stable
+ 
+ niin suorita komento 4. (sudo apt-get -f install) ja suorita uudelleen komento 3.
+ 
+ Nyt suorittamalla komennon  gradle browse, ongelma on korjaantunut.
