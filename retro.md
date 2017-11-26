@@ -1,4 +1,4 @@
-#Retrospektiivi
+# Retrospektiivi
 
 Retrospektiivi on ketterässä ohjelmistotuotannossa aina jokaisen iteraation jälkeen pidettävä palaveri, jossa viimeisintä iteraatiota voidaan käydä läpi, ennen kaikkea jotta tiimin yhteistyö olisi jatkossa jollain tasolla parempaa. On useita erilaisia tapoja käydä tämä palaveri: esimerkkejä retrospektiivitekniikoista ovat 'Start, Stop, Continue, More of, Less of wheel' ja 'Glad, Sad, Mad'.
 
