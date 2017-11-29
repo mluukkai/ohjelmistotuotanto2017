@@ -76,7 +76,7 @@ Yksittäiset metodit ovat nyt kaikki samalla abstraktiotasolla toimivia ja hyvin
 
 Nyt aikaansaatu lopputulos ei ole vielä välttämättä ideaali koko ohjelman kontekstissa. [Artikkelissa](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html) esimerkkiä jatketaankin eristäen tietokantaoperaatiot (joita myös muut ohjelman osat tarvitsevat) omaan luokkaansa.
 
-# ÄLÄ LUE VIELÄ TÄSTÄ ETEENPÄIN!
+# ÄLÄ LUE VIELÄ TÄSTÄ ETEENPÄIN. viikon 5 laskareissa ei allaolevia vielä tarvita
 
 ## Single responsibility -periaate eli koheesio luokkatasolla
 
@@ -157,6 +157,65 @@ public class Laskin {
 Nyt kommunikointitavan muutos ei edellytä luokkaan mitään muutoksia edellyttäen että uusikin kommunikoinitapa toteuttaa rajapinnan, jonka kautta Laskin hoitaa kommunikoinnin.
 
 Vaikka luokka Laskin siis toteuttaakin edelleen käyttäjänsä näkökulmasta samat asiat kuin aiemmin, ei se hoida kaikkea itse vaan _delegoi_ osan vastuistaan muualle.
+
+Kommunikointirajapinta voidaan toteuttaa esim. seuraavasti:
+
+```java
+public class KonsoliIO implements IO {
+    private Scanner lukija;
+
+    public KonsoliIO() {
+        lukija = new Scanner(System.in);
+    }
+
+    public int nextInt() {
+        return lukija.nextInt();
+    }
+
+    public void print(String m) {
+        System.out.println(m);
+    }
+}
+```
+
+Ja laskin konfiguroidaan injektoimalla _IO_-rajapinnan toteuttava luokka konstruktorin parametrina:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Laskin laskin = new Laskin( new KonsoliIO() );
+        laskin.suorita();
+    }
+}
+```
+
+Testausta varten voidaan toteuttaa _stub_ eli valekomponentti, jonka avulla testi voi hallita "käyttäjän" syötteitä ja lukea ohjelman tulostukset:
+
+```java
+public class IOStub implements IO {
+
+    int[] inputs;
+    int mones;
+    ArrayList<String> outputs;
+
+    public IOStub(int... inputs) {
+        this.inputs = inputs;
+        this.outputs = new ArrayList<String>();
+    }
+
+    public int nextInt() {
+        return inputs[mones++];
+    }
+
+    public void print(String m) {
+        outputs.add(m);
+    }
+}
+```
+
+Parannellun laskimen rakenne luokkakaaviona
+
+![](http://yuml.me/3dac91a6.png)
 
 Luokka ei ole vielä kaikin osin laajennettavuuden kannalta optimaalinen. Palaamme asiaan hetken kuluttua.
 
