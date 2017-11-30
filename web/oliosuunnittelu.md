@@ -2246,7 +2246,7 @@ public class MVCSovellus {
 
 Rakenne luokkakaaviona:
 
-![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8.png)
 
 Model eli Sovelluslogiikka on nyt täysin tietämätön siitä kuka sitä kutsuu. Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
 
