@@ -737,7 +737,7 @@ Jatkamme muokkaamista seuraavassa luvussa
 
 ## laskin ja komento-olio
 
-Muutamme Operaatio-luokan olemusta, päädymme jo oikeastaan Strategy-suunnittelumallin lähisukulaisen Command-suunnittelumallin puolelle ja annammekin sille nimen Komento ja teemmie siitä rajapinnan sillä siirrämme erillisten komento-olioiden luomisen Komentotehdas-luokalle:
+Muutamme Operaatio-luokan olemusta, päädymme jo oikeastaan Strategy-suunnittelumallin lähisukulaisen _Command_-suunnittelumallin puolelle ja annammekin sille nimen Komento ja teemmie siitä rajapinnan sillä siirrämme erillisten komento-olioiden luomisen Komentotehdas-luokalle:
 
 ``` java
 public interface Komento {
@@ -847,6 +847,12 @@ public class Lopeta implements Komento {
 
 }
 ```
+
+Ohjelman rakenne tässä vaiheessa
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-5.png)
+
+
 
 ### command
 
