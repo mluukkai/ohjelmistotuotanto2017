@@ -215,8 +215,7 @@ public class IOStub implements IO {
 
 Parannellun laskimen rakenne luokkakaaviona
 
-![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.png)
-
+<img src="https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.pngurl" alt="alt text"height="200">
 
 Luokka ei ole vielä kaikin osin laajennettavuuden kannalta optimaalinen. Palaamme asiaan hetken kuluttua.
 
