@@ -2271,7 +2271,7 @@ public class MVCSovellus2 {
 
 Tilanne näyttää _oliokaaviona_ seuraavalta:
 
-![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-olio.png)
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8a.png)
 
 Eli sovelluslogiikkaolioita on ainoastaan yksi, mutta _näyttö-kontrolleri_-pareja on kolme.
 
