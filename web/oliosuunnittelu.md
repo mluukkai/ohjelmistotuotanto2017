@@ -728,7 +728,7 @@ public class Laskin {
 Hienona puolena laskimessa on nyt se, että voimme lisätä operaatioita ja Laskinta ei tarvitse muuttaa millään tavalla!
 
 Rakenne näyttää seuraavalta
-![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-3.png)
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-4.png)
 
 
 Entä jos haluamme laskimelle muunkinlaisia kuin 2 parametria ottavia operaatioita, esim. neliöjuuren?
