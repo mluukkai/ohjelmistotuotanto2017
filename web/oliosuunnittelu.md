@@ -1670,8 +1670,6 @@ public class ViikonLottonumerotTest {
 }
 ```
 
-# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
-
 ## Dekoroitu pino
 
 Olemme toteuttaneet asiakkaalle pinon:
@@ -1937,7 +1935,7 @@ Rakentaja-suunnittelumalli sopii tilanteeseemme erittäin hyvin. Pyrkimyksenämm
     Pino pino = rakenna.prepaid(10).kryptattu().pino();
 ```
 
-Rakentajan metodinimet ja rakentajan muuttujan nimi on valittu mielenkiinoisella tavalla. On pyritty mahdollisimman luonnollista kieltä muistuttavaan ilmaisuun pinon luonnissa. Kyseessä onkin oikeastaan DSL (domain specific language) pinojen luomiseen!
+Rakentajan metodinimet ja rakentajan muuttujan nimi on valittu mielenkiinoisella tavalla. On pyritty mahdollisimman luonnollista kieltä muistuttavaan ilmaisuun pinon luonnissa. Kyseessä onkin oikeastaan [DSL](https://martinfowler.com/bliki/FluentInterface.html) (domain specific language) pinojen luomiseen!
 
 Luodaan ensin rakentajasta perusversio, joka soveltuu vasta normaalien pinojen luomiseen:
 
@@ -1957,7 +1955,7 @@ public class Pinorakentaja {
         pino = new Pino();
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 }
@@ -1987,7 +1985,7 @@ public class Pinorakentaja {
         // ????
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 }
@@ -2003,7 +2001,7 @@ public class Pinorakentaja {
         pino = new Pino();
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 
@@ -2024,7 +2022,7 @@ public class Pinorakentaja {
         pino = new Pino();
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 
@@ -2065,7 +2063,10 @@ Pino pino1 = rakenna.pino();  // luo normaalin pinon
 Pino pino2 = rakenna.kryptattu().loggaava(loki).prepaid.pino();  // luo sen mitä odottaa saattaa!
 ```
 
-Rakentajan toteutus perustuu tekniikkaan nimeltään [method chaining](http://en.wikipedia.org/wiki/Method_chaining) eli metodien ketjutukseen. Metodit jotka ovat muuten luonteeltaan void:eja onkin laitettu palauttamaan rakentajaolio. Tämä taas mahdollistaa metodin kutsumisen toisen metodin palauttamalle rakentajalle, ja näin metodikutsuja voidaan ketjuttaa peräkkäin mielivaltainen määrä. Metodiketjutuksen motivaationa on yleensä saada olion rajapinta käytettävyydeltään mahdollisimman luonnollisen kielen kaltaiseksi DSL:ksi.
+Rakentajan toteutus perustuu tekniikkaan nimeltään [method chaining](http://en.wikipedia.org/wiki/Method_chaining) eli metodien ketjutukseen. Metodit jotka ovat muuten luonteeltaan void:eja onkin laitettu palauttamaan rakentajaolio. Tämä taas mahdollistaa metodin kutsumisen toisen metodin palauttamalle rakentajalle, ja näin metodikutsuja voidaan ketjuttaa peräkkäin mielivaltainen määrä. Metodiketjutuksen motivaationa on yleensä saada olion rajapinta käytettävyydeltään mahdollisimman luonnollisen kielen kaltaiseksi DSL:ksi. 
+
+Tällä tekniikalla toteutetuista rajapinnoista käytetään myös nimitystä
+[fluent interface](ttps://martinfowler.com/bliki/FluentInterface.html).
 
 ## adapteri
 
@@ -2134,6 +2135,8 @@ public static void main(String[] args) {
         }
 }
 ```
+
+# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
 
 ## MVC eli Model View Controller
 
