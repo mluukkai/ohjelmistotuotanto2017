@@ -2391,9 +2391,7 @@ _update_-metodia kutsuttaessa (jota siis sovelluslogiikka kutsuu kun sen tila mu
 
 Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
 
-# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
-
-## Pelaajastatistiikkaa Java 8:lla
+## Pelaajastatistiikkaa Java 8:lla 
 
 Muokataan hieman jo tutuksi käynyttä NHL-pelaajastatistiikka-ohjelmaa, tällä kertaa [viikon 1 laskareiden](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/1.md#15-riippuvuuksien-injektointi-osa-2-nhl-tilastot) versiota.
 
@@ -2476,7 +2474,7 @@ Staattisen importtauksen jälkeen voimme siis tulostaa ruudulle helpommin, kirjo
 
 Luokan <code>Statistics</code> metodit toimivat hyvin samaan tyyliin, ne käyvät läpi pelaajien listan ja palauttavat joko yksittäisen tai useampia pelaajia metodin määrittelemästä kriteeristä riippuen. Jos lisäisimme luokalle samalla periaatteella muita hakutoiminnallisuuksia (esim. kaikkien yli 10 maalia tehneiden pelaajien lista), joutuisimme "copypasteamaan" pelaajat läpikäyvää koodia vielä useampiin metodeihin.
 
-Parempi ratkaisu olisikin ohjelmoida luokalle geneerinen etsintämetodi, joka saa hakukriteerin parametrina. [Edelliseltä viikolta tutut](https://github.com/mluukkai/ohtu2017/blob/master/web/luento8.md#koodissa-olevan-epätriviaalin-copypasten-poistaminen-strategy-patternin-avulla-java-8a-hyödyntävä-versio) Java 8:n oliovirrat eli streamit tarjoavat sopivan välineen erilaisten hakujen toteuttamiseen. Streamien [API-kuvaus](http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html).
+Parempi ratkaisu olisikin ohjelmoida luokalle geneerinen etsintämetodi, joka saa hakukriteerin parametrina. Java 8:n oliovirrat eli [streamit](http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html) tarjoavat sopivan välineen erilaisten hakujen toteuttamiseen. 
 
 Muutetaan ensin metodi <code>List&#60;Player> team(String teamName)</code> käyttämään stream-apia:
 
@@ -2513,7 +2511,7 @@ Yleistetyn metodin avulla on nyt helppo tehdä mielivaltaisen monimutkaisia haku
     }
 ```
 
-Java 8:ssa rajapinnoilla voi olla oletustoteutuksen omaavia metodeja. Rajapinnalla <code>Predicate</code> löytyykin mukavasti valmiiksi toteutetut metodit <code>and</code>, <code>or</code> ja <code>negate</code>. Näiden avulla on helppo muodostaa yksittäisten esim. lambda-lausekkeen avulla muodostettujen ehtojen avulla mielivaltaisen monimutkaisia ehtoja. Seuraavassa edellisen esimerkin tuloksen tuottava haku de Morganin lakia hyväksikäyttäen muodostettuna:
+Java 8:ssa rajapinnoilla voi olla oletustoteutuksen omaavia metodeja. Rajapinnalla <code>Predicate</code> löytyykin mukavasti valmiiksi toteutetut metodit <code>and</code>, <code>or</code> ja <code>negate</code>. Näiden avulla on helppo muodostaa yksittäisten esim. lambda-lausekkeen avulla muodostettujen ehtojen avulla mielivaltaisen monimutkaisia ehtoja. Seuraavassa edellisen esimerkin tuloksen tuottava haku [de Morganin lakia](https://fi.wikipedia.org/wiki/De_Morganin_lait) hyväksikäyttäen muodostettuna:
 
 ``` java
     Statistics stats = new Statistics();
@@ -2525,7 +2523,7 @@ Java 8:ssa rajapinnoilla voi olla oletustoteutuksen omaavia metodeja. Rajapinnal
     stats.find(cond.negate()).forEach(out::println);
 ```
 
-Eli ensin muodostettiin ehto "korkeintaan 20 maalia _tai_ syöttöä tehneet pelaajat." Tästä otettiin sitten negaatio jolloin tuloksena on de morganin sääntöjen nojalla ehto "vähintään 21 maalia _ja_ 21 syöttöä tehneet pelaajat".
+Eli ensin muodostettiin ehto "korkeintaan 20 maalia _tai_ syöttöä tehneet pelaajat." Tästä otettiin sitten negaatio jolloin tuloksena on de Morganin sääntöjen nojalla ehto "vähintään 21 maalia _ja_ 21 syöttöä tehneet pelaajat".
 
 ### järjestäminen
 
@@ -2558,7 +2556,7 @@ Metodista on helppo tehtä Java 8:a hyödyntävä versio:
     }
 ```
 
-Eli otamme jälleen pelaajista muodostuvat streamin. Stream muutetaan luonnollisen järjestyksen (eli luokan <code>Player</code> metodin <code>compareTo</code> määrittelemän järjestyksen) mukaisesti järjestetyksi streamiksi metodilla <code>sorted</code>. Medodilla <code>limit</code> rajoitetaan streamin koko haluttuun määrään pelaajia, ja näistä muodostettu lista palautetaan.
+Eli otamme jälleen pelaajista muodostuvat streamin. Stream muutetaan luonnollisen järjestyksen (eli luokan <code>Player</code> metodin <code>compareTo</code> määrittelemän järjestyksen) mukaisesti järjestetyksi streamiksi metodilla <code>sorted</code>. Metodilla <code>limit</code> rajoitetaan streamin koko haluttuun määrään pelaajia, ja näistä muodostettu lista palautetaan.
 
 Jotta myös muunlaiset järjestykset olisivat mahdollisia, generalisoidaan metodi muotoon, joka ottaa parametriksi halutun järjestyksen määrittelevän <code>Comparator&#60;Player></code>-rajapinnan määrittelevän olion:
 
@@ -2592,7 +2590,7 @@ Comparator-olioiden luominen on hieman ikävää, varsinkin jos joutuisimme luom
 
 Koodi sisältää ikävästi copy-pastea.
 
-Voimme siistiä koodia Comparatoreja rakentavan tehdasmetodin avulla. Periaatteena on, että tehtaalle annetaan viitteenä metodi, jonka perusteella <code>Player</code>-olioiden vertailu tehdään. Esim. pisteiden perusteella tapahtuvan vertailun tekevä vertailija luotaisiin seuraavasti:
+Voimme siistiä koodia Comparatoreja rakentavan _tehdasmetodin_ avulla. Periaatteena on, että tehtaalle annetaan viitteenä getterimetodi, jonka perusteella <code>Player</code>-olioiden vertailu tehdään. Esim. pisteiden perusteella tapahtuvan vertailun tekevä vertailija luotaisiin seuraavasti:
 
 ``` java
     Comparator<Player> byPoints = by(Player::getPoints);
@@ -2706,7 +2704,9 @@ Metodi <code>reduce</code> saa parametrikseen lambda-lausekkeen joka saa ensimm�
 
 ## Builder revisited
 
-Luennolla 9 toteutettiin monimutkaisen olion luomista helpottava [rakentaja](https://github.com/mluukkai/ohtu2016/blob/master/web/luento9.md#pinorakentaja). Rakentajan toteutuksessa kiinnitettiin erityisesti huomiota rajapinnan sujuvuuteen:
+Muutama metri ylempänä tässä materiaalissa toteutettiin monimutkaisen pinon luomista helpottava [rakentaja](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/web/oliosuunnittelu.md#pinorakentaja). 
+
+Rakentajan toteutuksessa kiinnitettiin erityisesti huomiota rajapinnan käytön luontevaan muotoon:
 
 ``` java
 Pinorakentaja rakenna = new Pinorakentaja();
@@ -2742,7 +2742,7 @@ Metodin toteutus näyttää seuraavalta:
 ``` java
 public class Player implements Comparable<Player> {
 
-    String name;
+    private String name;
     private String team;
     private int goals;
     private int assists;
@@ -2760,7 +2760,7 @@ public class Player implements Comparable<Player> {
 }
 ```
 
-Metodin parametrina on siis <code>Consumer&#60;Player></code>-tyyppinen olio. Käytännössä kyseessä on rajapinta, joka määrittelee että sen toteuttajalla on metodi <code>void accept(Player p)</code>. Rajapinnan toteuttava olio on helppo luoda lambda-lausekkeen avulla. Käytännössä siis rakentajametodi toimii siten, että se luo ensin pelaaja-olion ja kutsuu sen jälkeen metodin parametrina olevaa lambda-lausekkeen avulla määriteltyä koodilohkoa antaen luodun pelaaja-olion parametriksi. Näin koodilohkoon määritellyt setterikutsut suoritetaan luodulle pelaajaoliolle. Rakentajametodi palauttaa lopuksi luodun ja määritellyllä tavalla "konfiguroidun" olion kutsujalle.
+Rakentajametodin _create_ parametrina on siis <code>Consumer&#60;Player></code>-tyyppinen olio. Käytännössä kyseessä on rajapinta, joka määrittelee että sen toteuttajalla on metodi <code>void accept(Player p)</code>. Rajapinnan toteuttava olio on helppo luoda lambda-lausekkeen avulla. Käytännössä siis rakentajametodi toimii siten, että se luo ensin pelaaja-olion ja kutsuu sen jälkeen metodin parametrina olevaa lambda-lausekkeen avulla määriteltyä koodilohkoa antaen luodun pelaaja-olion parametriksi. Näin koodilohkoon määritellyt setterikutsut suoritetaan luodulle pelaajaoliolle. Rakentajametodi palauttaa lopuksi luodun ja määritellyllä tavalla "konfiguroidun" olion kutsujalle.
 
 Eli käytännössä jos rakentajaa kutsutaan seuraavasti:
 
