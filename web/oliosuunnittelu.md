@@ -2138,15 +2138,15 @@ public static void main(String[] args) {
 ## MVC eli Model View Controller
 
 
-Model View Controller (MVC) -mallilla tarkoitetaan periaatetta, jonka avulla _model_ eli liiketoimintalogiikan sisältävät oliot (esim. domain-oliot) eristetään käyttöliittymän näytöt (view) generoivasta koodista. Toimintaa koordinoivana komponenttina ovat _kontrollerit_, jotka reagoivat käyttäjän syötteisiin kutsumalla tarvittavia model-oliota ja pyytämällä viewejä päivittämään näkymät operaatioiden edellyttämällä tavalla.
+Model View Controller (MVC) -mallilla tarkoitetaan periaatetta, jonka avulla _model_ eli sovelluslogiikan sisältävät oliot eristetään käyttöliittymän näytöt (view) generoivasta koodista. Toimintaa koordinoivana komponenttina ovat _kontrollerit_, jotka reagoivat käyttäjän syötteisiin kutsumalla tarvittavia model-oliota ja pyytämällä viewejä päivittämään näkymät operaatioiden edellyttämällä tavalla.
 
-Periaatteena on, että model, eli liiketoimintalogiikka ei tunne kontrollereja eikä näyttöjä ja samaan modelissa olevaan dataan voikin olla useita näyttöjä.
+Periaatteena on, että model, eli sovellustalogiikka ei tunne kontrollereja eikä näyttöjä ja samaan modelissa olevaan dataan voikin olla useita näyttöjä.
 
-Esim. Javalla tehdyissä käyttöliittymäsovelluksissa näppäimistön käsittelystä vastaavat _tapahtumankuuntelijat_ ovat MVC-mallia sovellettaessa kontrollereja. 
+Esim. Javalla tehdyissä käyttöliittymäsovelluksissa painikkeiden klikkailuun reagoimisesta vastaavat _tapahtumankuuntelijat_ ovat MVC-mallia sovellettaessa kontrollereja. 
 
 Koska kontrollerit hoitavat käyttöliittymäspesifejä tehtäviä kuten painikkeisiin reagoimista, niiden ajatellaan esim. kerrosarkkitehtuurista puhuttaessa liittyvän käyttöliittymäkerrokseen. 
 
-Teemme nyt erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen käyttäen Javan Swing-käyttöliittymäkirjastoa. Jos suoritut Ohjelmoinnin jatkokurssin keväällä 2017 ei Swing ole välttämättä tuttu sillä kurssi käytti käyttöliittymäkirjastona Java FX:ää. Perusteriaatteet ovat kuitenkin samat. 
+Teemme nyt erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen käyttäen Javan Swing-käyttöliittymäkirjastoa. Jos suoritut Ohjelmoinnin jatkokurssin keväällä 2017 ei Swing ole välttämättä tuttu sillä kurssi käytti käyttöliittymäkirjastona Java FX:ää. Periaatteet ovat kuitenkin samat. 
 
 Sovelluslogiikka on seuraavassa:
 
@@ -2163,7 +2163,7 @@ public class Sovelluslogiikka {
         return luvut;
     }
 
-    public void arvoLuku(){
+    public void arvoLuku() {
         int luku = 1+new Random().nextInt(20);
         luvut.add(luku);
     }
@@ -2205,7 +2205,7 @@ public class Naytto extends JFrame {
 }
 ```
 
-Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakäsittelijää, joka on MVC:n hengen mukaisesti laitettu kontrolleriin:
+Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakuuntelijaa joka on MVC:n hengen mukaisesti laitettu kontrolleriin:
 
 
 ``` java
@@ -2227,9 +2227,9 @@ public class Kontrolleri implements ActionListener {
 }
 ```
 
-Kontrolleri tuntee näytön ja sovelluslogiikan eli _modelin_. Alussa kontrolleri asettaa itsensä tapahtumakuuntelijaksi näytössä olevalle painikkeelle.
+Kontrolleri tuntee _näytön_ ja sovelluslogiikan eli _modelin_. Konstruktorissa kontrolleri asettaa itsensä tapahtumakuuntelijaksi näytössä olevalle painikkeelle.
 
-Kun nappia painetaan, pyytää kontrolleri modelia arpomaan uuden luvun. Sen jälkeen kontrolleri hakee luvut modelilta ja asettaa ne tekstimuoisena näytölle käyttäen näytön update-metodia.
+Kun nappia painetaan, eli metodin _actionPerformed_ suorituksen yhteydessä kontrolleri pyytää modelia arpomaan uuden luvun. Sen jälkeen kontrolleri hakee luvut modelilta ja asettaa ne tekstimuoisena näytölle käyttäen näytön update-metodia.
 
 Itse sovellus ainoastaan luo oliot ja antaa näytön sekä modelin kontrollerille:
 
@@ -2248,7 +2248,9 @@ Rakenne luokkakaaviona:
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8.png)
 
-Model eli Sovelluslogiikka on nyt täysin tietämätön siitä kuka sitä kutsuu. Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
+Model eli sovelluslogiikka on nyt täysin tietämätön siitä kuka sen kutsuu. 
+
+Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
 
 ``` java
 public class MVCSovellus2 {
@@ -2266,6 +2268,12 @@ public class MVCSovellus2 {
     }
 }
 ```
+
+Tilanne näyttää _oliokaaviona_ seuraavalta:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-olio.png)
+
+Eli sovelluslogiikkaolioita on ainoastaan yksi, mutta _näyttö-kontrolleri_-pareja on kolme.
 
 Sovelluksessamme on pieni ongelma. Haluaisimme kaikkien näyttöjen olevan koko ajan ajantasalla. Nyt ainoastaan se näyttö minkä nappia painetaan päivittyy ajantasaiseksi.
 
@@ -2304,6 +2312,8 @@ Nyt kaikki menee siististi, sovelluslogiikasta ei enää ole konkreettista riipp
 Jos käyttöliittymäolio haluaa tarkkailla jonkun sovellusolion tilaa, se toteuttaa Observer-rajapinnan ja rekisteröi rajapintansa tarkkailtavalle sovellusoliolle kutsumalla sovelluslogiikan metodia _addObserver_. Näin sovellusolio saa tietoonsa kaikki sitä tarkkailevat rajapinnat.
 
 Kun joku muuttaa sovellusolion tilaa, kutsuu se sovellusolion metodia _notifyObservers_, joka taas kutsuu kaikkien tarkkailijoiden _update_- metodeja, joiden parametrina voidaan tarvittaessa välittää muutostieto.
+
+Toiminnan logiikka sekvenssikaaviona:
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-11.png)
 
