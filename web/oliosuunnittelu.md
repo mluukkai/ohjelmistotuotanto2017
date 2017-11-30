@@ -2277,11 +2277,11 @@ Eli sovelluslogiikkaolioita on ainoastaan yksi, mutta _näyttö-kontrolleri_-par
 
 Sovelluksessamme on pieni ongelma. Haluaisimme kaikkien näyttöjen olevan koko ajan ajantasalla. Nyt ainoastaan se näyttö minkä nappia painetaan päivittyy ajantasaiseksi.
 
-## Käyttöliittymän päivittäminen modelin muuttuessa
+## Käyttöliittymän päivittäminen sovelluslogiikan tilan muuttuessa
 
-Kerrosarkkitehtuurissa ja MVC-mallin mukaisissa sovelluksissa törmätään usein nyt kohdatun kaltaiseen tilanteeseen, jossa sovelluslogiikan on kerrottava käyttöliittymäkerrokselle (joka siis sisältää näkymät ja kontrollerit) jonkin sovellusolion tilan muutoksesta, jotta käyttöliittymä näyttäisi koko ajan ajantasaista tietoa.
+Kerrosarkkitehtuurissa ja MVC-mallin mukaisissa sovelluksissa törmätään usein nyt kohdatun kaltaiseen tilanteeseen, missä sovelluslogiikan on kerrottava käyttöliittymäkerrokselle (joka siis sisältää näkymät ja kontrollerit) jonkin sovellusolion tilan muutoksesta, jotta käyttöliittymä pystyisi koko ajan näyttämään ajantasaista tietoa.
 
-Meidän tapauksessamme siis käyttöliittymäkerroksessa on kolme eri näyttöä, ja niitä vastaavat kontrollerit, ja sovelluslogiikan muuttunut tila pitäisi saada päivitettyä yhtä aikaa jokaiseen näyttöön. 
+Meidän tapauksessamme siis käyttöliittymäkerroksessa on kolme eri näyttöä, ja niitä vastaavat kontrollerit, ja sovelluslogiikan muuttunut tila pitäisi saada päivitettyä yhtä aikaa jokaiseen näkymään. Nyt päivitys tapahtuu ainoastaan siihen näkymään, joka saa aikaan uuden luvun arpomisen.
 
 Suoraviivainen toteutus saa aikaa ikävän riippuvuussyklin sovelluslogiikasta käyttöliittymään. 
 
@@ -2289,7 +2289,7 @@ Kuvitellaan, että sovelluslogiikka ilmoittaa muuttuneesta tilasta kutsumalla jo
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
 
-Eli käyttöliittymäkerros on riippuvainen sovelluslogiikasta mutta myös sovelluslogiikka on riippuvainen käyttöliittymästä, sillä se kutsuu käyttöliittymän metodia update. Sykliset riippuvuudet  eivät ole ollenkaan toivottavia.
+Eli käyttöliittymäkerros on riippuvainen sovelluslogiikasta mutta myös sovelluslogiikka on riippuvainen käyttöliittymästä, sillä sen on  kutsuttava käyttöliittymän metodia update sovelluslogiikan päivityksen tapahtuessa. Sykliset riippuvuudet  eivät ole ollenkaan toivottavia.
 
 ## Observer
 
@@ -2311,7 +2311,7 @@ Nyt kaikki menee siististi, sovelluslogiikasta ei enää ole konkreettista riipp
 
 Jos käyttöliittymäolio haluaa tarkkailla jonkun sovellusolion tilaa, se toteuttaa Observer-rajapinnan ja rekisteröi rajapintansa tarkkailtavalle sovellusoliolle kutsumalla sovelluslogiikan metodia _addObserver_. Näin sovellusolio saa tietoonsa kaikki sitä tarkkailevat rajapinnat.
 
-Kun joku muuttaa sovellusolion tilaa, kutsuu se sovellusolion metodia _notifyObservers_, joka taas kutsuu kaikkien tarkkailijoiden _update_- metodeja, joiden parametrina voidaan tarvittaessa välittää muutostieto.
+Kun joku muuttaa sovellusolion tilaa, kutsuu se sovellusolion metodia _notifyObservers_, joka taas kutsuu kaikkien tarkkailijoiden metodeja _update_. 
 
 Toiminnan logiikka sekvenssikaaviona:
 
@@ -2321,7 +2321,7 @@ Toiminnan logiikka sekvenssikaaviona:
 
 Muutetaan nyt sovelluksemme käyttämään observer-suunnittelumallia.
 
-Sovelluslogiikka tuntee joukon tarkkailijoita:
+Laajennetaan sovelluslogiikkaa siten, että tuntee joukon tarkkailijoita:
 
 ``` java
 public class Sovelluslogiikka {
@@ -2355,9 +2355,11 @@ public class Sovelluslogiikka {
 }
 ```
 
-Tarkkailijat siis  voivat rekisteröidä itsensä sovellukselle metodilla _addObserver_. Kun sovelluksen metodia _notifyObservers_ kutsutaan, kutsuu Sovelluslogiikka jokaisen tarkkailijan update-metodia.
+Tarkkailijat voivat rekisteröidä itsensä sovellukselle metodilla _addObserver_. Kun sovelluksen metodia _notifyObservers_ kutsutaan, kutsuu sovelluslogiikka jokaisen rekisteröityneen tarkkailijan _update_-metodia.
 
 Sovelluslogiikalla ei nyt ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
+
+Kontrolleri muuttuu seuraavasti:
 
 ``` java
 public class Kontrolleri implements ActionListener, Observer {
@@ -2385,12 +2387,11 @@ public class Kontrolleri implements ActionListener, Observer {
 
 Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan _Observer_. Kun nappia painetaan, eli _actionPerformed_-metodissa, kontrolleri pyytää modelia arpomaan uuden luvun ja samalla pyytää modelia ilmoittamaan tarkkailijoille muuttuneen arvon.
 
-_update_-metodia kutsuttaessa (jota siis Sovelluslogiikka kutsuu) suorittaa kontrolleri näytön päivityksen.
+_update_-metodia kutsuttaessa (jota siis sovelluslogiikka kutsuu kun sen tila muuttuu) hakee kontrolleri sovelluslogiikan uuden tilan ja suorittaa hallinnoimansa näytön päivityksen.
 
 Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
 
 # TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
-
 
 ## Pelaajastatistiikkaa Java 8:lla
 
