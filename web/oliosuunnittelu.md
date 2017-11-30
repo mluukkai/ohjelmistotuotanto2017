@@ -215,7 +215,7 @@ public class IOStub implements IO {
 
 Parannellun laskimen rakenne luokkakaaviona
 
-<img src="https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.pngurl" alt="alt text"height="200">
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.png)
 
 Luokka ei ole vielä kaikin osin laajennettavuuden kannalta optimaalinen. Palaamme asiaan hetken kuluttua.
 
@@ -446,6 +446,10 @@ Erilaisia tilejä luodaan nyt seuraavasti:
 Tili normaali = new Tili("1234-1234", "Kasper Hirvikoski", new Tasakorko(4));
 Tili euribor12 = new Tili("4422-3355", "Tero Huomo", new EuriborKorko(12));
 ```
+
+Ohjelman rakenne on nyt seuraava
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.png)
+
 
 Muutetaan luokkaa vielä siten, että tilejä saadaan luotua ilman konstruktoria:
 
