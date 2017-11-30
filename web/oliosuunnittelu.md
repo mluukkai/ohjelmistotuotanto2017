@@ -2271,17 +2271,17 @@ Sovelluksessamme on pieni ongelma. Haluaisimme kaikkien näyttöjen olevan koko 
 
 ## Käyttöliittymän päivittäminen modelin muuttuessa
 
-Kerrosarkkitehtuurissa ja MVC-mallin mukaisissa sovelluksissa törmätään usein nyt kohdatun kaltaiseen tilanteeseen, jossa sovelluslogiikan on kerrottava käyttöliittymälle jonkin sovellusolion tilan muutoksesta, jotta käyttöliittymä näyttäisi koko ajan ajantasaista tietoa.
+Kerrosarkkitehtuurissa ja MVC-mallin mukaisissa sovelluksissa törmätään usein nyt kohdatun kaltaiseen tilanteeseen, jossa sovelluslogiikan on kerrottava käyttöliittymäkerrokselle (joka siis sisältää näkymät ja kontrollerit) jonkin sovellusolion tilan muutoksesta, jotta käyttöliittymä näyttäisi koko ajan ajantasaista tietoa.
 
-Meidän tapauksessamme siis käyttöliittymäkerroksessa on kolme eri näyttöä, ja sovelluslogiikan muuttunut tila pitäisi saada päivitettyä yhtä aikaa jokaiseen näyttöön. Käyttöliittymäkerroksen siis muodostavat tapahtumien käsittelystä huolehtivat kontrollerit ja näkymät.
+Meidän tapauksessamme siis käyttöliittymäkerroksessa on kolme eri näyttöä, ja niitä vastaavat kontrollerit, ja sovelluslogiikan muuttunut tila pitäisi saada päivitettyä yhtä aikaa jokaiseen näyttöön. 
 
-Suoraviivainen toteutus saa aikaa ikävän riippuvuus sovelluslogiikasta käyttöliittymään. 
+Suoraviivainen toteutus saa aikaa ikävän riippuvuussyklin sovelluslogiikasta käyttöliittymään. 
 
-Kuvitellaan, että sovelluslogiikka ilmoittaa muuttuneesta tilasta kutsumalla jonkin käyttöliittymän luokan toteuttamaa metodia update(). Parametrina voidaan esim. kertoa muuttunut tieto. Tilanne näyttää seuraavalta:
+Kuvitellaan, että sovelluslogiikka ilmoittaa muuttuneesta tilasta kutsumalla jonkin käyttöliittymän luokan toteuttamaa metodia _update_. Parametrina voidaan esim. kertoa muuttunut tieto. Tilanne näyttää UML:n _pakkauskaaviona_ seuraavalta:
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
 
-Eli käyttöliittymäkerros on riippuvainen sovelluslogiikasta mutta myös sovelluslogiikka on riippuvainen käyttöliittymästä, sillä se kutsuu käyttöliittymän metodia update. Sykliset riippuvuudet ohjelmassa eivät ole ollenkaan toivottavia.
+Eli käyttöliittymäkerros on riippuvainen sovelluslogiikasta mutta myös sovelluslogiikka on riippuvainen käyttöliittymästä, sillä se kutsuu käyttöliittymän metodia update. Sykliset riippuvuudet  eivät ole ollenkaan toivottavia.
 
 ## Observer
 
