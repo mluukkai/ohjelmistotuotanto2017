@@ -13,6 +13,7 @@
 [7](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento7.pdf?raw=true)
 [8](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento8.pdf?raw=true)
 [9](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento9.pdf?raw=true)
+[10](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento10.pdf?raw=true)
 
 ## Laskarit
 
