@@ -2137,9 +2137,18 @@ public static void main(String[] args) {
 
 ## MVC eli Model View Controller
 
-Teemme erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen.
 
-Sovelluslogiikka seuraavassa:
+Model View Controller (MVC) -mallilla tarkoitetaan periaatetta, jonka avulla _model_ eli liiketoimintalogiikan sisältävät oliot (esim. domain-oliot) eristetään käyttöliittymän näytöt (view) generoivasta koodista. Toimintaa koordinoivana komponenttina ovat _kontrollerit_, jotka reagoivat käyttäjän syötteisiin kutsumalla tarvittavia model-oliota ja pyytämällä viewejä päivittämään näkymät operaatioiden edellyttämällä tavalla.
+
+Periaatteena on, että model, eli liiketoimintalogiikka ei tunne kontrollereja eikä näyttöjä ja samaan modelissa olevaan dataan voikin olla useita näyttöjä.
+
+Esim. Javalla tehdyissä käyttöliittymäsovelluksissa näppäimistön käsittelystä vastaavat _tapahtumankuuntelijat_ ovat MVC-mallia sovellettaessa kontrollereja. 
+
+Koska kontrollerit hoitavat käyttöliittymäspesifejä tehtäviä kuten painikkeisiin reagoimista, niiden ajatellaan esim. kerrosarkkitehtuurista puhuttaessa liittyvän käyttöliittymäkerrokseen. 
+
+Teemme nyt erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen käyttäen Javan Swing-käyttöliittymäkirjastoa. Jos suoritut Ohjelmoinnin jatkokurssin keväällä 2017 ei Swing ole välttämättä tuttu sillä kurssi käytti käyttöliittymäkirjastona Java FX:ää. Perusteriaatteet ovat kuitenkin samat. 
+
+Sovelluslogiikka on seuraavassa:
 
 
 ``` java
@@ -2162,7 +2171,7 @@ public class Sovelluslogiikka {
 }
 ```
 
-Eli sovelluksella voi arpoa lukuja koko ajan uusia lukuja. Sovellus muistaa kaikki arpomansa luvut.
+Eli sovelluksella voi arpoa lukuja koko ajan uusia lukuja. Sovelluslogiikka muistaa kaikki arpomansa luvut.
 
 Näytössä on painike, jolla pyydetään uuden luvun arpomista sekä tekstikenttä, missä arvotut luvut näytetään:
 
@@ -2196,7 +2205,7 @@ public class Naytto extends JFrame {
 }
 ```
 
-Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakäsittelijää joka on MVC:n hengen mukaisesti laitettu kontrolleriin:
+Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakäsittelijää, joka on MVC:n hengen mukaisesti laitettu kontrolleriin:
 
 
 ``` java
@@ -2218,9 +2227,9 @@ public class Kontrolleri implements ActionListener {
 }
 ```
 
-Kontrolleri tuntee näytön ja sovelluslogiikan eli mallin. Alussa kontrolleri asettaa itsensä tapahtumakuuntelijaksi näytössä olevalle painikkeelle.
+Kontrolleri tuntee näytön ja sovelluslogiikan eli _modelin_. Alussa kontrolleri asettaa itsensä tapahtumakuuntelijaksi näytössä olevalle painikkeelle.
 
-Kun nappia painetaan, pyytää kontrolleri modelia arpomaan uuden luvun. Sen jälkeen näyttö hakee luvut modelilta ja asettaa ne tekstimuoisena näytölle käyttäen näytön update-metodia.
+Kun nappia painetaan, pyytää kontrolleri modelia arpomaan uuden luvun. Sen jälkeen kontrolleri hakee luvut modelilta ja asettaa ne tekstimuoisena näytölle käyttäen näytön update-metodia.
 
 Itse sovellus ainoastaan luo oliot ja antaa näytön sekä modelin kontrollerille:
 
@@ -2239,9 +2248,7 @@ Rakenne luokkakaaviona:
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
 
-
 Model eli Sovelluslogiikka on nyt täysin tietämätön siitä kuka sitä kutsuu. Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
-
 
 ``` java
 public class MVCSovellus2 {
@@ -2262,17 +2269,39 @@ public class MVCSovellus2 {
 
 Sovelluksessamme on pieni ongelma. Haluaisimme kaikkien näyttöjen olevan koko ajan ajantasalla. Nyt ainoastaan se näyttö minkä nappia painetaan päivittyy ajantasaiseksi.
 
-# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
+## Käyttöliittymän päivittäminen modelin muuttuessa
+
+Kerrosarkkitehtuurissa ja MVC-mallin mukaisissa sovelluksissa törmätään usein nyt kohdatun kaltaiseen tilanteeseen, jossa sovelluslogiikan on kerrottava käyttöliittymälle jonkin sovellusolion tilan muutoksesta, jotta käyttöliittymä näyttäisi koko ajan ajantasaista tietoa.
+
+Meidän tapauksessamme siis käyttöliittymäkerroksessa on kolme eri näyttöä, ja sovelluslogiikan muuttunut tila pitäisi saada päivitettyä yhtä aikaa jokaiseen näyttöön. Käyttöliittymäkerroksen siis muodostavat tapahtumien käsittelystä huolehtivat kontrollerit ja näkymät.
+
+Suoraviivainen toteutus saa aikaa ikävän riippuvuus sovelluslogiikasta käyttöliittymään. 
+
+Kuvitellaan, että sovelluslogiikka ilmoittaa muuttuneesta tilasta kutsumalla jonkin käyttöliittymän luokan toteuttamaa metodia update(). Parametrina voidaan esim. kertoa muuttunut tieto. Tilanne näyttää seuraavalta:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
+
+Eli käyttöliittymäkerros on riippuvainen sovelluslogiikasta mutta myös sovelluslogiikka on riippuvainen käyttöliittymästä, sillä se kutsuu käyttöliittymän metodia update. Sykliset riippuvuudet ohjelmassa eivät ole ollenkaan toivottavia.
 
 ## Observer
 
-Siirrymme käyttämään luentokalvoilla selitettyä [Observer](https://sourcemaking.com/design_patterns/observer)-suunnittelumallia.
+Suunnittelumalli [Observer](https://sourcemaking.com/design_patterns/observer) auttaa rikkomaan sykliset riippuvuudet.
+
+Määritellään rajapinta, joka sisältää käyttöliittymäluokan päivitysmetodin _update_, jota sovellusluokka kutsuu.
 
 ``` java
 public interface Observer {
     void update();
 }
 ```
+
+Käyttöliittymäluokka toteuttaa rajapinnan, eli käytännössä toteuttaa _update_-metodin haluamallaan tavalla. Sovellusluokalle riittää nyt tuntea ainoastaan rajapinta, jonka metodia _update_ se tarvittaessa kutsuu.
+
+Nyt kaikki menee siististi, sovelluslogiikasta ei enää ole konkreettista riippuvuutta mihinkään käyttöliittymän luokkaan mutta se voi silti kutsua käyttöliittymän metodia. Sovellusluokka tuntee siis vain rajapinnan. Rajapinta voidaan tarvittaessa määritellä sovelluslogiikan kanssa samassa pakkauksessa, jolloin riippuvuudesta saadaan vielä heikompi:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-10.png)
+
+Muutetaan nyt sovelluksemme käyttämään observer-suunnittelumallia.
 
 Sovelluslogiikka tuntee joukon tarkkailijoita:
 
@@ -2341,6 +2370,9 @@ Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan Observer. Kun nappia p
 update-metodia kutsuttaessa (jota siis Sovelluslogiikka kutsuu) suorittaa kontrolleri näytön päivityksen.
 
 Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
+
+# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
+
 
 ## Pelaajastatistiikkaa Java 8:lla
 
