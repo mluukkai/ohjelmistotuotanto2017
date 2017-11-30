@@ -945,7 +945,7 @@ public class Laskin {
 
 Ohjelmasta on näinollen saatu laajennettavuudeltaan varsin joustava. Uusia operaatioita on helppo lisätä ja lisäys ei aiheuta muutoksia moneen kohtaan koodia. Laskin-luokallahan ei ole riippuvuuksia muualle kuin rajapintoihin IO ja Komento ja luokkaan Komentotehdas.
 
-![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-5.png)
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-6.png)
 
 
 
