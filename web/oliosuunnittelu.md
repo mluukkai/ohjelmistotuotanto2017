@@ -448,7 +448,7 @@ Tili euribor12 = new Tili("4422-3355", "Tero Huomo", new EuriborKorko(12));
 ```
 
 Ohjelman rakenne on nyt seuraava
-![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.png)
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-3.png)
 
 
 Muutetaan luokkaa vielä siten, että tilejä saadaan luotua ilman konstruktoria:
