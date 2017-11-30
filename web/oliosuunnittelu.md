@@ -2340,8 +2340,7 @@ Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
 
 ## Pelaajastatistiikkaa Java 8:lla
 
-Muokataan hieman  [viikon 2 laskareissa](https://github.com/mluukkai/ohtu2017/blob/master/laskarit/2.md#2-riippuvuuksien-injektointi-osa-2-nhl-tilastot)
-työn alla ollutta NHL-pelaajastatistiikka-ohjelmaa.
+Muokataan hieman jo tutuksi käynyttä NHL-pelaajastatistiikka-ohjelmaa, tällä kertaa [viikon 1 laskareiden](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/1.md#15-riippuvuuksien-injektointi-osa-2-nhl-tilastot) versiota.
 
 ### forEach
 
