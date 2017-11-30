@@ -2074,7 +2074,7 @@ Tällä tekniikalla toteutetuista rajapinnoista käytetään myös nimitystä
 
 Nyt tarkastelemme tilannetta, jossa meillä on käytettävissä luokka joka oleellisesti ottaen tarjoaa haluamamme toiminnallisuuden, mutta sen rajapinta on hieman vääränlainen. Emme kuitenkaan voi muuttaa alkuperäistä luokkaa sillä muutos rikkoisi luokan muut käyttäjät.
 
-Adapteri-suunnittelumalli sopii tälläisiin tilanteisiin http://sourcemaking.com/design_patterns/adapter
+[Adapteri](http://sourcemaking.com/design_patterns/adapter)-suunnittelumalli sopii tälläisiin tilanteisiin. 
 
 Tehdään aiemmasta esimerkistä tutulle Pinolle adapteri HyväPino joka muuttaa metodien nimiä ja tarjoaa muutaman lisätoiminnallisuuden:
 
@@ -2135,8 +2135,6 @@ public static void main(String[] args) {
 }
 ```
 
-# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
-
 ## MVC eli Model View Controller
 
 Teemme erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen.
@@ -2145,11 +2143,11 @@ Sovelluslogiikka seuraavassa:
 
 
 ``` java
-public class Sovellusolio {
+public class Sovelluslogiikka {
     private ArrayList<Integer> luvut;
 
-    public Sovellusolio() {
-        luvut = new ArrayList<Integer>();
+    public Sovelluslogiikka() {
+        luvut = new ArrayList<>();
     }
 
     public ArrayList<Integer> getLuvut() {
@@ -2166,7 +2164,7 @@ public class Sovellusolio {
 
 Eli sovelluksella voi arpoa lukuja koko ajan uusia lukuja. Sovellus muistaa kaikki arpomansa luvut.
 
-Näytössä on painike, jolla pyydetään uuden luvun arpomista sekä tekstikenttä missä arvotut luvut näytetään:
+Näytössä on painike, jolla pyydetään uuden luvun arpomista sekä tekstikenttä, missä arvotut luvut näytetään:
 
 
 ``` java
@@ -2204,9 +2202,9 @@ Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakäsittelijää j
 ``` java
 public class Kontrolleri implements ActionListener {
     private Naytto naytto;
-    private Sovellusolio model;
+    private Sovelluslogiikka model;
 
-    public Kontrolleri(Naytto naytto, Sovellusolio model) {
+    public Kontrolleri(Naytto naytto, Sovelluslogiikka model) {
         this.naytto = naytto;
         this.model = model;
         naytto.asetaKontrolleri(this);
@@ -2229,28 +2227,33 @@ Itse sovellus ainoastaan luo oliot ja antaa näytön sekä modelin kontrollerill
 ``` java
 public class MVCSovellus {
 
-    public void kaynnista(){
+    public void kaynnista() {
         Naytto naytto = new Naytto();
-        Sovellusolio model = new Sovellusolio();
+        Sovelluslogiikka model = new Sovelluslogiikka();
         Kontrolleri kontrolleri = new Kontrolleri(naytto, model);
     }
 }
 ```
 
-Model eli sovellusolio on nyt täysin tietämätön siitä kuka sitä kutsuu. Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
+Rakenne luokkakaaviona:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
+
+
+Model eli Sovelluslogiikka on nyt täysin tietämätön siitä kuka sitä kutsuu. Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
 
 
 ``` java
 public class MVCSovellus2 {
 
     public void kaynnista() {
-        Sovellusolio model = new Sovellusolio();
+        Sovelluslogiikka model = new Sovelluslogiikka();
         for (int i = 0; i < 3; i++) {
             luoNaytto(model);
         }
     }
 
-    private void luoNaytto(Sovellusolio model) {
+    private void luoNaytto(Sovelluslogiikka model) {
         Naytto naytto = new Naytto();
         Kontrolleri kontrolleri = new Kontrolleri(naytto, model);
     }
@@ -2259,9 +2262,11 @@ public class MVCSovellus2 {
 
 Sovelluksessamme on pieni ongelma. Haluaisimme kaikkien näyttöjen olevan koko ajan ajantasalla. Nyt ainoastaan se näyttö minkä nappia painetaan päivittyy ajantasaiseksi.
 
+# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
+
 ## Observer
 
-Siirrymme käyttämään luentokalvoilla selitettyä Observer-suunnittelumallia.
+Siirrymme käyttämään luentokalvoilla selitettyä [Observer](https://sourcemaking.com/design_patterns/observer)-suunnittelumallia.
 
 ``` java
 public interface Observer {
@@ -2269,16 +2274,16 @@ public interface Observer {
 }
 ```
 
-Sovellusolio tuntee joukon tarkkailijoita:
+Sovelluslogiikka tuntee joukon tarkkailijoita:
 
 ``` java
-public class Sovellusolio {
+public class Sovelluslogiikka {
     private ArrayList<Integer> luvut;
     private List<Observer> tarkkailijat;
 
-    public Sovellusolio() {
+    public Sovelluslogiikka() {
         luvut = new ArrayList<Integer>();
-        tarkkailijat = new ArrayList<Observer>();
+        tarkkailijat = new ArrayList<>();
     }
 
     public void rekisteroiTarkkailija(Observer tarkkailija){
@@ -2303,16 +2308,16 @@ public class Sovellusolio {
 }
 ```
 
-Tarkkailijat voivat rekisteröidä itsensä sovellukselle. Kun sovelluksen metodia ilmoitaTarkkailijoille kutsutaan, kutsuu sovellusolio jokaisen tarkkailijan update-metodia.
+Tarkkailijat voivat rekisteröidä itsensä sovellukselle. Kun sovelluksen metodia ilmoitaTarkkailijoille kutsutaan, kutsuu Sovelluslogiikka jokaisen tarkkailijan update-metodia.
 
-Sovellusoliolla ei siis ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
+Sovelluslogiikalla ei siis ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
 
 ``` java
 public class Kontrolleri implements ActionListener, Observer {
     private Naytto naytto;
-    private Sovellusolio model;
+    private Sovelluslogiikka model;
 
-    public Kontrolleri(Naytto naytto, Sovellusolio model) {
+    public Kontrolleri(Naytto naytto, Sovelluslogiikka model) {
         this.naytto = naytto;
         this.model = model;
         naytto.asetaKontrolleri(this);
@@ -2333,7 +2338,7 @@ public class Kontrolleri implements ActionListener, Observer {
 
 Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan Observer. Kun nappia painetaan, eli actionPerformed-metodissa, kontrolleri pyytää modelia arpomaan uuden luvun ja samalla pyytää modelia ilmoittamaan tarkkailijoille muuttuneen arvon.
 
-update-metodia kutsuttaessa (jota siis sovellusolio kutsuu) suorittaa kontrolleri näytön päivityksen.
+update-metodia kutsuttaessa (jota siis Sovelluslogiikka kutsuu) suorittaa kontrolleri näytön päivityksen.
 
 Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
 
