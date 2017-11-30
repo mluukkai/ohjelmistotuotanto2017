@@ -1778,7 +1778,7 @@ public class PrepaidPino extends Pino {
 
 PrepaidPino siis perii pinon, mutta kun tarkkaa katsotaan, niin yliluokan operaatiot ylikirjoitetaan ja yliluokkaa ei hyödynnetä millään tavalla!
 
-PrepaidPino siis perii luokan Pino, mutta se ei käytä "perittyä" pinouttaan, vaan sensijaan PrepaidPino __sisältää__ pinon, jonka se saa konstruktoriparametrina. Tätä sisältämäänsä pinoa PrepaidPino käyttää tallettamaan kaikki alkionsa. Eli jokainen PrepaidPinon operaatio delegoi operaation sisältämälleen pinolle.
+PrepaidPino siis perii luokan Pino, mutta se ei käytä "perittyä" pinouttaan, vaan sensijaan PrepaidPino __sisältää__ pinon, jonka se saa konstruktoriparametrina. Tätä sisältämäänsä pinoa PrepaidPino käyttää tallettamaan kaikki alkionsa. Eli jokainen PrepaidPinon operaatio delegoi operaation toiminnallisuuden toteuttamisen sisältämälleen pinolle.
 
 PrepaidPino luodaan seuraavalla tavalla:
 
