@@ -2297,9 +2297,17 @@ public interface Observer {
 
 Käyttöliittymäluokka toteuttaa rajapinnan, eli käytännössä toteuttaa _update_-metodin haluamallaan tavalla. Sovellusluokalle riittää nyt tuntea ainoastaan rajapinta, jonka metodia _update_ se tarvittaessa kutsuu.
 
-Nyt kaikki menee siististi, sovelluslogiikasta ei enää ole konkreettista riippuvuutta mihinkään käyttöliittymän luokkaan mutta se voi silti kutsua käyttöliittymän metodia. Sovellusluokka tuntee siis vain rajapinnan. Rajapinta voidaan tarvittaessa määritellä sovelluslogiikan kanssa samassa pakkauksessa, jolloin riippuvuudesta saadaan vielä heikompi:
+Nyt kaikki menee siististi, sovelluslogiikasta ei enää ole konkreettista riippuvuutta mihinkään käyttöliittymän luokkaan mutta se voi silti kutsua käyttöliittymän metodia. Sovellusluokka tuntee siis vain rajapinnan. Rajapinta voidaan tarvittaessa määritellä sovelluslogiikan kanssa samassa pakkauksessa, jolloin riippuvuudesta saadaan kooditasolla vieläkin hallitumpi:
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-10.png)
+
+Jos käyttöliittymäolio haluaa tarkkailla jonkun sovellusolion tilaa, se toteuttaa Observer-rajapinnan ja rekisteröi rajapintansa tarkkailtavalle sovellusoliolle kutsumalla sovelluslogiikan metodia _addObserver_. Näin sovellusolio saa tietoonsa kaikki sitä tarkkailevat rajapinnat.
+
+Kun joku muuttaa sovellusolion tilaa, kutsuu se sovellusolion metodia _notifyObservers_, joka taas kutsuu kaikkien tarkkailijoiden _update_- metodeja, joiden parametrina voidaan tarvittaessa välittää muutostieto.
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-11.png)
+
+## sovelluksen observeria käyttävä versio
 
 Muutetaan nyt sovelluksemme käyttämään observer-suunnittelumallia.
 
@@ -2311,15 +2319,15 @@ public class Sovelluslogiikka {
     private List<Observer> tarkkailijat;
 
     public Sovelluslogiikka() {
-        luvut = new ArrayList<Integer>();
+        luvut = new ArrayList<>();
         tarkkailijat = new ArrayList<>();
     }
 
-    public void rekisteroiTarkkailija(Observer tarkkailija){
+    public void addObserver(Observer tarkkailija) {
         tarkkailijat.add(tarkkailija);
     }
 
-    public void ilmoitaTarkkailijoille(){
+    public void notifyObservers() {
         for (Observer tarkkailija : tarkkailijat) {
             tarkkailija.update();
         }
@@ -2337,9 +2345,9 @@ public class Sovelluslogiikka {
 }
 ```
 
-Tarkkailijat voivat rekisteröidä itsensä sovellukselle. Kun sovelluksen metodia ilmoitaTarkkailijoille kutsutaan, kutsuu Sovelluslogiikka jokaisen tarkkailijan update-metodia.
+Tarkkailijat siis  voivat rekisteröidä itsensä sovellukselle metodilla _addObserver_. Kun sovelluksen metodia _notifyObservers_ kutsutaan, kutsuu Sovelluslogiikka jokaisen tarkkailijan update-metodia.
 
-Sovelluslogiikalla ei siis ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
+Sovelluslogiikalla ei nyt ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
 
 ``` java
 public class Kontrolleri implements ActionListener, Observer {
@@ -2350,12 +2358,12 @@ public class Kontrolleri implements ActionListener, Observer {
         this.naytto = naytto;
         this.model = model;
         naytto.asetaKontrolleri(this);
-        model.rekisteroiTarkkailija(this);
+        model.addObserver(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
         model.arvoLuku();
-        model.ilmoitaTarkkailijoille();
+        model.notifyObservers();
     }
 
     public void update() {
@@ -2365,9 +2373,9 @@ public class Kontrolleri implements ActionListener, Observer {
 }
 ```
 
-Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan Observer. Kun nappia painetaan, eli actionPerformed-metodissa, kontrolleri pyytää modelia arpomaan uuden luvun ja samalla pyytää modelia ilmoittamaan tarkkailijoille muuttuneen arvon.
+Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan _Observer_. Kun nappia painetaan, eli _actionPerformed_-metodissa, kontrolleri pyytää modelia arpomaan uuden luvun ja samalla pyytää modelia ilmoittamaan tarkkailijoille muuttuneen arvon.
 
-update-metodia kutsuttaessa (jota siis Sovelluslogiikka kutsuu) suorittaa kontrolleri näytön päivityksen.
+_update_-metodia kutsuttaessa (jota siis Sovelluslogiikka kutsuu) suorittaa kontrolleri näytön päivityksen.
 
 Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
 
