@@ -76,7 +76,7 @@ Yksittäiset metodit ovat nyt kaikki samalla abstraktiotasolla toimivia ja hyvin
 
 Nyt aikaansaatu lopputulos ei ole vielä välttämättä ideaali koko ohjelman kontekstissa. [Artikkelissa](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html) esimerkkiä jatketaankin eristäen tietokantaoperaatiot (joita myös muut ohjelman osat tarvitsevat) omaan luokkaansa.
 
-# ÄLÄ LUE VIELÄ TÄSTÄ ETEENPÄIN. viikon 5 laskareissa ei allaolevia vielä tarvita
+# Viikon 5 laskareihin riittää tähän asti lukeminen
 
 ## Single responsibility -periaate eli koheesio luokkatasolla
 
@@ -509,7 +509,7 @@ Tehdasmetodi siis auttaa _kapseloinnissa_, olion luomiseen liittyvät detaljit j
 
 Staattinen tehdasmetodi ei ole testauksen kannalta erityisen hyvä ratkaisu, esimerkissämme olisi vaikea luoda tili, jolle annetaan Korko-rajapinnan toteuttama mock-olio. Nyt se tosin onnistuu koska konstruktoria ei ole täysin piilotettu.
 
-Lisätietoa factory-suunnittelumallista esim. seuraavissa https://sourcemaking.com/design_patterns/factory_methodh ttp://www.oodesign.com/factory-method-pattern.html
+Lisätietoa factory-suunnittelumallista esim. seuraavissa https://sourcemaking.com/design_patterns/factory_method ja http://www.oodesign.com/factory-method-pattern.html
 
 Tehdasmetodien avulla voimme siis kapseloida luokan todellisen tyypin. Kasperin tilihän on määräaikaistili, se kuitenkin pyydetään Tili-luokassa sijaitsevalta factoryltä, olion oikea tyyppi on piilotettu tarkoituksella käyttäjältä. Määräaikaistilin käyttäjällä ei siis ole enää konkreettista riippuvuutta luokkaan Määräaikaistili.
 
@@ -947,13 +947,11 @@ Ohjelmasta on näinollen saatu laajennettavuudeltaan varsin joustava. Uusia oper
 
 ![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-6.png)
 
-
+Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). 
 
 ### template method
 
-Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). 
-
-Tmplate method -mallia sovelletaan tilanteissa, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
+Template method -suunnittelumallia sopii tilainteisiin, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
 
 Summa- ja Tulo-komentojen suoritus on oleellisesti samanlainen:
 
@@ -1001,9 +999,11 @@ public class Summa extends KaksiparametrinenLaskuoperaatio {
 }
 ```
 
-Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että osan suorituksen konkreettinen toteutus on abstraktissa metodissa, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
+Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että suorituksen eroava osa määritellään yliluokan abstraktina metodina, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
 
-Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella
+Template-metodeitta voi olla useampiakin kuin yksi eroava osa, tällöin abstrakteja metodeja määritellään tarpeellinen määrä. 
+
+Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella.
 Strategioita voidaan vaihtaa ajonaikana, template-metodissa olio toimii samalla tavalla koko elinaikansa  
 
 Lisää template method -suunnittelumallista seuraavissa
@@ -1083,7 +1083,7 @@ Luokkaa käytetään seuraavasti:
     }
 ```
 
-Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Osalle Java 8 on jo tuttu Ohjelmoinnin perusteiden ja jatkokurssin uudemmista versiosta.
+Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Monelle Java 8 on jo tuttu Ohjelmoinnin perusteiden ja jatkokurssin uudemmista versiosta.
 
 Voimme korvata listalla olevien merkkijonojen tulostamisen kutsumalla listoilla (tarkemmin sanottuna rajapinnan [Interable](http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)-toteuttavilla) olevaa metodia <code>forEach</code> joka mahdollistaa listan alkioiden läpikäynnin "funktionaaliseen" tyyliin. Metodi saa parametrikseen "functional interfacen" (eli rajapinnan, joka määrittelee ainoastaan yhden toteutettavan metodin) toteuttavan olion. Tälläisiä ovat Java 8:ssa myös ns. lambda-lausekkeet (lambda expression), joka tarkoittaa käytännössä anonyymia mihinkään luokkaan liittymätöntä metodia.  Seuraavassa metodin palauttavien kirjan rivien tulostus forEachia ja lambdaa käyttäen:
 
@@ -1400,7 +1400,12 @@ public class KoosteElementti implements Elementti {
 
 Koska KoosteElementti toteuttaa itsekin rajapinnan Elementti, tarkoittaa tämä että kooste voi sisältää koosteita. Eli hyvin yksinkertaisella luokkarakenteella saadaan aikaan mielivaltaisista puumaisesti muodostuneista elementeistä koostuvia dokumentteja!
 
-Huomaamme, että <code>Elementti</code> on _funktionaalinen rejapinta_ eli se määrittelee ainoastaan yhden sen metodin joka rajapinnan toteuttavien luokkien on toteutettava. Kuten [edellisellä viikolla ](https://github.com/mluukkai/ohtu2014/blob/master/web/luento8.md#koodissa-olevan-ep%C3%A4triviaalin-copypasten-poistaminen-strategy-patternin-avulla-java-8a-hy%C3%B6dynt%C3%A4v%C3%A4-versio) totesimme Java 8:ssa voimme käyttää lambda-lausekkeita korvaamaan funktionaalisen rajapinnan toteuttavien luokkien instanssien tilalla. Koska luokat <code>TekstiElementti</code>, <code>ErotinElementti</code> ja <code>KoosteElementti</code> ovat niin yksinkertaisia, ei luokkia välttämättä tarvitse määritellä eksplisiittisesti. Voimmekin palauttaa elementtitehtaasta niiden tilalla sopivat lambda-lausekkeen avulla määritellyt elementit:
+Ohjelman rakenne tällä hetkellä
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-7.png)
+
+
+Huomaamme, että <code>Elementti</code> on _funktionaalinen rejapinta_ eli se määrittelee ainoastaan yhden sen metodin joka rajapinnan toteuttavien luokkien on toteutettava. Kuten [edellisessä esimerkissä](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/web/oliosuunnittelu.md#koodissa-olevan-epätriviaalin-copypasten-poistaminen-strategy-patternin-avulla-java-8a-hyödyntävä-versio) totesimme voimme käyttää Java 8:n lambda-lausekkeita korvaamaan funktionaalisen rajapinnan toteuttavien luokkien instanssien tilalla. Koska luokat <code>TekstiElementti</code>, <code>ErotinElementti</code> ja <code>KoosteElementti</code> ovat niin yksinkertaisia, ei luokkia välttämättä tarvitse määritellä eksplisiittisesti. Voimmekin palauttaa elementtitehtaasta niiden tilalla sopivat lambda-lausekkeen avulla määritellyt elementit:
 
 ``` java
 public class Elementtitehdas {
@@ -1468,6 +1473,8 @@ Ongelmaksi muodostuu nyt se, että elementtien lataaminen webistä on hidasta. J
 
 Proxy-suunnittelumalli tuo ongelmaan ratkaisun. Periaatteena on luoda varsinaiselle "raskaalle" oliolle edustaja joka toimii raskaan olion sijalla niin kauan kunnes olioa oikeasti tarvitaan. Tälläisessä tilanteessa edustaja sitten luo todellisen olion ja delegoi sille kaikki operaatiot.
 
+Lisää proxystä esim. https://sourcemaking.com/design_patterns/proxy
+
 Tehdään WebElementille proxy:
 
 
@@ -1503,6 +1510,10 @@ public class Elementtitehdas {
     }
 }
 ```
+
+Ohjelman rakenne täydentyy muotoon
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8.png)
 
 Asiakas on tyytyväinen aikaansaannokseemme.
 
@@ -1658,6 +1669,8 @@ public class ViikonLottonumerotTest {
     }
 }
 ```
+
+# TÄSTÄ ETEENPÄIN VAIN OMALLA VASTUULLA, tekstiä ei vielä ole päivitetty syksylle 2017
 
 ## Dekoroitu pino
 
@@ -1866,6 +1879,8 @@ Pino pino = new KryptattuPino( new LokiPino( new Pino(), loki ) );
 Dekoroinnin avulla saamme siis suhteellisen vähällä ohjelmoinnilla pinolle paljon erilaisia ominaisuuskombinaatioita. Jos olisimme yrittäneet hoitaa kaiken normaalilla perinnällä, olisi luokkien määrä kasvanut eksponentiaalisesti eri ominaisuuksien määrän suhteen ja uusiokäytöstäkään ei olisi tullut mitään.
 
 Dekorointi siis ei oleellisesti ole perintää vaan delegointia, jälleen kerran oliosuunnitteun periaate "favour composition over inheritance" on näyttänyt voimansa.
+
+Lisää dekoraattori-suunnittelumallista esim. osoitteessa https://sourcemaking.com/design_patterns/decorator 
 
 ## Pintotehdas
 
