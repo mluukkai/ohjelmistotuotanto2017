@@ -523,9 +523,9 @@ Eli luopumalla perinnästä selkeytyy oliorakenne huomattavasti ja saavutetaan a
 
 ### strategy
 
-Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia eli englanniksi strategy*. 
+Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia* eli *englanniksi strategy*. 
 
-Strategyn avulla voidaan hoitaa tilanne, jossa eri olioiden käyttäytyminen on muuten sama mutta tietyissä kohdissa on käytössä eri "algoritmi". Esimerkissämme tämä algoritmi oli korkoprosentin määritys. Sama tilanne voidaan hoitaa usein myös perinnän avulla käyttämättä erillisiä olioita, strategy kuitenkin mahdollistaa huomattavasti dynaamisemman ratkaisun, sillä strategia-olioa voi vaihtaa ajoaikana. Strategyn käyttö ilmentää hienosti "favour composition over inheritance"-periaatetta
+Strategyn avulla voidaan hoitaa tilanne, jossa eri olioiden käyttäytyminen on muuten sama, mutta tietyissä kohdissa on käytössä eri "algoritmi". Esimerkissämme tämä algoritmi oli korkoprosentin määritys. Sama tilanne voidaan hoitaa usein myös perinnän avulla käyttämättä erillisiä olioita, strategy kuitenkin mahdollistaa huomattavasti dynaamisemman ratkaisun, sillä strategia-olioa voi vaihtaa ajoaikana. Strategyn käyttö ilmentää hienosti "favour composition over inheritance"-periaatetta
 
 Lisätietoa strategia-suunnittelumallista seuraavissa http://www.oodesign.com/strategy-pattern.html ja https://sourcemaking.com/design_patterns/strategy
 
@@ -726,6 +726,10 @@ public class Laskin {
 ```
 
 Hienona puolena laskimessa on nyt se, että voimme lisätä operaatioita ja Laskinta ei tarvitse muuttaa millään tavalla!
+
+Rakenne näyttää seuraavalta
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-3.png)
+
 
 Entä jos haluamme laskimelle muunkinlaisia kuin 2 parametria ottavia operaatioita, esim. neliöjuuren?
 
