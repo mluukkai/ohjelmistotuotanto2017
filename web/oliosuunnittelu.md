@@ -2074,8 +2074,7 @@ Tällä tekniikalla toteutetuista rajapinnoista käytetään myös nimitystä
 
 Nyt tarkastelemme tilannetta, jossa meillä on käytettävissä luokka joka oleellisesti ottaen tarjoaa haluamamme toiminnallisuuden, mutta sen rajapinta on hieman vääränlainen. Emme kuitenkaan voi muuttaa alkuperäistä luokkaa sillä muutos rikkoisi luokan muut käyttäjät.
 
-Adapteri-suunnittelumalli sopii tälläisiin tilanteisiin [http://sourcemaking.com/design_patterns/adapter]
-(http://sourcemaking.com/design_patterns/adapter)
+Adapteri-suunnittelumalli sopii tälläisiin tilanteisiin http://sourcemaking.com/design_patterns/adapter
 
 Tehdään aiemmasta esimerkistä tutulle Pinolle adapteri HyväPino joka muuttaa metodien nimiä ja tarjoaa muutaman lisätoiminnallisuuden:
 
@@ -2110,7 +2109,7 @@ public class HyväPino {
     }
 
     public List<String> kaikkiPinosta(){
-        ArrayList<String> alkiot = new ArrayList<String>();
+        ArrayList<String> alkiot = new ArrayList<>();
 
         while(eiOleTyhja()){
             alkiot.add(pinosta());
