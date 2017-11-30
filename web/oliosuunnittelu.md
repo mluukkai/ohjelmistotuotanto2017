@@ -1935,7 +1935,7 @@ Rakentaja-suunnittelumalli sopii tilanteeseemme erittäin hyvin. Pyrkimyksenämm
     Pino pino = rakenna.prepaid(10).kryptattu().pino();
 ```
 
-Rakentajan metodinimet ja rakentajan muuttujan nimi on valittu mielenkiinoisella tavalla. On pyritty mahdollisimman luonnollista kieltä muistuttavaan ilmaisuun pinon luonnissa. Kyseessä onkin oikeastaan [DSL](https://martinfowler.com/bliki/FluentInterface.html) (domain specific language) pinojen luomiseen!
+Rakentajan metodinimet ja rakentajan muuttujan nimi on valittu mielenkiinoisella tavalla. On pyritty mahdollisimman luonnollista kieltä muistuttavaan ilmaisuun pinon luonnissa. Kyseessä onkin oikeastaan [DSL](https://martinfowler.com/bliki/DomainSpecificLanguage.html) (domain specific language) pinojen luomiseen!
 
 Luodaan ensin rakentajasta perusversio, joka soveltuu vasta normaalien pinojen luomiseen:
 
@@ -2066,7 +2066,7 @@ Pino pino2 = rakenna.kryptattu().loggaava(loki).prepaid.pino();  // luo sen mit�
 Rakentajan toteutus perustuu tekniikkaan nimeltään [method chaining](http://en.wikipedia.org/wiki/Method_chaining) eli metodien ketjutukseen. Metodit jotka ovat muuten luonteeltaan void:eja onkin laitettu palauttamaan rakentajaolio. Tämä taas mahdollistaa metodin kutsumisen toisen metodin palauttamalle rakentajalle, ja näin metodikutsuja voidaan ketjuttaa peräkkäin mielivaltainen määrä. Metodiketjutuksen motivaationa on yleensä saada olion rajapinta käytettävyydeltään mahdollisimman luonnollisen kielen kaltaiseksi DSL:ksi. 
 
 Tällä tekniikalla toteutetuista rajapinnoista käytetään myös nimitystä
-[fluent interface](ttps://martinfowler.com/bliki/FluentInterface.html).
+[fluent interface](https://martinfowler.com/bliki/FluentInterface.html).
 
 ## adapteri
 
