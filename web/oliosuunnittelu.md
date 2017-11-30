@@ -371,6 +371,10 @@ public class MääräaikaisTili extends Tili {
 
 Luokka syntyi tuskattomasti.
 
+Ohjelman rakenne näyttää tässä vaiheessa seuraavalta:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-2.png)
+
 Seuraavaksi tulee idea _Euribor-korkoa käyttävistä määräaikaistileistä_. 
 Miten nyt kannattaisi tehdä? Osa toiminnallisuudesta on luokassa Määräaikaistili ja osa luokassa Euribor-tili...
 
