@@ -10,7 +10,7 @@ Koheesiolla tarkoitetaan sitä, kuinka pitkälle metodissa, luokassa tai kompone
 Esimerkki artikkelista [http://www.ibm.com/developerworks/java/library/j-eaed4/index.html](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html)
 
 ``` java
-public void populate() throws Exception  {
+public void populate() throws Exception {
     Connection c = null;
     try {
         c = DriverManager.getConnection(DB_URL, USER, PASSWORD);
