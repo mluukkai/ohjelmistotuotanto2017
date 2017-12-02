@@ -13,3 +13,5 @@
 **/bin
 .vscode/
 >>>>>>> 2144f465165e87b38d7f77bda469066d959519ec
+/koodi/viikko5/IntJoukkoSovellus/.nb-gradle/
+/koodi/viikko5/IntJoukkoSovellus/build/
