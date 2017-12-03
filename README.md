@@ -22,3 +22,4 @@
 [4](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/4.md)
 
 Muutos vko 4.
+Muutos vko 5.
