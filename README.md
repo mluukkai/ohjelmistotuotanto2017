@@ -23,3 +23,5 @@
 [4](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/4.md)
 [5](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/5.md)
 [6](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/6.md)
+
+Viikon 5 tehtävät
