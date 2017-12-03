@@ -12,44 +12,44 @@ public class IntJoukkoTest {
     @Before
     public void setUp() {
         joukko = new IntJoukko();
-        joukko.lisaa(10);
-        joukko.lisaa(3);
+        joukko.lisaaLuku(10);
+        joukko.lisaaLuku(3);
     }
 
     @Test
     public void lukujaLisattyMaara() {
-        joukko.lisaa(4);
-        assertEquals(3, joukko.mahtavuus());
+        joukko.lisaaLuku(4);
+        assertEquals(3, joukko.getAlkioidenLkm());
     }
 
     @Test
     public void samaLukuMeneeJoukkoonVaanKerran() {
-        joukko.lisaa(10);
-        joukko.lisaa(3);
-        assertEquals(2, joukko.mahtavuus());
+        joukko.lisaaLuku(10);
+        joukko.lisaaLuku(3);
+        assertEquals(2, joukko.getAlkioidenLkm());
     }
 
     @Test
     public void vainLisatytLuvutLoytyvat() {
-        assertTrue(joukko.kuuluu(10));
-        assertFalse(joukko.kuuluu(5));
-        assertTrue(joukko.kuuluu(3));
+        assertTrue(joukko.etsi(10));
+        assertFalse(joukko.etsi(5));
+        assertTrue(joukko.etsi(3));
     }
 
     @Test
     public void poistettuEiOleEnaaJoukossa() {
         joukko.poista(3);
-        assertFalse(joukko.kuuluu(3));
-        assertEquals(1, joukko.mahtavuus());
+        assertFalse(joukko.etsi(3));
+        assertEquals(1, joukko.getAlkioidenLkm());
     }
     
     @Test
     public void palautetaanOikeaTaulukko() {
         int[] odotettu = {3, 55, 99};
         
-        joukko.lisaa(55);
+        joukko.lisaaLuku(55);
         joukko.poista(10);
-        joukko.lisaa(99);
+        joukko.lisaaLuku(99);
 
         int[] vastaus = joukko.toIntArray();
         Arrays.sort(vastaus);
@@ -61,13 +61,13 @@ public class IntJoukkoTest {
     public void toimiiKasvatuksenJalkeen(){
         int[] lisattavat = {1,2,4,5,6,7,8,9,11,12,13,14};
         for (int luku : lisattavat) {
-            joukko.lisaa(luku);
+            joukko.lisaaLuku(luku);
         }
-        assertEquals(14, joukko.mahtavuus());
-        assertTrue(joukko.kuuluu(11));
+        assertEquals(14, joukko.getAlkioidenLkm());
+        assertTrue(joukko.etsi(11));
         joukko.poista(11);
-        assertFalse(joukko.kuuluu(11));
-        assertEquals(13, joukko.mahtavuus());
+        assertFalse(joukko.etsi(11));
+        assertEquals(13, joukko.getAlkioidenLkm());
     }
     
     @Test
@@ -78,7 +78,7 @@ public class IntJoukkoTest {
     @Test
     public void toStringToimiiYhdenKokoiselleJoukolla(){
         joukko = new IntJoukko();
-        joukko.lisaa(1);
+        joukko.lisaaLuku(1);
         assertEquals("{1}", joukko.toString());
     }
 

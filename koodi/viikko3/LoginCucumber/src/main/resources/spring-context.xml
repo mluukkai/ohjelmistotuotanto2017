@@ -12,4 +12,6 @@
     <context:annotation-config />
     <context:component-scan base-package="ohtu" />  
     
+    
+    
 </beans>
