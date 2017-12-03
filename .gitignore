@@ -1,3 +1,7 @@
 **/.gradle
 **/.settings
-/koodi/viikko3/WebLogin/.nb-gradle/
+**/.classpath
+**/.project
+**/bin
+.vscode/
+/koodi/viikko5/IntJoukkoSovellus/build/
