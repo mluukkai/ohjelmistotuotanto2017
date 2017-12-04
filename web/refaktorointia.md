@@ -51,7 +51,7 @@ public class IntJoukko {
             return false;
         }
         
-        if (alkioidenLkm % joukko.length == 0) {
+        if (eiTilaa()) {
             kasvataTalukkoa();
         }
         
@@ -83,6 +83,10 @@ public class IntJoukko {
         alkioidenLkm--;
 
         return true;
+    }
+
+    private boolean eiTilaa() {
+      return alkioidenLkm % joukko.length == 0;
     }
 
     private void tiivistaAlkaenKohdasta(int paikka) {
