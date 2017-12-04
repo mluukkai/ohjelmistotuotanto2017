@@ -175,8 +175,8 @@ public class IntJoukko {
 
 Muutama huomio:
 * Useissa näkemissäni ratkaisuissa oli unohdettu hyödyntää yksinkertaisimmissa konstruktoreissa kaksiparametrista konstruktoria
-* Metodit _kuuluu_ ja _posta_ joutuvat molemmat etsimään löytyykö tietty alkio jokuosta. Yhteinen logiikka kannattaa eristää metodiin, yllä nimeltään _paikka_ joka etsii tietyn alkion paikan taulukosta.
-* Joukko-operaatioiden toteuttamisessa kannattaa huomioida se, että joukkojen metodi _toIntArray_ mahdollistaa joukon alkioiden iteroimisen 'for each'-tyylillä. Näin vältytään ikävältä indeksittäiseltä taulukon läpikäynniltä.
+* Metodit _kuuluu_ ja _posta_ joutuvat molemmat etsimään löytyykö tietty alkio jokuosta. Yhteinen logiikka kannattaa eristää metodiin, yllä nimeltään _paikka_, joka etsii tietyn alkion paikan taulukosta.
+* Joukko-operaatioiden toteuttamisessa kannattaa huomioida se, että joukkojen metodi _toIntArray_ mahdollistaa alkioiden iteroimisen 'for each'-tyylillä. Näin vältytään ikävältä indeksittäiseltä taulukon läpikäynniltä.
 
 ## Tennis
 
