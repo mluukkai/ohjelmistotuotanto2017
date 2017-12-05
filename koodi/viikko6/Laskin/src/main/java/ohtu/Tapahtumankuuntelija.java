@@ -36,9 +36,9 @@ public class Tapahtumankuuntelija implements ActionListener {
             komento.suorita();
             edellinen = komento;
         } else {
-            // toiminto oli undo
-//            edellinen.peru();
-//            edellinen = null;
+//             toiminto oli undo
+            edellinen.peru();
+            edellinen = null;
         }
         
         nollaa.setEnabled(sovellus.tulos()!=0);

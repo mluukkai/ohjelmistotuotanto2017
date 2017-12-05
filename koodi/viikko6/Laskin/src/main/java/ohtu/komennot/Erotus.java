@@ -13,10 +13,11 @@ import ohtu.Sovelluslogiikka;
  * @author oce
  */
 public class Erotus implements Komento {
-    
-        private Sovelluslogiikka sovellus;
+
+    private Sovelluslogiikka sovellus;
     private JTextField tulos;
     private JTextField syote;
+    private int vanhaTulos;
 
     public Erotus(Sovelluslogiikka sovellus, JTextField tuloskentta, JTextField syotekentta) {
         this.sovellus = sovellus;
@@ -26,7 +27,18 @@ public class Erotus implements Komento {
 
     @Override
     public void suorita() {
+        this.vanhaTulos = sovellus.tulos();
+        try {
         sovellus.miinus(Integer.parseInt(this.syote.getText()));
-        this.tulos.setText(""+sovellus.tulos());
+        } catch (Exception e) {
+            
+        }
+        this.tulos.setText("" + sovellus.tulos());
+    }
+
+    @Override
+    public void peru() {
+        sovellus.setTulos(vanhaTulos);
+        this.tulos.setText(""+this.vanhaTulos);
     }
 }
