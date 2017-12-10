@@ -10,7 +10,7 @@ Koheesiolla tarkoitetaan sitä, kuinka pitkälle metodissa, luokassa tai kompone
 Esimerkki artikkelista [http://www.ibm.com/developerworks/java/library/j-eaed4/index.html](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html)
 
 ``` java
-public void populate() throws Exception  {
+public void populate() throws Exception {
     Connection c = null;
     try {
         c = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -76,7 +76,7 @@ Yksittäiset metodit ovat nyt kaikki samalla abstraktiotasolla toimivia ja hyvin
 
 Nyt aikaansaatu lopputulos ei ole vielä välttämättä ideaali koko ohjelman kontekstissa. [Artikkelissa](http://www.ibm.com/developerworks/java/library/j-eaed4/index.html) esimerkkiä jatketaankin eristäen tietokantaoperaatiot (joita myös muut ohjelman osat tarvitsevat) omaan luokkaansa.
 
-# ÄLÄ LUE VIELÄ TÄSTÄ ETEENPÄIN!
+# Viikon 5 laskareihin riittää tähän asti lukeminen
 
 ## Single responsibility -periaate eli koheesio luokkatasolla
 
@@ -157,6 +157,65 @@ public class Laskin {
 Nyt kommunikointitavan muutos ei edellytä luokkaan mitään muutoksia edellyttäen että uusikin kommunikoinitapa toteuttaa rajapinnan, jonka kautta Laskin hoitaa kommunikoinnin.
 
 Vaikka luokka Laskin siis toteuttaakin edelleen käyttäjänsä näkökulmasta samat asiat kuin aiemmin, ei se hoida kaikkea itse vaan _delegoi_ osan vastuistaan muualle.
+
+Kommunikointirajapinta voidaan toteuttaa esim. seuraavasti:
+
+```java
+public class KonsoliIO implements IO {
+    private Scanner lukija;
+
+    public KonsoliIO() {
+        lukija = new Scanner(System.in);
+    }
+
+    public int nextInt() {
+        return lukija.nextInt();
+    }
+
+    public void print(String m) {
+        System.out.println(m);
+    }
+}
+```
+
+Ja laskin konfiguroidaan injektoimalla _IO_-rajapinnan toteuttava luokka konstruktorin parametrina:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Laskin laskin = new Laskin( new KonsoliIO() );
+        laskin.suorita();
+    }
+}
+```
+
+Testausta varten voidaan toteuttaa _stub_ eli valekomponentti, jonka avulla testi voi hallita "käyttäjän" syötteitä ja lukea ohjelman tulostukset:
+
+```java
+public class IOStub implements IO {
+
+    int[] inputs;
+    int mones;
+    ArrayList<String> outputs;
+
+    public IOStub(int... inputs) {
+        this.inputs = inputs;
+        this.outputs = new ArrayList<String>();
+    }
+
+    public int nextInt() {
+        return inputs[mones++];
+    }
+
+    public void print(String m) {
+        outputs.add(m);
+    }
+}
+```
+
+Parannellun laskimen rakenne luokkakaaviona
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-1.png)
 
 Luokka ei ole vielä kaikin osin laajennettavuuden kannalta optimaalinen. Palaamme asiaan hetken kuluttua.
 
@@ -312,6 +371,10 @@ public class MääräaikaisTili extends Tili {
 
 Luokka syntyi tuskattomasti.
 
+Ohjelman rakenne näyttää tässä vaiheessa seuraavalta:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-2.png)
+
 Seuraavaksi tulee idea _Euribor-korkoa käyttävistä määräaikaistileistä_. 
 Miten nyt kannattaisi tehdä? Osa toiminnallisuudesta on luokassa Määräaikaistili ja osa luokassa Euribor-tili...
 
@@ -384,6 +447,10 @@ Tili normaali = new Tili("1234-1234", "Kasper Hirvikoski", new Tasakorko(4));
 Tili euribor12 = new Tili("4422-3355", "Tero Huomo", new EuriborKorko(12));
 ```
 
+Ohjelman rakenne on nyt seuraava
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-3.png)
+
+
 Muutetaan luokkaa vielä siten, että tilejä saadaan luotua ilman konstruktoria:
 
 ``` java
@@ -442,7 +509,7 @@ Tehdasmetodi siis auttaa _kapseloinnissa_, olion luomiseen liittyvät detaljit j
 
 Staattinen tehdasmetodi ei ole testauksen kannalta erityisen hyvä ratkaisu, esimerkissämme olisi vaikea luoda tili, jolle annetaan Korko-rajapinnan toteuttama mock-olio. Nyt se tosin onnistuu koska konstruktoria ei ole täysin piilotettu.
 
-Lisätietoa factory-suunnittelumallista esim. seuraavissa https://sourcemaking.com/design_patterns/factory_methodh ttp://www.oodesign.com/factory-method-pattern.html
+Lisätietoa factory-suunnittelumallista esim. seuraavissa https://sourcemaking.com/design_patterns/factory_method ja http://www.oodesign.com/factory-method-pattern.html
 
 Tehdasmetodien avulla voimme siis kapseloida luokan todellisen tyypin. Kasperin tilihän on määräaikaistili, se kuitenkin pyydetään Tili-luokassa sijaitsevalta factoryltä, olion oikea tyyppi on piilotettu tarkoituksella käyttäjältä. Määräaikaistilin käyttäjällä ei siis ole enää konkreettista riippuvuutta luokkaan Määräaikaistili.
 
@@ -456,9 +523,9 @@ Eli luopumalla perinnästä selkeytyy oliorakenne huomattavasti ja saavutetaan a
 
 ### strategy
 
-Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia eli englanniksi strategy*. 
+Tekniikka jolla koronmaksu hoidetaan on myöskin suunnittelumalli nimeltään *strategia* eli *englanniksi strategy*. 
 
-Strategyn avulla voidaan hoitaa tilanne, jossa eri olioiden käyttäytyminen on muuten sama mutta tietyissä kohdissa on käytössä eri "algoritmi". Esimerkissämme tämä algoritmi oli korkoprosentin määritys. Sama tilanne voidaan hoitaa usein myös perinnän avulla käyttämättä erillisiä olioita, strategy kuitenkin mahdollistaa huomattavasti dynaamisemman ratkaisun, sillä strategia-olioa voi vaihtaa ajoaikana. Strategyn käyttö ilmentää hienosti "favour composition over inheritance"-periaatetta
+Strategyn avulla voidaan hoitaa tilanne, jossa eri olioiden käyttäytyminen on muuten sama, mutta tietyissä kohdissa on käytössä eri "algoritmi". Esimerkissämme tämä algoritmi oli korkoprosentin määritys. Sama tilanne voidaan hoitaa usein myös perinnän avulla käyttämättä erillisiä olioita, strategy kuitenkin mahdollistaa huomattavasti dynaamisemman ratkaisun, sillä strategia-olioa voi vaihtaa ajoaikana. Strategyn käyttö ilmentää hienosti "favour composition over inheritance"-periaatetta
 
 Lisätietoa strategia-suunnittelumallista seuraavissa http://www.oodesign.com/strategy-pattern.html ja https://sourcemaking.com/design_patterns/strategy
 
@@ -660,13 +727,17 @@ public class Laskin {
 
 Hienona puolena laskimessa on nyt se, että voimme lisätä operaatioita ja Laskinta ei tarvitse muuttaa millään tavalla!
 
+Rakenne näyttää seuraavalta
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-4.png)
+
+
 Entä jos haluamme laskimelle muunkinlaisia kuin 2 parametria ottavia operaatioita, esim. neliöjuuren?
 
 Jatkamme muokkaamista seuraavassa luvussa
 
 ## laskin ja komento-olio
 
-Muutamme Operaatio-luokan olemusta, päädymme jo oikeastaan Strategy-suunnittelumallin lähisukulaisen Command-suunnittelumallin puolelle ja annammekin sille nimen Komento ja teemmie siitä rajapinnan sillä siirrämme erillisten komento-olioiden luomisen Komentotehdas-luokalle:
+Muutamme Operaatio-luokan olemusta, päädymme jo oikeastaan Strategy-suunnittelumallin lähisukulaisen _Command_-suunnittelumallin puolelle ja annammekin sille nimen Komento ja teemmie siitä rajapinnan sillä siirrämme erillisten komento-olioiden luomisen Komentotehdas-luokalle:
 
 ``` java
 public interface Komento {
@@ -777,6 +848,11 @@ public class Lopeta implements Komento {
 }
 ```
 
+Ohjelman rakenne tässä vaiheessa
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-5.png)
+
+
 ### command
 
 Eristämme siis jokaiseen erilliseen laskuoperaatioon liittyvä toiminnallisuuden omaksi oliokseen command-suunnittelumallin ideaa nodattaen, eli siten, että kaikki operaatiot toteuttavat yksinkertaisen rajapinnan, jolla on ainoastaan metodi public <code>void suorita()</code>
@@ -869,11 +945,13 @@ public class Laskin {
 
 Ohjelmasta on näinollen saatu laajennettavuudeltaan varsin joustava. Uusia operaatioita on helppo lisätä ja lisäys ei aiheuta muutoksia moneen kohtaan koodia. Laskin-luokallahan ei ole riippuvuuksia muualle kuin rajapintoihin IO ja Komento ja luokkaan Komentotehdas.
 
-### template method
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-6.png)
 
 Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaakin olla vaikea havaita miten ohjelma toimii, varsinkaan jos ei ole vastaavaan tyyliin tottunut, mukaan on nimittäin piilotettu factory- ja command-suunnittelumallien lisäksi suunnittelumalli __template method__ (kaksiparametrisen komennon toteutukseen). 
 
-Tmplate method -mallia sovelletaan tilanteissa, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
+### template method
+
+Template method -suunnittelumallia sopii tilainteisiin, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
 
 Summa- ja Tulo-komentojen suoritus on oleellisesti samanlainen:
 
@@ -921,9 +999,11 @@ public class Summa extends KaksiparametrinenLaskuoperaatio {
 }
 ```
 
-Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että osan suorituksen konkreettinen toteutus on abstraktissa metodissa, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
+Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että suorituksen eroava osa määritellään yliluokan abstraktina metodina, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
 
-Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella
+Template-metodeitta voi olla useampiakin kuin yksi eroava osa, tällöin abstrakteja metodeja määritellään tarpeellinen määrä. 
+
+Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella.
 Strategioita voidaan vaihtaa ajonaikana, template-metodissa olio toimii samalla tavalla koko elinaikansa  
 
 Lisää template method -suunnittelumallista seuraavissa
@@ -1003,7 +1083,7 @@ Luokkaa käytetään seuraavasti:
     }
 ```
 
-Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Osalle Java 8 on jo tuttu Ohjelmoinnin perusteiden ja jatkokurssin uudemmista versiosta.
+Tutustutaan tehtävässä hieman [Java 8:n](http://docs.oracle.com/javase/8/docs/api/) tarjoamiin uusiin ominaisuuksiin. Monelle Java 8 on jo tuttu Ohjelmoinnin perusteiden ja jatkokurssin uudemmista versiosta.
 
 Voimme korvata listalla olevien merkkijonojen tulostamisen kutsumalla listoilla (tarkemmin sanottuna rajapinnan [Interable](http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)-toteuttavilla) olevaa metodia <code>forEach</code> joka mahdollistaa listan alkioiden läpikäynnin "funktionaaliseen" tyyliin. Metodi saa parametrikseen "functional interfacen" (eli rajapinnan, joka määrittelee ainoastaan yhden toteutettavan metodin) toteuttavan olion. Tälläisiä ovat Java 8:ssa myös ns. lambda-lausekkeet (lambda expression), joka tarkoittaa käytännössä anonyymia mihinkään luokkaan liittymätöntä metodia.  Seuraavassa metodin palauttavien kirjan rivien tulostus forEachia ja lambdaa käyttäen:
 
@@ -1320,7 +1400,12 @@ public class KoosteElementti implements Elementti {
 
 Koska KoosteElementti toteuttaa itsekin rajapinnan Elementti, tarkoittaa tämä että kooste voi sisältää koosteita. Eli hyvin yksinkertaisella luokkarakenteella saadaan aikaan mielivaltaisista puumaisesti muodostuneista elementeistä koostuvia dokumentteja!
 
-Huomaamme, että <code>Elementti</code> on _funktionaalinen rejapinta_ eli se määrittelee ainoastaan yhden sen metodin joka rajapinnan toteuttavien luokkien on toteutettava. Kuten [edellisellä viikolla ](https://github.com/mluukkai/ohtu2014/blob/master/web/luento8.md#koodissa-olevan-ep%C3%A4triviaalin-copypasten-poistaminen-strategy-patternin-avulla-java-8a-hy%C3%B6dynt%C3%A4v%C3%A4-versio) totesimme Java 8:ssa voimme käyttää lambda-lausekkeita korvaamaan funktionaalisen rajapinnan toteuttavien luokkien instanssien tilalla. Koska luokat <code>TekstiElementti</code>, <code>ErotinElementti</code> ja <code>KoosteElementti</code> ovat niin yksinkertaisia, ei luokkia välttämättä tarvitse määritellä eksplisiittisesti. Voimmekin palauttaa elementtitehtaasta niiden tilalla sopivat lambda-lausekkeen avulla määritellyt elementit:
+Ohjelman rakenne tällä hetkellä
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-7.png)
+
+
+Huomaamme, että <code>Elementti</code> on _funktionaalinen rejapinta_ eli se määrittelee ainoastaan yhden sen metodin joka rajapinnan toteuttavien luokkien on toteutettava. Kuten [edellisessä esimerkissä](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/web/oliosuunnittelu.md#koodissa-olevan-epätriviaalin-copypasten-poistaminen-strategy-patternin-avulla-java-8a-hyödyntävä-versio) totesimme voimme käyttää Java 8:n lambda-lausekkeita korvaamaan funktionaalisen rajapinnan toteuttavien luokkien instanssien tilalla. Koska luokat <code>TekstiElementti</code>, <code>ErotinElementti</code> ja <code>KoosteElementti</code> ovat niin yksinkertaisia, ei luokkia välttämättä tarvitse määritellä eksplisiittisesti. Voimmekin palauttaa elementtitehtaasta niiden tilalla sopivat lambda-lausekkeen avulla määritellyt elementit:
 
 ``` java
 public class Elementtitehdas {
@@ -1388,6 +1473,8 @@ Ongelmaksi muodostuu nyt se, että elementtien lataaminen webistä on hidasta. J
 
 Proxy-suunnittelumalli tuo ongelmaan ratkaisun. Periaatteena on luoda varsinaiselle "raskaalle" oliolle edustaja joka toimii raskaan olion sijalla niin kauan kunnes olioa oikeasti tarvitaan. Tälläisessä tilanteessa edustaja sitten luo todellisen olion ja delegoi sille kaikki operaatiot.
 
+Lisää proxystä esim. https://sourcemaking.com/design_patterns/proxy
+
 Tehdään WebElementille proxy:
 
 
@@ -1423,6 +1510,10 @@ public class Elementtitehdas {
     }
 }
 ```
+
+Ohjelman rakenne täydentyy muotoon
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8.png)
 
 Asiakas on tyytyväinen aikaansaannokseemme.
 
@@ -1685,7 +1776,7 @@ public class PrepaidPino extends Pino {
 
 PrepaidPino siis perii pinon, mutta kun tarkkaa katsotaan, niin yliluokan operaatiot ylikirjoitetaan ja yliluokkaa ei hyödynnetä millään tavalla!
 
-PrepaidPino siis perii luokan Pino, mutta se ei käytä "perittyä" pinouttaan, vaan sensijaan PrepaidPino __sisältää__ pinon, jonka se saa konstruktoriparametrina. Tätä sisältämäänsä pinoa PrepaidPino käyttää tallettamaan kaikki alkionsa. Eli jokainen PrepaidPinon operaatio delegoi operaation sisältämälleen pinolle.
+PrepaidPino siis perii luokan Pino, mutta se ei käytä "perittyä" pinouttaan, vaan sensijaan PrepaidPino __sisältää__ pinon, jonka se saa konstruktoriparametrina. Tätä sisältämäänsä pinoa PrepaidPino käyttää tallettamaan kaikki alkionsa. Eli jokainen PrepaidPinon operaatio delegoi operaation toiminnallisuuden toteuttamisen sisältämälleen pinolle.
 
 PrepaidPino luodaan seuraavalla tavalla:
 
@@ -1787,6 +1878,8 @@ Dekoroinnin avulla saamme siis suhteellisen vähällä ohjelmoinnilla pinolle pa
 
 Dekorointi siis ei oleellisesti ole perintää vaan delegointia, jälleen kerran oliosuunnitteun periaate "favour composition over inheritance" on näyttänyt voimansa.
 
+Lisää dekoraattori-suunnittelumallista esim. osoitteessa https://sourcemaking.com/design_patterns/decorator 
+
 ## Pintotehdas
 
 Huomaamme, että eri ominaisuuksilla varustettujen pinojen luominen on käyttäjän kannalta hieman ikävää. Teemmekin luomista helpottamaan pinotehtaan:
@@ -1842,7 +1935,7 @@ Rakentaja-suunnittelumalli sopii tilanteeseemme erittäin hyvin. Pyrkimyksenämm
     Pino pino = rakenna.prepaid(10).kryptattu().pino();
 ```
 
-Rakentajan metodinimet ja rakentajan muuttujan nimi on valittu mielenkiinoisella tavalla. On pyritty mahdollisimman luonnollista kieltä muistuttavaan ilmaisuun pinon luonnissa. Kyseessä onkin oikeastaan DSL (domain specific language) pinojen luomiseen!
+Rakentajan metodinimet ja rakentajan muuttujan nimi on valittu mielenkiinoisella tavalla. On pyritty mahdollisimman luonnollista kieltä muistuttavaan ilmaisuun pinon luonnissa. Kyseessä onkin oikeastaan [DSL](https://martinfowler.com/bliki/DomainSpecificLanguage.html) (domain specific language) pinojen luomiseen!
 
 Luodaan ensin rakentajasta perusversio, joka soveltuu vasta normaalien pinojen luomiseen:
 
@@ -1862,7 +1955,7 @@ public class Pinorakentaja {
         pino = new Pino();
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 }
@@ -1892,7 +1985,7 @@ public class Pinorakentaja {
         // ????
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 }
@@ -1908,7 +2001,7 @@ public class Pinorakentaja {
         pino = new Pino();
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 
@@ -1929,7 +2022,7 @@ public class Pinorakentaja {
         pino = new Pino();
     }
 
-    public Pino pino(){
+    public Pino pino() {
         return pino;
     }
 
@@ -1970,7 +2063,10 @@ Pino pino1 = rakenna.pino();  // luo normaalin pinon
 Pino pino2 = rakenna.kryptattu().loggaava(loki).prepaid.pino();  // luo sen mitä odottaa saattaa!
 ```
 
-Rakentajan toteutus perustuu tekniikkaan nimeltään [method chaining](http://en.wikipedia.org/wiki/Method_chaining) eli metodien ketjutukseen. Metodit jotka ovat muuten luonteeltaan void:eja onkin laitettu palauttamaan rakentajaolio. Tämä taas mahdollistaa metodin kutsumisen toisen metodin palauttamalle rakentajalle, ja näin metodikutsuja voidaan ketjuttaa peräkkäin mielivaltainen määrä. Metodiketjutuksen motivaationa on yleensä saada olion rajapinta käytettävyydeltään mahdollisimman luonnollisen kielen kaltaiseksi DSL:ksi.
+Rakentajan toteutus perustuu tekniikkaan nimeltään [method chaining](http://en.wikipedia.org/wiki/Method_chaining) eli metodien ketjutukseen. Metodit jotka ovat muuten luonteeltaan void:eja onkin laitettu palauttamaan rakentajaolio. Tämä taas mahdollistaa metodin kutsumisen toisen metodin palauttamalle rakentajalle, ja näin metodikutsuja voidaan ketjuttaa peräkkäin mielivaltainen määrä. Metodiketjutuksen motivaationa on yleensä saada olion rajapinta käytettävyydeltään mahdollisimman luonnollisen kielen kaltaiseksi DSL:ksi. 
+
+Tällä tekniikalla toteutetuista rajapinnoista käytetään myös nimitystä
+[fluent interface](https://martinfowler.com/bliki/FluentInterface.html).
 
 ## adapteri
 
@@ -1978,8 +2074,7 @@ Rakentajan toteutus perustuu tekniikkaan nimeltään [method chaining](http://en
 
 Nyt tarkastelemme tilannetta, jossa meillä on käytettävissä luokka joka oleellisesti ottaen tarjoaa haluamamme toiminnallisuuden, mutta sen rajapinta on hieman vääränlainen. Emme kuitenkaan voi muuttaa alkuperäistä luokkaa sillä muutos rikkoisi luokan muut käyttäjät.
 
-Adapteri-suunnittelumalli sopii tälläisiin tilanteisiin [http://sourcemaking.com/design_patterns/adapter]
-(http://sourcemaking.com/design_patterns/adapter)
+[Adapteri](http://sourcemaking.com/design_patterns/adapter)-suunnittelumalli sopii tälläisiin tilanteisiin. 
 
 Tehdään aiemmasta esimerkistä tutulle Pinolle adapteri HyväPino joka muuttaa metodien nimiä ja tarjoaa muutaman lisätoiminnallisuuden:
 
@@ -2014,7 +2109,7 @@ public class HyväPino {
     }
 
     public List<String> kaikkiPinosta(){
-        ArrayList<String> alkiot = new ArrayList<String>();
+        ArrayList<String> alkiot = new ArrayList<>();
 
         while(eiOleTyhja()){
             alkiot.add(pinosta());
@@ -2042,24 +2137,33 @@ public static void main(String[] args) {
 
 ## MVC eli Model View Controller
 
-Teemme erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen.
 
-Sovelluslogiikka seuraavassa:
+Model View Controller (MVC) -mallilla tarkoitetaan periaatetta, jonka avulla _model_ eli sovelluslogiikan sisältävät oliot eristetään käyttöliittymän näytöt (view) generoivasta koodista. Toimintaa koordinoivana komponenttina ovat _kontrollerit_, jotka reagoivat käyttäjän syötteisiin kutsumalla tarvittavia model-oliota ja pyytämällä viewejä päivittämään näkymät operaatioiden edellyttämällä tavalla.
+
+Periaatteena on, että model, eli sovellustalogiikka ei tunne kontrollereja eikä näyttöjä ja samaan modelissa olevaan dataan voikin olla useita näyttöjä.
+
+Esim. Javalla tehdyissä käyttöliittymäsovelluksissa painikkeiden klikkailuun reagoimisesta vastaavat _tapahtumankuuntelijat_ ovat MVC-mallia sovellettaessa kontrollereja. 
+
+Koska kontrollerit hoitavat käyttöliittymäspesifejä tehtäviä kuten painikkeisiin reagoimista, niiden ajatellaan esim. kerrosarkkitehtuurista puhuttaessa liittyvän käyttöliittymäkerrokseen. 
+
+Teemme nyt erittäin yksinkertaisen MVC-periaatetta noudattavan sovelluksen käyttäen Javan Swing-käyttöliittymäkirjastoa. Jos suoritut Ohjelmoinnin jatkokurssin keväällä 2017 ei Swing ole välttämättä tuttu sillä kurssi käytti käyttöliittymäkirjastona Java FX:ää. Periaatteet ovat kuitenkin samat. 
+
+Sovelluslogiikka on seuraavassa:
 
 
 ``` java
-public class Sovellusolio {
+public class Sovelluslogiikka {
     private ArrayList<Integer> luvut;
 
-    public Sovellusolio() {
-        luvut = new ArrayList<Integer>();
+    public Sovelluslogiikka() {
+        luvut = new ArrayList<>();
     }
 
     public ArrayList<Integer> getLuvut() {
         return luvut;
     }
 
-    public void arvoLuku(){
+    public void arvoLuku() {
         int luku = 1+new Random().nextInt(20);
         luvut.add(luku);
     }
@@ -2067,9 +2171,9 @@ public class Sovellusolio {
 }
 ```
 
-Eli sovelluksella voi arpoa lukuja koko ajan uusia lukuja. Sovellus muistaa kaikki arpomansa luvut.
+Eli sovelluksella voi arpoa lukuja koko ajan uusia lukuja. Sovelluslogiikka muistaa kaikki arpomansa luvut.
 
-Näytössä on painike, jolla pyydetään uuden luvun arpomista sekä tekstikenttä missä arvotut luvut näytetään:
+Näytössä on painike, jolla pyydetään uuden luvun arpomista sekä tekstikenttä, missä arvotut luvut näytetään:
 
 
 ``` java
@@ -2101,15 +2205,15 @@ public class Naytto extends JFrame {
 }
 ```
 
-Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakäsittelijää joka on MVC:n hengen mukaisesti laitettu kontrolleriin:
+Näyttö on täysin passiivinen, se ei sisällä edes tapahtumakuuntelijaa joka on MVC:n hengen mukaisesti laitettu kontrolleriin:
 
 
 ``` java
 public class Kontrolleri implements ActionListener {
     private Naytto naytto;
-    private Sovellusolio model;
+    private Sovelluslogiikka model;
 
-    public Kontrolleri(Naytto naytto, Sovellusolio model) {
+    public Kontrolleri(Naytto naytto, Sovelluslogiikka model) {
         this.naytto = naytto;
         this.model = model;
         naytto.asetaKontrolleri(this);
@@ -2123,48 +2227,75 @@ public class Kontrolleri implements ActionListener {
 }
 ```
 
-Kontrolleri tuntee näytön ja sovelluslogiikan eli mallin. Alussa kontrolleri asettaa itsensä tapahtumakuuntelijaksi näytössä olevalle painikkeelle.
+Kontrolleri tuntee _näytön_ ja sovelluslogiikan eli _modelin_. Konstruktorissa kontrolleri asettaa itsensä tapahtumakuuntelijaksi näytössä olevalle painikkeelle.
 
-Kun nappia painetaan, pyytää kontrolleri modelia arpomaan uuden luvun. Sen jälkeen näyttö hakee luvut modelilta ja asettaa ne tekstimuoisena näytölle käyttäen näytön update-metodia.
+Kun nappia painetaan, eli metodin _actionPerformed_ suorituksen yhteydessä kontrolleri pyytää modelia arpomaan uuden luvun. Sen jälkeen kontrolleri hakee luvut modelilta ja asettaa ne tekstimuoisena näytölle käyttäen näytön update-metodia.
 
 Itse sovellus ainoastaan luo oliot ja antaa näytön sekä modelin kontrollerille:
 
 ``` java
 public class MVCSovellus {
 
-    public void kaynnista(){
+    public void kaynnista() {
         Naytto naytto = new Naytto();
-        Sovellusolio model = new Sovellusolio();
+        Sovelluslogiikka model = new Sovelluslogiikka();
         Kontrolleri kontrolleri = new Kontrolleri(naytto, model);
     }
 }
 ```
 
-Model eli sovellusolio on nyt täysin tietämätön siitä kuka sitä kutsuu. Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
+Rakenne luokkakaaviona:
 
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8.png)
+
+Model eli sovelluslogiikka on nyt täysin tietämätön siitä kuka sen kutsuu. 
+
+Päätämme lisätä ohjelmaan useampia näyttöjä, joille kaikille tulee oma kontrolleri.
 
 ``` java
 public class MVCSovellus2 {
 
     public void kaynnista() {
-        Sovellusolio model = new Sovellusolio();
+        Sovelluslogiikka model = new Sovelluslogiikka();
         for (int i = 0; i < 3; i++) {
             luoNaytto(model);
         }
     }
 
-    private void luoNaytto(Sovellusolio model) {
+    private void luoNaytto(Sovelluslogiikka model) {
         Naytto naytto = new Naytto();
         Kontrolleri kontrolleri = new Kontrolleri(naytto, model);
     }
 }
 ```
 
+Tilanne näyttää _oliokaaviona_ seuraavalta:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-8a.png)
+
+Eli sovelluslogiikkaolioita on ainoastaan yksi, mutta _näyttö-kontrolleri_-pareja on kolme.
+
 Sovelluksessamme on pieni ongelma. Haluaisimme kaikkien näyttöjen olevan koko ajan ajantasalla. Nyt ainoastaan se näyttö minkä nappia painetaan päivittyy ajantasaiseksi.
+
+## Käyttöliittymän päivittäminen sovelluslogiikan tilan muuttuessa
+
+Kerrosarkkitehtuurissa ja MVC-mallin mukaisissa sovelluksissa törmätään usein nyt kohdatun kaltaiseen tilanteeseen, missä sovelluslogiikan on kerrottava käyttöliittymäkerrokselle (joka siis sisältää näkymät ja kontrollerit) jonkin sovellusolion tilan muutoksesta, jotta käyttöliittymä pystyisi koko ajan näyttämään ajantasaista tietoa.
+
+Meidän tapauksessamme siis käyttöliittymäkerroksessa on kolme eri näyttöä, ja niitä vastaavat kontrollerit, ja sovelluslogiikan muuttunut tila pitäisi saada päivitettyä yhtä aikaa jokaiseen näkymään. Nyt päivitys tapahtuu ainoastaan siihen näkymään, joka saa aikaan uuden luvun arpomisen.
+
+Suoraviivainen toteutus saa aikaa ikävän riippuvuussyklin sovelluslogiikasta käyttöliittymään. 
+
+Kuvitellaan, että sovelluslogiikka ilmoittaa muuttuneesta tilasta kutsumalla jonkin käyttöliittymän luokan toteuttamaa metodia _update_. Parametrina voidaan esim. kertoa muuttunut tieto. Tilanne näyttää UML:n _pakkauskaaviona_ seuraavalta:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-9.png)
+
+Eli käyttöliittymäkerros on riippuvainen sovelluslogiikasta mutta myös sovelluslogiikka on riippuvainen käyttöliittymästä, sillä sen on  kutsuttava käyttöliittymän metodia update sovelluslogiikan päivityksen tapahtuessa. Sykliset riippuvuudet  eivät ole ollenkaan toivottavia.
 
 ## Observer
 
-Siirrymme käyttämään luentokalvoilla selitettyä Observer-suunnittelumallia.
+Suunnittelumalli [Observer](https://sourcemaking.com/design_patterns/observer) auttaa rikkomaan sykliset riippuvuudet.
+
+Määritellään rajapinta, joka sisältää käyttöliittymäluokan päivitysmetodin _update_, jota sovellusluokka kutsuu.
 
 ``` java
 public interface Observer {
@@ -2172,23 +2303,41 @@ public interface Observer {
 }
 ```
 
-Sovellusolio tuntee joukon tarkkailijoita:
+Käyttöliittymäluokka toteuttaa rajapinnan, eli käytännössä toteuttaa _update_-metodin haluamallaan tavalla. Sovellusluokalle riittää nyt tuntea ainoastaan rajapinta, jonka metodia _update_ se tarvittaessa kutsuu.
+
+Nyt kaikki menee siististi, sovelluslogiikasta ei enää ole konkreettista riippuvuutta mihinkään käyttöliittymän luokkaan mutta se voi silti kutsua käyttöliittymän metodia. Sovellusluokka tuntee siis vain rajapinnan. Rajapinta voidaan tarvittaessa määritellä sovelluslogiikan kanssa samassa pakkauksessa, jolloin riippuvuudesta saadaan kooditasolla vieläkin hallitumpi:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-10.png)
+
+Jos käyttöliittymäolio haluaa tarkkailla jonkun sovellusolion tilaa, se toteuttaa Observer-rajapinnan ja rekisteröi rajapintansa tarkkailtavalle sovellusoliolle kutsumalla sovelluslogiikan metodia _addObserver_. Näin sovellusolio saa tietoonsa kaikki sitä tarkkailevat rajapinnat.
+
+Kun joku muuttaa sovellusolion tilaa, kutsuu se sovellusolion metodia _notifyObservers_, joka taas kutsuu kaikkien tarkkailijoiden metodeja _update_. 
+
+Toiminnan logiikka sekvenssikaaviona:
+
+![](https://github.com/mluukkai/ohjelmistotuotanto2017/raw/master/images/os-11.png)
+
+## sovelluksen observeria käyttävä versio
+
+Muutetaan nyt sovelluksemme käyttämään observer-suunnittelumallia.
+
+Laajennetaan sovelluslogiikkaa siten, että tuntee joukon tarkkailijoita:
 
 ``` java
-public class Sovellusolio {
+public class Sovelluslogiikka {
     private ArrayList<Integer> luvut;
     private List<Observer> tarkkailijat;
 
-    public Sovellusolio() {
-        luvut = new ArrayList<Integer>();
-        tarkkailijat = new ArrayList<Observer>();
+    public Sovelluslogiikka() {
+        luvut = new ArrayList<>();
+        tarkkailijat = new ArrayList<>();
     }
 
-    public void rekisteroiTarkkailija(Observer tarkkailija){
+    public void addObserver(Observer tarkkailija) {
         tarkkailijat.add(tarkkailija);
     }
 
-    public void ilmoitaTarkkailijoille(){
+    public void notifyObservers() {
         for (Observer tarkkailija : tarkkailijat) {
             tarkkailija.update();
         }
@@ -2206,25 +2355,27 @@ public class Sovellusolio {
 }
 ```
 
-Tarkkailijat voivat rekisteröidä itsensä sovellukselle. Kun sovelluksen metodia ilmoitaTarkkailijoille kutsutaan, kutsuu sovellusolio jokaisen tarkkailijan update-metodia.
+Tarkkailijat voivat rekisteröidä itsensä sovellukselle metodilla _addObserver_. Kun sovelluksen metodia _notifyObservers_ kutsutaan, kutsuu sovelluslogiikka jokaisen rekisteröityneen tarkkailijan _update_-metodia.
 
-Sovellusoliolla ei siis ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
+Sovelluslogiikalla ei nyt ole konkreettista riippuvuutta mihinkään tarkkailijaan, se tuntee ne ainoastaan rajapinnan kautta.
+
+Kontrolleri muuttuu seuraavasti:
 
 ``` java
 public class Kontrolleri implements ActionListener, Observer {
     private Naytto naytto;
-    private Sovellusolio model;
+    private Sovelluslogiikka model;
 
-    public Kontrolleri(Naytto naytto, Sovellusolio model) {
+    public Kontrolleri(Naytto naytto, Sovelluslogiikka model) {
         this.naytto = naytto;
         this.model = model;
         naytto.asetaKontrolleri(this);
-        model.rekisteroiTarkkailija(this);
+        model.addObserver(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
         model.arvoLuku();
-        model.ilmoitaTarkkailijoille();
+        model.notifyObservers();
     }
 
     public void update() {
@@ -2234,16 +2385,15 @@ public class Kontrolleri implements ActionListener, Observer {
 }
 ```
 
-Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan Observer. Kun nappia painetaan, eli actionPerformed-metodissa, kontrolleri pyytää modelia arpomaan uuden luvun ja samalla pyytää modelia ilmoittamaan tarkkailijoille muuttuneen arvon.
+Kontrolleri toimii tarkkailijana eli toteuttaa rajapinnan _Observer_. Kun nappia painetaan, eli _actionPerformed_-metodissa, kontrolleri pyytää modelia arpomaan uuden luvun ja samalla pyytää modelia ilmoittamaan tarkkailijoille muuttuneen arvon.
 
-update-metodia kutsuttaessa (jota siis sovellusolio kutsuu) suorittaa kontrolleri näytön päivityksen.
+_update_-metodia kutsuttaessa (jota siis sovelluslogiikka kutsuu kun sen tila muuttuu) hakee kontrolleri sovelluslogiikan uuden tilan ja suorittaa hallinnoimansa näytön päivityksen.
 
 Luokkaa Naytto ei tässä ratkaisussa tarvitse muuttaa.
 
-## Pelaajastatistiikkaa Java 8:lla
+## Pelaajastatistiikkaa Java 8:lla 
 
-Muokataan hieman  [viikon 2 laskareissa](https://github.com/mluukkai/ohtu2017/blob/master/laskarit/2.md#2-riippuvuuksien-injektointi-osa-2-nhl-tilastot)
-työn alla ollutta NHL-pelaajastatistiikka-ohjelmaa.
+Muokataan hieman jo tutuksi käynyttä NHL-pelaajastatistiikka-ohjelmaa, tällä kertaa [viikon 1 laskareiden](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/laskarit/1.md#15-riippuvuuksien-injektointi-osa-2-nhl-tilastot) versiota.
 
 ### forEach
 
@@ -2324,7 +2474,7 @@ Staattisen importtauksen jälkeen voimme siis tulostaa ruudulle helpommin, kirjo
 
 Luokan <code>Statistics</code> metodit toimivat hyvin samaan tyyliin, ne käyvät läpi pelaajien listan ja palauttavat joko yksittäisen tai useampia pelaajia metodin määrittelemästä kriteeristä riippuen. Jos lisäisimme luokalle samalla periaatteella muita hakutoiminnallisuuksia (esim. kaikkien yli 10 maalia tehneiden pelaajien lista), joutuisimme "copypasteamaan" pelaajat läpikäyvää koodia vielä useampiin metodeihin.
 
-Parempi ratkaisu olisikin ohjelmoida luokalle geneerinen etsintämetodi, joka saa hakukriteerin parametrina. [Edelliseltä viikolta tutut](https://github.com/mluukkai/ohtu2017/blob/master/web/luento8.md#koodissa-olevan-epätriviaalin-copypasten-poistaminen-strategy-patternin-avulla-java-8a-hyödyntävä-versio) Java 8:n oliovirrat eli streamit tarjoavat sopivan välineen erilaisten hakujen toteuttamiseen. Streamien [API-kuvaus](http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html).
+Parempi ratkaisu olisikin ohjelmoida luokalle geneerinen etsintämetodi, joka saa hakukriteerin parametrina. Java 8:n oliovirrat eli [streamit](http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html) tarjoavat sopivan välineen erilaisten hakujen toteuttamiseen. 
 
 Muutetaan ensin metodi <code>List&#60;Player> team(String teamName)</code> käyttämään stream-apia:
 
@@ -2361,7 +2511,7 @@ Yleistetyn metodin avulla on nyt helppo tehdä mielivaltaisen monimutkaisia haku
     }
 ```
 
-Java 8:ssa rajapinnoilla voi olla oletustoteutuksen omaavia metodeja. Rajapinnalla <code>Predicate</code> löytyykin mukavasti valmiiksi toteutetut metodit <code>and</code>, <code>or</code> ja <code>negate</code>. Näiden avulla on helppo muodostaa yksittäisten esim. lambda-lausekkeen avulla muodostettujen ehtojen avulla mielivaltaisen monimutkaisia ehtoja. Seuraavassa edellisen esimerkin tuloksen tuottava haku de Morganin lakia hyväksikäyttäen muodostettuna:
+Java 8:ssa rajapinnoilla voi olla oletustoteutuksen omaavia metodeja. Rajapinnalla <code>Predicate</code> löytyykin mukavasti valmiiksi toteutetut metodit <code>and</code>, <code>or</code> ja <code>negate</code>. Näiden avulla on helppo muodostaa yksittäisten esim. lambda-lausekkeen avulla muodostettujen ehtojen avulla mielivaltaisen monimutkaisia ehtoja. Seuraavassa edellisen esimerkin tuloksen tuottava haku [de Morganin lakia](https://fi.wikipedia.org/wiki/De_Morganin_lait) hyväksikäyttäen muodostettuna:
 
 ``` java
     Statistics stats = new Statistics();
@@ -2373,7 +2523,7 @@ Java 8:ssa rajapinnoilla voi olla oletustoteutuksen omaavia metodeja. Rajapinnal
     stats.find(cond.negate()).forEach(out::println);
 ```
 
-Eli ensin muodostettiin ehto "korkeintaan 20 maalia _tai_ syöttöä tehneet pelaajat." Tästä otettiin sitten negaatio jolloin tuloksena on de morganin sääntöjen nojalla ehto "vähintään 21 maalia _ja_ 21 syöttöä tehneet pelaajat".
+Eli ensin muodostettiin ehto "korkeintaan 20 maalia _tai_ syöttöä tehneet pelaajat." Tästä otettiin sitten negaatio jolloin tuloksena on de Morganin sääntöjen nojalla ehto "vähintään 21 maalia _ja_ 21 syöttöä tehneet pelaajat".
 
 ### järjestäminen
 
@@ -2406,7 +2556,7 @@ Metodista on helppo tehtä Java 8:a hyödyntävä versio:
     }
 ```
 
-Eli otamme jälleen pelaajista muodostuvat streamin. Stream muutetaan luonnollisen järjestyksen (eli luokan <code>Player</code> metodin <code>compareTo</code> määrittelemän järjestyksen) mukaisesti järjestetyksi streamiksi metodilla <code>sorted</code>. Medodilla <code>limit</code> rajoitetaan streamin koko haluttuun määrään pelaajia, ja näistä muodostettu lista palautetaan.
+Eli otamme jälleen pelaajista muodostuvat streamin. Stream muutetaan luonnollisen järjestyksen (eli luokan <code>Player</code> metodin <code>compareTo</code> määrittelemän järjestyksen) mukaisesti järjestetyksi streamiksi metodilla <code>sorted</code>. Metodilla <code>limit</code> rajoitetaan streamin koko haluttuun määrään pelaajia, ja näistä muodostettu lista palautetaan.
 
 Jotta myös muunlaiset järjestykset olisivat mahdollisia, generalisoidaan metodi muotoon, joka ottaa parametriksi halutun järjestyksen määrittelevän <code>Comparator&#60;Player></code>-rajapinnan määrittelevän olion:
 
@@ -2440,7 +2590,7 @@ Comparator-olioiden luominen on hieman ikävää, varsinkin jos joutuisimme luom
 
 Koodi sisältää ikävästi copy-pastea.
 
-Voimme siistiä koodia Comparatoreja rakentavan tehdasmetodin avulla. Periaatteena on, että tehtaalle annetaan viitteenä metodi, jonka perusteella <code>Player</code>-olioiden vertailu tehdään. Esim. pisteiden perusteella tapahtuvan vertailun tekevä vertailija luotaisiin seuraavasti:
+Voimme siistiä koodia Comparatoreja rakentavan _tehdasmetodin_ avulla. Periaatteena on, että tehtaalle annetaan viitteenä getterimetodi, jonka perusteella <code>Player</code>-olioiden vertailu tehdään. Esim. pisteiden perusteella tapahtuvan vertailun tekevä vertailija luotaisiin seuraavasti:
 
 ``` java
     Comparator<Player> byPoints = by(Player::getPoints);
@@ -2554,7 +2704,9 @@ Metodi <code>reduce</code> saa parametrikseen lambda-lausekkeen joka saa ensimm�
 
 ## Builder revisited
 
-Luennolla 9 toteutettiin monimutkaisen olion luomista helpottava [rakentaja](https://github.com/mluukkai/ohtu2016/blob/master/web/luento9.md#pinorakentaja). Rakentajan toteutuksessa kiinnitettiin erityisesti huomiota rajapinnan sujuvuuteen:
+Muutama metri ylempänä tässä materiaalissa toteutettiin monimutkaisen pinon luomista helpottava [rakentaja](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/web/oliosuunnittelu.md#pinorakentaja). 
+
+Rakentajan toteutuksessa kiinnitettiin erityisesti huomiota rajapinnan käytön luontevaan muotoon:
 
 ``` java
 Pinorakentaja rakenna = new Pinorakentaja();
@@ -2590,7 +2742,7 @@ Metodin toteutus näyttää seuraavalta:
 ``` java
 public class Player implements Comparable<Player> {
 
-    String name;
+    private String name;
     private String team;
     private int goals;
     private int assists;
@@ -2608,7 +2760,7 @@ public class Player implements Comparable<Player> {
 }
 ```
 
-Metodin parametrina on siis <code>Consumer&#60;Player></code>-tyyppinen olio. Käytännössä kyseessä on rajapinta, joka määrittelee että sen toteuttajalla on metodi <code>void accept(Player p)</code>. Rajapinnan toteuttava olio on helppo luoda lambda-lausekkeen avulla. Käytännössä siis rakentajametodi toimii siten, että se luo ensin pelaaja-olion ja kutsuu sen jälkeen metodin parametrina olevaa lambda-lausekkeen avulla määriteltyä koodilohkoa antaen luodun pelaaja-olion parametriksi. Näin koodilohkoon määritellyt setterikutsut suoritetaan luodulle pelaajaoliolle. Rakentajametodi palauttaa lopuksi luodun ja määritellyllä tavalla "konfiguroidun" olion kutsujalle.
+Rakentajametodin _create_ parametrina on siis <code>Consumer&#60;Player></code>-tyyppinen olio. Käytännössä kyseessä on rajapinta, joka määrittelee että sen toteuttajalla on metodi <code>void accept(Player p)</code>. Rajapinnan toteuttava olio on helppo luoda lambda-lausekkeen avulla. Käytännössä siis rakentajametodi toimii siten, että se luo ensin pelaaja-olion ja kutsuu sen jälkeen metodin parametrina olevaa lambda-lausekkeen avulla määriteltyä koodilohkoa antaen luodun pelaaja-olion parametriksi. Näin koodilohkoon määritellyt setterikutsut suoritetaan luodulle pelaajaoliolle. Rakentajametodi palauttaa lopuksi luodun ja määritellyllä tavalla "konfiguroidun" olion kutsujalle.
 
 Eli käytännössä jos rakentajaa kutsutaan seuraavasti:
 
