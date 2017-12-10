@@ -1,5 +1,7 @@
 package ohtu.verkkokauppa;
 
+import java.util.ArrayList;
+
 public class Kauppa {
 
     private VarastoInt varasto;
@@ -23,6 +25,7 @@ public class Kauppa {
     public void poistaKorista(int id) {
         Tuote t = varasto.haeTuote(id); 
         varasto.palautaVarastoon(t);
+        ostoskori.poista(t);
     }
 
     public void lisaaKoriin(int id) {
