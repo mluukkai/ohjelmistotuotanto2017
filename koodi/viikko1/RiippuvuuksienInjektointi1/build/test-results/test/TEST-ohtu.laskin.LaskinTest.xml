@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ohtu.laskin.LaskinTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-11-01T07:55:40" hostname="fuxi16" time="0.008">
+  <properties/>
+  <testcase name="yksiSummaOikein" classname="ohtu.laskin.LaskinTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
