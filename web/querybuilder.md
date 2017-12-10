@@ -73,7 +73,7 @@ _QueryBuilder_ osoittautui paikoin aika haastavaksi. Oma ratkaisuni on seuraava:
 
 ```java
 public class QueryBuilder {
-    Matcher matcher;
+    private Matcher matcher;
 
     public QueryBuilder() {
         this.matcher = new All();
