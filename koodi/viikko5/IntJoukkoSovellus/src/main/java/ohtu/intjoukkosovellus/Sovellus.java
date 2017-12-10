@@ -40,7 +40,7 @@ public class Sovellus {
         System.out.println("");
         System.out.print("Mikä luku lisätään? ");
         lisLuku = lukija.nextInt();
-        joukko.lisaa(lisLuku);
+        joukko.lisaaLuku(lisLuku);
         return;
 
     }
@@ -98,7 +98,7 @@ public class Sovellus {
         joukko = mikaJoukko();
         System.out.print("Mikä luku? ");
         kysLuku = lukija.nextInt();
-        boolean kuuluuko = joukko.kuuluu(kysLuku);
+        boolean kuuluuko = joukko.etsi(kysLuku);
         if (kuuluuko) {
             System.out.println(kysLuku + " kuuluu joukkoon ");
         } else {

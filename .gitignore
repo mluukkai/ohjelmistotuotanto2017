@@ -1,6 +1,22 @@
 **/.gradle
 **/.settings
+<<<<<<< HEAD
+/koodi/viikko3/Kurssistatistiikka/.nb-gradle/
+/koodi/viikko3/HelloCucumber/.nb-gradle/
+/koodi/viikko3/HelloCucumber/build/
+/koodi/viikko3/LoginCucumber/.nb-gradle/
+/koodi/viikko3/LoginCucumber/build/
+/koodi/viikko3/WebLogin/.nb-gradle/
+=======
 **/.classpath
 **/.project
 **/bin
 .vscode/
+>>>>>>> 2144f465165e87b38d7f77bda469066d959519ec
+/koodi/viikko5/IntJoukkoSovellus/.nb-gradle/
+/koodi/viikko5/IntJoukkoSovellus/build/
+/koodi/viikko5/Tennis/.nb-gradle/
+/koodi/viikko5/Tennis/build/
+/koodi/viikko6/Laskin/.nb-gradle/
+/koodi/viikko6/Laskin/build/
+/koodi/viikko6/QueryLanguage/.nb-gradle/
