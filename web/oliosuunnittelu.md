@@ -1880,7 +1880,7 @@ Dekorointi siis ei oleellisesti ole perintää vaan delegointia, jälleen kerran
 
 Lisää dekoraattori-suunnittelumallista esim. osoitteessa https://sourcemaking.com/design_patterns/decorator 
 
-## Pintotehdas
+## Pinotehdas
 
 Huomaamme, että eri ominaisuuksilla varustettujen pinojen luominen on käyttäjän kannalta hieman ikävää. Teemmekin luomista helpottamaan pinotehtaan:
 
