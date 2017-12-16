@@ -1,0 +1,9 @@
+Scrum, Kanban ja näiden yhdistelmä Scrumban ovat esimerkkejä ketterästä ohjelmistokehitystavasta. Kyseisessä mallissa arvostetaan työntekijöitä ja työntekijöiden välistä kanssakäymistä, yhteistyötä asiakkaan kanssa ja kannustetaan muutokseen, ja siten se eroaa suuresti perinteisemmästä vesiputousmallista, jossa mm. dokumentointi ja perusteellinen suunnittelu ovat keskeisiä.
+
+Scrumissa ohjelmistoa tuotetaan "sprinteissä", joista jokaisessa ohjelmistotuotannon eri vaiheet (vaatimusmäärittely, suunnittelu, toteutus, testaus, ylläpito) toistuvat. Jokaisen sprintin alussa kehitystiimi tapaa asiakkaan ja tuleva sprintti suunnitellaan. Scrumiin liittyy myös monia muita palaverejä. Ohessa ylläpidetään tuotteen kehitysjonoa (product backlog), josta löytyy mm. toteutettavan ohjelmiston toiminnot priorisoituina ja arviot kunkin toiminnon toteuttamiseen kuluvasta ajasta.
+
+Kanbanissa keskeisessä osassa ovat työnkulun visualisointi, jatkuva kehitys ja keskeneräisen työn määrän minimointi. Myös Kanbanin käytäntöihin kuuluvat tapaamiset: esimerkiksi päivittäisissä tapaamisissa käydään läpi, mitä ollaan saavutettu ja mitä ongelmia ollaan havaittu, ja priorisointitapaamisissa priorisoidaan tehtäviä ainakin kehitystiimin ja asiakkaan edustajan kesken.
+
+Kun ohjelmistotuotantomenetelmässä on sekä Scrumin että Kanbanin piirteitä, kutsutaan sitä Scrumbaniksi. Tuotantoprosessien arvaamattoman ja muuttuvan luonteen takia Scrumbanista on poistettu Scrumin aikarajoitetut sprintit, eikä siinä keskitytä työmäärän arviointiin yhtä paljon. Toisaalta Scrumiinkin kuuluvat arviointitapaaminen ja lopputapaaminen liittyvät Scrumban-projektin usein tapahtuvaan suunnitteluun. Kanbanista työnkulkua visualisoivat kanban-taulut kuuluvat Scrumbaniin.
+
+Kuten Scrum ja Kanban, on Scrumban ainoastaan työkalu tietyn ongelman ratkaisemiseen. Ohjelmistotuotannolle ei välttämättä ole valmista menetelmää.
