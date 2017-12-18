@@ -951,7 +951,7 @@ Hintana joustavuudelle on luokkien määrän kasvu. Nopealla vilkaisulla saattaa
 
 ### template method
 
-Template method -suunnittelumallia sopii tilainteisiin, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
+Template method -suunnittelumallia sopii tilanteisiin, missä kahden tai useamman operation suoritus on hyvin samankaltainen ja poikkeaa ainoastaan yhden tai muutaman operaatioon liittyvän askeleen kohdalla.
 
 Summa- ja Tulo-komentojen suoritus on oleellisesti samanlainen:
 
@@ -1001,7 +1001,7 @@ public class Summa extends KaksiparametrinenLaskuoperaatio {
 
 Abstraktin luokan määrittelemä _suorita()_ on _template-metodi_, joka määrittelee suorituksen siten, että suorituksen eroava osa määritellään yliluokan abstraktina metodina, jonka aliluokat ylikirjoittavat. Template-metodin avulla siis saadaan määriteltyä "geneerinen algoritmirunko", jota voidaan aliluokissa erikoistaa sopivalla tavalla.
 
-Template-metodeitta voi olla useampiakin kuin yksi eroava osa, tällöin abstrakteja metodeja määritellään tarpeellinen määrä. 
+Template-metodeita voi olla useampiakin kuin yksi eroava osa, tällöin abstrakteja metodeja määritellään tarpeellinen määrä. 
 
 Strategy-suunnittelumalli on osittain samaa sukua Template-metodin kanssa, siinä kokonainen algoritmi tai algoritmin osa korvataan erillisessä luokassa toteutetulla toteutuksella.
 Strategioita voidaan vaihtaa ajonaikana, template-metodissa olio toimii samalla tavalla koko elinaikansa  
@@ -1880,7 +1880,7 @@ Dekorointi siis ei oleellisesti ole perintää vaan delegointia, jälleen kerran
 
 Lisää dekoraattori-suunnittelumallista esim. osoitteessa https://sourcemaking.com/design_patterns/decorator 
 
-## Pintotehdas
+## Pinotehdas
 
 Huomaamme, että eri ominaisuuksilla varustettujen pinojen luominen on käyttäjän kannalta hieman ikävää. Teemmekin luomista helpottamaan pinotehtaan:
 
