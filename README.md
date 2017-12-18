@@ -1,7 +1,7 @@
 # Ohjelmistotuotanto syksy 2017, Tietojenkäsittelytieteen laitos, Helsingin yliopisto
 
 <https://github.com/mluukkai/ohjelmistotuotanto2017/wiki/Ohjelmistotuotanto-syksy-2017>
-
+**pyydetty muutos**
 ## Luentokalvot
 
 [1](https://github.com/mluukkai/ohjelmistotuotanto2017/blob/master/kalvot/luento1.pdf?raw=true)
